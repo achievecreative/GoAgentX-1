@@ -38,8 +38,10 @@
 
 
 - (void)waitTaskUntilDone:(id)sender {
-    [task waitUntilExit];
-    [[NSNotificationCenter defaultCenter] postNotificationName:GACommandRunnerTaskTerminatedNotification object:sender];
+    @autoreleasepool {
+        [task waitUntilExit];
+        [[NSNotificationCenter defaultCenter] postNotificationName:GACommandRunnerTaskTerminatedNotification object:sender];   
+    }
 }
 
 
