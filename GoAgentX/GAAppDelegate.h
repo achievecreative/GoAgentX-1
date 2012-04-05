@@ -17,6 +17,9 @@
     GACommandRunner     *proxyRunner;
     GACommandRunner     *deployRunner;
     
+    NSDictionary        *previousAirportProxy;
+    NSDictionary        *previousEthernetProxy;
+    
     IBOutlet NSMenu     *statusBarItemMenu;
     IBOutlet NSMenuItem *statusMenuItem;
     
@@ -44,6 +47,8 @@
     IBOutlet NSTextField            *deployServicePasswordField;
     IBOutlet GAAutoscrollTextView   *deployLogTextView;
 }
+
+- (void)setSystemProxySettingsToGoAgent:(BOOL)apply;
 
 - (IBAction)showMainWindow:(id)sender;
 - (IBAction)exitApplication:(id)sender;

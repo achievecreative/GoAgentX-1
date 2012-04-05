@@ -68,6 +68,11 @@
     statusMenuItem.title = statusText;
     statusMenuItem.image = statusImage;
     statusToggleButton.title = buttonTitle;
+    
+    // 自动切换系统代理设置
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
+        [self setSystemProxySettingsToGoAgent:running];
+    }
 }
 
 - (NSArray *)connectionModes {
@@ -264,6 +269,7 @@
 }
 
 
+#pragma mark -
 #pragma mark 服务端部署
 
 - (void)clearDeployLog:(id)sender {
@@ -336,6 +342,78 @@
 
 
 #pragma mark -
+#pragma mark 其他设置
+
+- (CFStringRef)proxiesPathOfDevice:(NSString *)devId {
+    NSString *path = [NSString stringWithFormat:@"/%@/%@/%@", kSCPrefNetworkServices, devId, kSCEntNetProxies];
+    return (__bridge CFStringRef)path;
+}
+
+
+- (void)setSystemProxySettingsToGoAgent:(BOOL)apply {
+    SCPreferencesRef prefRef;// = SCPreferencesCreate(kCFAllocatorSystemDefault, CFSTR("test"), NULL);
+    NSString *airportId = nil, *ethernetId = nil;
+    
+    AuthorizationRef auth = nil;
+	OSStatus authErr = noErr;
+	
+	AuthorizationFlags rootFlags = kAuthorizationFlagDefaults | kAuthorizationFlagExtendRights 
+    | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagPreAuthorize;
+	authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, rootFlags, &auth);
+	if (authErr == noErr) {
+		prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, auth);
+	}
+    
+    NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
+    NSMutableDictionary *airportDict = nil, *ethernetDict = nil;
+    
+    for (NSString *key in [sets allKeys]) {
+        NSString *hardware = [sets valueForKeyPath:[key stringByAppendingString:@".Interface.Hardware"]];
+        if ([hardware isEqualToString:@"AirPort"]) {
+            airportDict = [sets objectForKey:key];
+            airportId = key;
+        } else if ([hardware isEqualToString:@"Ethernet"]) {
+            ethernetDict = [sets objectForKey:key];
+            ethernetId = key;
+        }
+    }
+    
+    if (apply) {
+        // 如果已经获取了旧的代理设置就直接用之前获取的，防止第二次获取到设置过的代理
+        previousAirportProxy = previousAirportProxy ?: [[airportDict objectForKey:(NSString *)kSCEntNetProxies] copy];
+        previousEthernetProxy = previousEthernetProxy ?: [[ethernetDict objectForKey:(NSString *)kSCEntNetProxies] copy];
+        
+        // 生成要设置的属性的字典
+        NSInteger proxyPort = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
+        NSMutableDictionary *proxies = (__bridge NSMutableDictionary *)SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:airportId]);
+        [proxies setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
+        [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
+        [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
+        
+        BOOL ret;
+        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], (__bridge CFDictionaryRef)[proxies copy]);
+        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], (__bridge CFDictionaryRef)[proxies copy]);
+        ret = SCPreferencesCommitChanges(prefRef);
+        ret = SCPreferencesApplyChanges(prefRef);
+        
+    } else {
+        BOOL ret;
+        if (previousAirportProxy != nil) {
+            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], (__bridge CFDictionaryRef)previousAirportProxy);
+        }
+        if (previousEthernetProxy != nil) {
+            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], (__bridge CFDictionaryRef)previousEthernetProxy);
+        }
+        ret = SCPreferencesCommitChanges(prefRef);
+        ret = SCPreferencesApplyChanges(prefRef);
+        
+        previousAirportProxy = nil;
+        previousEthernetProxy = nil;
+    }
+}
+
+
+#pragma mark -
 #pragma mark Window delegate
 
 - (BOOL)windowShouldClose:(id)sender {
@@ -347,8 +425,11 @@
 #pragma mark -
 #pragma mark App delegate
 
-- (void)applicationWillTerminate:(NSNotification *)notification {
-    [proxyRunner terminateTask];
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    if ([proxyRunner isTaskRunning]) {
+        [self toggleServiceStatus:nil];
+    }
+    return NSTerminateNow;
 }
 
 
@@ -372,7 +453,7 @@
         [self toggleServiceStatus:nil];
     } else {
         [self showMainWindow:nil];
-    }    
+    }
 }
 
 

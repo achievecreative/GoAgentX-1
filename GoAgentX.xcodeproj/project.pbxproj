@@ -24,6 +24,8 @@
 		89B72CF414E934CF0027DC19 /* GACommandRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B72CF314E934CF0027DC19 /* GACommandRunner.m */; };
 		89B72D4614E956340027DC19 /* GoAgentDefaultSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 89B72D4514E956340027DC19 /* GoAgentDefaultSettings.plist */; };
 		89B72D4A14E960BE0027DC19 /* proxyinitemplate in Resources */ = {isa = PBXBuildFile; fileRef = 89B72D4914E960BE0027DC19 /* proxyinitemplate */; };
+		89CC4742152DC9F700A12119 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4741152DC9F700A12119 /* SystemConfiguration.framework */; };
+		89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4744152DCF5B00A12119 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		89B72CF314E934CF0027DC19 /* GACommandRunner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GACommandRunner.m; sourceTree = "<group>"; };
 		89B72D4514E956340027DC19 /* GoAgentDefaultSettings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentDefaultSettings.plist; sourceTree = "<group>"; };
 		89B72D4914E960BE0027DC19 /* proxyinitemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = proxyinitemplate; sourceTree = "<group>"; };
+		89CC4741152DC9F700A12119 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		89CC4744152DCF5B00A12119 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */,
+				89CC4742152DC9F700A12119 /* SystemConfiguration.framework in Frameworks */,
 				89B72C5E14E8DF9D0027DC19 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +114,8 @@
 		89B72C5C14E8DF9D0027DC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				89CC4744152DCF5B00A12119 /* Security.framework */,
+				89CC4741152DC9F700A12119 /* SystemConfiguration.framework */,
 				89B72C5D14E8DF9D0027DC19 /* Cocoa.framework */,
 				89B72C5F14E8DF9D0027DC19 /* Other Frameworks */,
 			);
