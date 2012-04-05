@@ -22,5 +22,7 @@
 	<string></string>
 	<key>GoAgent:Local:ProxyPassword</key>
 	<string></string>
+	<key>GoAgent:AutoToggleSystemProxySettings</key>
+	<true/>
 </dict>
 </plist>
