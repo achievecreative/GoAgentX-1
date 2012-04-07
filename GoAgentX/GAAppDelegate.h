@@ -17,8 +17,8 @@
     GACommandRunner     *proxyRunner;
     GACommandRunner     *deployRunner;
     
-    NSDictionary        *previousAirportProxy;
-    NSDictionary        *previousEthernetProxy;
+    NSMutableDictionary *previousAirportProxy;
+    NSMutableDictionary *previousEthernetProxy;
     
     IBOutlet NSMenu     *statusBarItemMenu;
     IBOutlet NSMenuItem *statusMenuItem;

@@ -24,5 +24,11 @@
 	<string></string>
 	<key>GoAgent:AutoToggleSystemProxySettings</key>
 	<true/>
+	<key>GoAgent:Local:PACEnabled</key>
+	<false/>
+	<key>GoAgent:Local:CrlfEnabled</key>
+	<false/>
+	<key>GoAgent:AutoToggleSystemProxyWithPAC</key>
+	<false/>
 </dict>
 </plist>
