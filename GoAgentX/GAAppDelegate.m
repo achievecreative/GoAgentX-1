@@ -357,18 +357,18 @@
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         
         if (usePAC) {
-            [proxies setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
             [proxies setObject:@"http://127.0.0.1:8089/goagent.pac" forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             
         } else {
-            [proxies setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
-            [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
-            [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+            [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
+            [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
         }
         
     } else {
-        [proxies setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
-        [proxies setObject:[NSNumber numberWithBool:NO] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
     }
 }
 
@@ -437,6 +437,8 @@
         previousAirportProxy = nil;
         previousEthernetProxy = nil;
     }
+    
+    SCPreferencesSynchronize(prefRef);
 }
 
 
