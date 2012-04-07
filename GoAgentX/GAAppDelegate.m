@@ -350,9 +350,31 @@
 }
 
 
+//! 修改代理设置的字典
+- (void)modifyPrefProxiesDictionary:(NSMutableDictionary *)proxies withProxyEnabled:(BOOL)enabled {
+    if (enabled) {
+        NSInteger proxyPort = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
+        BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
+        
+        if (usePAC) {
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+            [proxies setObject:@"http://127.0.0.1:8089/goagent.pac" forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
+            
+        } else {
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+            [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
+            [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
+        }
+        
+    } else {
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+    }
+}
+
+
 - (void)setSystemProxySettingsToGoAgent:(BOOL)apply {
     SCPreferencesRef prefRef;// = SCPreferencesCreate(kCFAllocatorSystemDefault, CFSTR("test"), NULL);
-    NSString *airportId = nil, *ethernetId = nil;
     
     AuthorizationRef auth = nil;
 	OSStatus authErr = noErr;
@@ -365,43 +387,48 @@
 	}
     
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
+    NSString *airportId = nil, *ethernetId = nil;
     NSMutableDictionary *airportDict = nil, *ethernetDict = nil;
     
+    // 遍历系统中的网络设备列表，设置 AirPort 和 Ethernet 的代理
     for (NSString *key in [sets allKeys]) {
-        NSString *hardware = [sets valueForKeyPath:[key stringByAppendingString:@".Interface.Hardware"]];
+        NSMutableDictionary *dict = [sets objectForKey:key];
+        NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
         if ([hardware isEqualToString:@"AirPort"]) {
-            airportDict = [sets objectForKey:key];
+            airportDict = dict;
             airportId = key;
-        } else if ([hardware isEqualToString:@"Ethernet"]) {
-            ethernetDict = [sets objectForKey:key];
+        } else if ([hardware isEqualToString:@"Ethernet"] && [@"Ethernet" isEqualToString:[dict objectForKey:@"UserDefinedName"]]) {
+            ethernetDict = dict;
             ethernetId = key;
         }
     }
     
     if (apply) {
         // 如果已经获取了旧的代理设置就直接用之前获取的，防止第二次获取到设置过的代理
-        previousAirportProxy = previousAirportProxy ?: [[airportDict objectForKey:(NSString *)kSCEntNetProxies] copy];
-        previousEthernetProxy = previousEthernetProxy ?: [[ethernetDict objectForKey:(NSString *)kSCEntNetProxies] copy];
-        
-        // 生成要设置的属性的字典
-        NSInteger proxyPort = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
-        NSMutableDictionary *proxies = (__bridge NSMutableDictionary *)SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:airportId]);
-        [proxies setObject:[NSNumber numberWithBool:YES] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
-        [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
-        [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
+        previousAirportProxy = previousAirportProxy ?: [[airportDict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy];
+        previousEthernetProxy = previousEthernetProxy ?: [[ethernetDict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy];
         
         BOOL ret;
-        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], (__bridge CFDictionaryRef)[proxies copy]);
-        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], (__bridge CFDictionaryRef)[proxies copy]);
+        CFDictionaryRef proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:airportId]);
+        [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
+        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], proxies);
+        
+        proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:ethernetId]);
+        [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
+        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], proxies);
         ret = SCPreferencesCommitChanges(prefRef);
         ret = SCPreferencesApplyChanges(prefRef);
         
     } else {
         BOOL ret;
         if (previousAirportProxy != nil) {
+            // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
+            [self modifyPrefProxiesDictionary:previousAirportProxy withProxyEnabled:NO];
             ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], (__bridge CFDictionaryRef)previousAirportProxy);
         }
         if (previousEthernetProxy != nil) {
+            // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
+            [self modifyPrefProxiesDictionary:previousEthernetProxy withProxyEnabled:NO];
             ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], (__bridge CFDictionaryRef)previousEthernetProxy);
         }
         ret = SCPreferencesCommitChanges(prefRef);
@@ -410,6 +437,8 @@
         previousAirportProxy = nil;
         previousEthernetProxy = nil;
     }
+    
+    SCPreferencesSynchronize(prefRef);
 }
 
 
