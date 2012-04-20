@@ -50,7 +50,14 @@
 }
 
 
-- (void)setStatusToRunning:(BOOL)running {
+- (void)setStatusToRunning:(NSNumber *)status {
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(setStatusToRunning:) withObject:status waitUntilDone:[NSThread isMainThread]];
+        return;
+    }
+    
+    BOOL running = [status boolValue];
+    
     NSInteger port = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
     NSString *statusText = [NSString stringWithFormat:@"正在运行，端口 %ld", port];
     NSImage *statusImage = [NSImage imageNamed:@"status_running"];
@@ -60,6 +67,7 @@
         statusText = @"已停止";
         statusImage = [NSImage imageNamed:@"status_stopped"];
         buttonTitle = @"启动";
+        [statusLogTextView appendString:@"服务已停止\n"];
     }
     
     statusBarItem.toolTip = statusText;
@@ -199,7 +207,7 @@
     
     if ([runner isTaskRunning]) {
         [runner terminateTask];
-        [self setStatusToRunning:NO];
+        //[self setStatusToRunning:[NSNumber numberWithBool:NO]];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GoAgent:LastRunPID"];
         
     } else {
@@ -241,15 +249,14 @@
                  inputText:nil
             outputTextView:statusLogTextView 
         terminationHandler:^(NSTask *theTask) {
-            [self setStatusToRunning:NO];
-            [statusLogTextView appendString:@"服务已停止\n"];
+            [self setStatusToRunning:[NSNumber numberWithBool:NO]];
         }];
         
         [statusLogTextView appendString:@"启动完成\n"];
         
         [[NSUserDefaults standardUserDefaults] setInteger:[runner processId] forKey:@"GoAgent:LastRunPID"];
         
-        [self setStatusToRunning:YES];
+        [self setStatusToRunning:[NSNumber numberWithBool:YES]];
     }
 }
 
@@ -355,10 +362,13 @@
     if (enabled) {
         NSInteger proxyPort = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
+        BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
+        NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
+        NSString *pacFile = useCustomePAC ? customPAC : @"http://127.0.0.1:8089/goagent.pac";
         
         if (usePAC) {
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
-            [proxies setObject:@"http://127.0.0.1:8089/goagent.pac" forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
+            [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             
         } else {
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
@@ -387,57 +397,39 @@
 	}
     
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
-    NSString *airportId = nil, *ethernetId = nil;
-    NSMutableDictionary *airportDict = nil, *ethernetDict = nil;
     
     // 遍历系统中的网络设备列表，设置 AirPort 和 Ethernet 的代理
     for (NSString *key in [sets allKeys]) {
         NSMutableDictionary *dict = [sets objectForKey:key];
         NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
-        if ([hardware isEqualToString:@"AirPort"]) {
-            airportDict = dict;
-            airportId = key;
-        } else if ([hardware isEqualToString:@"Ethernet"] && [@"Ethernet" isEqualToString:[dict objectForKey:@"UserDefinedName"]]) {
-            ethernetDict = dict;
-            ethernetId = key;
+        if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
+            [previousDeviceProxies setObject:[dict mutableCopy] forKey:key];
         }
     }
     
-    if (apply) {
+    if (apply) {        
         // 如果已经获取了旧的代理设置就直接用之前获取的，防止第二次获取到设置过的代理
-        previousAirportProxy = previousAirportProxy ?: [[airportDict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy];
-        previousEthernetProxy = previousEthernetProxy ?: [[ethernetDict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy];
-        
-        BOOL ret;
-        CFDictionaryRef proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:airportId]);
-        [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
-        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], proxies);
-        
-        proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:ethernetId]);
-        [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
-        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], proxies);
-        ret = SCPreferencesCommitChanges(prefRef);
-        ret = SCPreferencesApplyChanges(prefRef);
+        for (NSString *deviceId in previousDeviceProxies) {
+            BOOL ret;
+            CFDictionaryRef proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:deviceId]);
+            [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
+            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:deviceId], proxies);
+        }
         
     } else {
-        BOOL ret;
-        if (previousAirportProxy != nil) {
+        for (NSString *deviceId in previousDeviceProxies) {
             // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
-            [self modifyPrefProxiesDictionary:previousAirportProxy withProxyEnabled:NO];
-            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], (__bridge CFDictionaryRef)previousAirportProxy);
+            BOOL ret;    
+            NSMutableDictionary *dict = [[previousDeviceProxies objectForKey:deviceId] objectForKey:(NSString *)kSCEntNetProxies];
+            [self modifyPrefProxiesDictionary:dict withProxyEnabled:NO];
+            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:deviceId], (__bridge CFDictionaryRef)dict);
         }
-        if (previousEthernetProxy != nil) {
-            // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
-            [self modifyPrefProxiesDictionary:previousEthernetProxy withProxyEnabled:NO];
-            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], (__bridge CFDictionaryRef)previousEthernetProxy);
-        }
-        ret = SCPreferencesCommitChanges(prefRef);
-        ret = SCPreferencesApplyChanges(prefRef);
         
-        previousAirportProxy = nil;
-        previousEthernetProxy = nil;
+        [previousDeviceProxies removeAllObjects];
     }
     
+    SCPreferencesCommitChanges(prefRef);
+    SCPreferencesApplyChanges(prefRef);
     SCPreferencesSynchronize(prefRef);
 }
 
@@ -463,6 +455,8 @@
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    previousDeviceProxies = [NSMutableDictionary new];
+    
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;
     

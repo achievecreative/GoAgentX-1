@@ -7,7 +7,7 @@ GoAgentX 是一个 goagent 在 Mac OS X 下的图形界面控制软件，方便�
 ## 功能
 
 * 部署 goagent 服务端到 App Engine
-* 自动设置系统 HTTP 代理或者 PAC 设置
+* 自动设置系统 HTTP 代理或者 PAC 设置（PAC 支持需要 goagent 1.8.0 以上版本）
 * 图形化界面设置客户端连接参数
 * MenuBar 图标，直接控制连接状态
 * 启动时自动连接 goagent

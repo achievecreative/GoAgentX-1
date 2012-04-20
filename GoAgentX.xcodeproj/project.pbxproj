@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		894E09D01541642200343BC6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
+		894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
+		894E09D31541655F00343BC6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 894E09D21541655F00343BC6 /* dsa_pub.pem */; };
 		8963E34014ED4A01008587B7 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */; };
 		8963E34114ED4A01008587B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8963E33F14ED4A01008587B7 /* README.md */; };
 		89B72C5E14E8DF9D0027DC19 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B72C5D14E8DF9D0027DC19 /* Cocoa.framework */; };
@@ -28,7 +31,22 @@
 		89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4744152DCF5B00A12119 /* Security.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		894E09CF154163E500343BC6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				894E09D01541642200343BC6 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		894E09CC154163BC00343BC6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		894E09D21541655F00343BC6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		8963E33D14ED4A01008587B7 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		8963E33F14ED4A01008587B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -65,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */,
 				89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */,
 				89CC4742152DC9F700A12119 /* SystemConfiguration.framework in Frameworks */,
 				89B72C5E14E8DF9D0027DC19 /* Cocoa.framework in Frameworks */,
@@ -114,6 +133,7 @@
 		89B72C5C14E8DF9D0027DC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				894E09CC154163BC00343BC6 /* Sparkle.framework */,
 				89CC4744152DCF5B00A12119 /* Security.framework */,
 				89CC4741152DC9F700A12119 /* SystemConfiguration.framework */,
 				89B72C5D14E8DF9D0027DC19 /* Cocoa.framework */,
@@ -163,6 +183,7 @@
 		89B72C7A14E8E1470027DC19 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				894E09D21541655F00343BC6 /* dsa_pub.pem */,
 				89B72CEA14E926730027DC19 /* status_running.png */,
 				89B72CEB14E926730027DC19 /* status_stopped.png */,
 				89B72CDA14E90CC60027DC19 /* status_item_icon.png */,
@@ -182,6 +203,7 @@
 			buildPhases = (
 				89B72C5514E8DF9D0027DC19 /* Sources */,
 				89B72C5614E8DF9D0027DC19 /* Frameworks */,
+				894E09CF154163E500343BC6 /* CopyFiles */,
 				89B72C5714E8DF9D0027DC19 /* Resources */,
 			);
 			buildRules = (
@@ -235,6 +257,7 @@
 				89B72D4614E956340027DC19 /* GoAgentDefaultSettings.plist in Resources */,
 				89B72D4A14E960BE0027DC19 /* proxyinitemplate in Resources */,
 				8963E34114ED4A01008587B7 /* README.md in Resources */,
+				894E09D31541655F00343BC6 /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +356,10 @@
 		89B72C7814E8DF9D0027DC19 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GoAgentX/GoAgentX-Prefix.pch";
 				INFOPLIST_FILE = "GoAgentX/GoAgentX-Info.plist";
@@ -346,6 +373,10 @@
 		89B72C7914E8DF9D0027DC19 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "GoAgentX/GoAgentX-Prefix.pch";
 				INFOPLIST_FILE = "GoAgentX/GoAgentX-Info.plist";

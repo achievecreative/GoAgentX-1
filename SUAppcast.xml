@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+   <channel>
+      <title>GoAgentX's Changelog</title>
+      <link>https://raw.github.com/ohdarling/GoAgentX/master/SUAppcast.xml</link>
+      <description></description>
+      <language>zh</language>
+         <item>
+            <title>GoAgentX v1.0.5</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.0.5 Changelog</h2>
+                <ul>
+                    <li>[NEW] 兼容 goagent 1.8.3</li>
+                    <li>[NEW] 添加自动更新支持</li>
+                    <li>[NEW] 增加 PPPoE 拨号的 PAC 自动设置支持</li>
+                    <li>[NEW] 支持自定义 PAC 地址</li>
+                </ul>
+            ]]></description>
+            <pubDate>Fri, 20 Apr 2012 21:52:24 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.0.5.dmg" sparkle:shortVersionString="1.0.5" sparkle:version="7" length="363009" type="application/octet-stream" sparkle:dsaSignature="MEYCIQCb1M2ZcppAfe0/MJ7jIU7iCmMuPH5aEiJBkCje7A5ZsgIhAM/QztIHv2UI4wQzp96Wj6q55EplqrmeM2zDjpQNqQhb" />
+         </item>
+   </channel>
+</rss>

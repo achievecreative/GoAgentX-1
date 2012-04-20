@@ -72,32 +72,36 @@ terminationHandler:(void (^)(NSTask *))terminationHandler {
     
     NSFileHandle *outputReadHandle = [outputPipe fileHandleForReading];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:NSFileHandleReadCompletionNotification
-                                                      object:outputReadHandle
-                                                       queue:[NSOperationQueue mainQueue]
-                                                  usingBlock:^(NSNotification *note) {
-                                                      NSData *data = [note.userInfo objectForKey:NSFileHandleNotificationDataItem];
-                                                      if ([data length] > 0) {
-                                                          NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                                          [textView appendString:str];
-                                                          [outputReadHandle readInBackgroundAndNotify];
-                                                      }
-                                                  }];
+    [[NSNotificationCenter defaultCenter] removeObserver:fileReadCompletionNotificationHandle];
+    [[NSNotificationCenter defaultCenter] removeObserver:runnerTerminationNotificationHandle];
+    
+    fileReadCompletionNotificationHandle = [[NSNotificationCenter defaultCenter]
+                                            addObserverForName:NSFileHandleReadCompletionNotification
+                                            object:outputReadHandle
+                                            queue:[NSOperationQueue mainQueue]
+                                            usingBlock:^(NSNotification *note) {
+                                                
+                                                NSData *data = [note.userInfo objectForKey:NSFileHandleNotificationDataItem];
+                                                if ([data length] > 0) {
+                                                    NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                                    [textView appendString:str];
+                                                    [outputReadHandle readInBackgroundAndNotify];
+                                                } 
+                                            }];
     
     [outputReadHandle readInBackgroundAndNotify];
     
-    __block id _self = self;
-    
-    [[NSNotificationCenter defaultCenter] addObserverForName:GACommandRunnerTaskTerminatedNotification
-                                                      object:self
-                                                       queue:[NSOperationQueue new]
-                                                  usingBlock:^(NSNotification *note) {
-                                                      [outputReadHandle closeFile];
-                                                      [[NSNotificationCenter defaultCenter] removeObserver:_self];
-                                                      [textView appendString:@"\n"];
-                                                      
-                                                      terminationHandler(task);
-                                                  }];
+    runnerTerminationNotificationHandle = [[NSNotificationCenter defaultCenter]
+                                           addObserverForName:GACommandRunnerTaskTerminatedNotification
+                                           object:self
+                                           queue:[NSOperationQueue mainQueue]
+                                           usingBlock:^(NSNotification *note) {
+                                               
+                                               [outputReadHandle closeFile];
+                                               [textView appendString:@"\n"];
+                                               
+                                               terminationHandler(task);
+                                           }];
     
     [task launch];
     
