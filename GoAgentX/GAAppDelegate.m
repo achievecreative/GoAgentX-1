@@ -51,11 +51,6 @@
 
 
 - (void)setStatusToRunning:(NSNumber *)status {
-    if (![NSThread isMainThread]) {
-        [self performSelectorOnMainThread:@selector(setStatusToRunning:) withObject:status waitUntilDone:[NSThread isMainThread]];
-        return;
-    }
-    
     BOOL running = [status boolValue];
     
     NSInteger port = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
@@ -207,7 +202,7 @@
     
     if ([runner isTaskRunning]) {
         [runner terminateTask];
-        //[self setStatusToRunning:[NSNumber numberWithBool:NO]];
+        [self setStatusToRunning:[NSNumber numberWithBool:NO]];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GoAgent:LastRunPID"];
         
     } else {
@@ -450,6 +445,7 @@
     if ([proxyRunner isTaskRunning]) {
         [self toggleServiceStatus:nil];
     }
+    
     return NSTerminateNow;
 }
 
