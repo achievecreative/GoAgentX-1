@@ -60,8 +60,9 @@ ip = 127.0.0.1
 port = 8089
 file = goagent.pac
 update = 0
-remote = http://autoproxy2pac.appspot.com/pac/proxy/127.0.0.1/8087
-timeout = 5
+remote = http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest
+timeout = 16
+direct = .253874.com|.cnn.com
 
 [crlf]
 enable = {GoAgent:Local:CrlfEnabled}
@@ -71,7 +72,7 @@ sites = .youtube.com|.ytimg.com|.appspot.com|.google.com|.googleusercontent.com|
 
 [useragent]
 enable = 0
-string = Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)
+string = Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3
 
 [love]
 enable = 1
