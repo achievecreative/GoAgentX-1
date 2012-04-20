@@ -17,7 +17,7 @@
                 </ul>
             ]]></description>
             <pubDate>Fri, 20 Apr 2012 21:52:24 +0800</pubDate>
-            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.0.5.dmg" sparkle:shortVersionString="1.0.5" sparkle:version="7" length="363009" type="application/octet-stream" sparkle:dsaSignature="MEYCIQCb1M2ZcppAfe0/MJ7jIU7iCmMuPH5aEiJBkCje7A5ZsgIhAM/QztIHv2UI4wQzp96Wj6q55EplqrmeM2zDjpQNqQhb" />
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.0.5.dmg" sparkle:shortVersionString="1.0.5" sparkle:version="7" length="363009" type="application/octet-stream" sparkle:dsaSignature="MEUCIA4Umkb3t9d1S75gsXuuBjQVfGbr+e0dHOfdqqm6FfqYAiEAm+5pyZ6SaLyWpWpasdmjmOBXW/kTZ+xW/CagDyUqEng=" />
          </item>
    </channel>
 </rss>
