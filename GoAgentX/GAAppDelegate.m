@@ -387,57 +387,39 @@
 	}
     
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
-    NSString *airportId = nil, *ethernetId = nil;
-    NSMutableDictionary *airportDict = nil, *ethernetDict = nil;
     
     // 遍历系统中的网络设备列表，设置 AirPort 和 Ethernet 的代理
     for (NSString *key in [sets allKeys]) {
         NSMutableDictionary *dict = [sets objectForKey:key];
         NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
-        if ([hardware isEqualToString:@"AirPort"]) {
-            airportDict = dict;
-            airportId = key;
-        } else if ([hardware isEqualToString:@"Ethernet"] && [@"Ethernet" isEqualToString:[dict objectForKey:@"UserDefinedName"]]) {
-            ethernetDict = dict;
-            ethernetId = key;
+        if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
+            [previousDeviceProxies setObject:[dict mutableCopy] forKey:key];
         }
     }
     
-    if (apply) {
+    if (apply) {        
         // 如果已经获取了旧的代理设置就直接用之前获取的，防止第二次获取到设置过的代理
-        previousAirportProxy = previousAirportProxy ?: [[airportDict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy];
-        previousEthernetProxy = previousEthernetProxy ?: [[ethernetDict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy];
-        
-        BOOL ret;
-        CFDictionaryRef proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:airportId]);
-        [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
-        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], proxies);
-        
-        proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:ethernetId]);
-        [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
-        ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], proxies);
-        ret = SCPreferencesCommitChanges(prefRef);
-        ret = SCPreferencesApplyChanges(prefRef);
+        for (NSString *deviceId in previousDeviceProxies) {
+            BOOL ret;
+            CFDictionaryRef proxies = SCPreferencesPathGetValue(prefRef, [self proxiesPathOfDevice:deviceId]);
+            [self modifyPrefProxiesDictionary:(__bridge NSMutableDictionary *)proxies withProxyEnabled:YES];
+            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:deviceId], proxies);
+        }
         
     } else {
-        BOOL ret;
-        if (previousAirportProxy != nil) {
+        for (NSString *deviceId in previousDeviceProxies) {
             // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
-            [self modifyPrefProxiesDictionary:previousAirportProxy withProxyEnabled:NO];
-            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:airportId], (__bridge CFDictionaryRef)previousAirportProxy);
+            BOOL ret;    
+            NSMutableDictionary *dict = [[previousDeviceProxies objectForKey:deviceId] objectForKey:(NSString *)kSCEntNetProxies];
+            [self modifyPrefProxiesDictionary:dict withProxyEnabled:NO];
+            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:deviceId], (__bridge CFDictionaryRef)dict);
         }
-        if (previousEthernetProxy != nil) {
-            // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
-            [self modifyPrefProxiesDictionary:previousEthernetProxy withProxyEnabled:NO];
-            ret = SCPreferencesPathSetValue(prefRef, [self proxiesPathOfDevice:ethernetId], (__bridge CFDictionaryRef)previousEthernetProxy);
-        }
-        ret = SCPreferencesCommitChanges(prefRef);
-        ret = SCPreferencesApplyChanges(prefRef);
         
-        previousAirportProxy = nil;
-        previousEthernetProxy = nil;
+        [previousDeviceProxies removeAllObjects];
     }
     
+    SCPreferencesCommitChanges(prefRef);
+    SCPreferencesApplyChanges(prefRef);
     SCPreferencesSynchronize(prefRef);
 }
 
@@ -463,6 +445,8 @@
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    previousDeviceProxies = [NSMutableDictionary new];
+    
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;
     
