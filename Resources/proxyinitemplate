@@ -65,7 +65,7 @@ timeout = 16
 direct = .253874.com|.cnn.com
 
 [crlf]
-enable = {GoAgent:Local:CrlfEnabled}
+enable = 0
 dns = 8.8.8.8
 cname = .google.com=www.google.com.hk|.appspot.com=www.google.com,mail.google.com,www.google.com.tw
 sites = .youtube.com|.ytimg.com|.appspot.com|.google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com

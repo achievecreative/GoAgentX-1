@@ -12,6 +12,9 @@
 
 @interface GACommandRunner : NSObject {
     NSTask      *task;
+    
+    id          fileReadCompletionNotificationHandle;
+    id          runnerTerminationNotificationHandle;
 }
 
 - (BOOL)isTaskRunning;

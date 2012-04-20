@@ -1697,13 +1697,13 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<string key="NSFrame">{{15, 72}, {424, 18}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
 												<reference key="NSWindow"/>
-												<reference key="NSNextKeyView" ref="413114016"/>
+												<reference key="NSNextKeyView" ref="673428256"/>
 												<string key="NSReuseIdentifierKey">_NS:771</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="583456660">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">启用 CRLF Injection，可以用来看 Youtube 直播和上传</string>
+													<string key="NSContents">设置自动代理配置为自定义的 PAC 文件地址</string>
 													<reference key="NSSupport" ref="988758687"/>
 													<string key="NSCellIdentifier">_NS:771</string>
 													<reference key="NSControlView" ref="872667740"/>
@@ -1781,12 +1781,11 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
 													<string type="base64-UTF8" key="NSContents">6buY6K6k5oOF5Ya15LiL77yMR29BZ2VudFgg6Ieq5Yqo6K6+572u57O757uf5Luj55CG5Li6IGdvYWdl
-bnQg5Lya5bCG57O757ufIFNPQ0tTIOS7o+eQhuiuvue9ruS4uiBnb2FnZW5077yM6L+Z5qC35omA5pyJ
-572R57uc6K+35rGC6YO95Lya6YCa6L+HIGdvYWdlbnQg5Y+R5Ye677yM5aaC5p6c5oOz6KaB5Y+q5piv
-5LiN6IO96K6/6Zeu55qE572R56uZ6YCa6L+HIGdvYWdlbnQg6K6/6Zeu77yM6YKj5LmI6K+35Yu+6YCJ
-5q2k6aG544CCCuazqOaEj++8muS9v+eUqOatpOmAiemhuemcgOimgeWQjOaXtuWLvumAieKAnEdvQWdl
-bnRYIOWQr+WKqOaIkOWKn+WQjuiHquWKqOWwhuezu+e7n+S7o+eQhuiuvue9ruS4uiBnb2FnZW504oCd
-A</string>
+bnQg5Lya5bCG57O757ufIFdlYiDku6PnkIborr7nva7kuLogZ29hZ2VudO+8jOi/meagt+aJgOaciee9
+kee7nOivt+axgumDveS8mumAmui/hyBnb2FnZW50IOWPkeWHuu+8jOWmguaenOaDs+imgeWPquaYr+S4
+jeiDveiuv+mXrueahOe9keermemAmui/hyBnb2FnZW50IOiuv+mXru+8jOmCo+S5iOivt+WLvumAieat
+pOmhueOAggrms6jmhI/vvJrkvb/nlKjmraTpgInpobnpnIDopoHlkIzml7bli77pgInigJxHb0FnZW50
+WCDlkK/liqjmiJDlip/lkI7oh6rliqjlsIbns7vnu5/ku6PnkIborr7nva7kuLogZ29hZ2VudOKAnQ</string>
 													<object class="NSFont" key="NSSupport" id="702230390">
 														<string key="NSName">STHeitiSC-Light</string>
 														<double key="NSSize">11</double>
@@ -1801,7 +1800,7 @@ A</string>
 											<object class="NSTextField" id="413114016">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{34, 49}, {406, 17}}</string>
+												<string key="NSFrame">{{34, 23}, {406, 17}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
 												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView"/>
@@ -1811,12 +1810,34 @@ A</string>
 												<object class="NSTextFieldCell" key="NSCell" id="549904294">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">不甚明白此选项的作用，如需使用请参考 goagent 网站⋯⋯</string>
+													<string key="NSContents">不使用 goagent 提供的 PAC 文件，使用自定义的 PAC 文件</string>
 													<reference key="NSSupport" ref="702230390"/>
 													<string key="NSCellIdentifier">_NS:360</string>
 													<reference key="NSControlView" ref="413114016"/>
 													<reference key="NSBackgroundColor" ref="698184804"/>
 													<reference key="NSTextColor" ref="787258990"/>
+												</object>
+											</object>
+											<object class="NSTextField" id="673428256">
+												<reference key="NSNextResponder" ref="286464401"/>
+												<int key="NSvFlags">268</int>
+												<string key="NSFrame">{{37, 44}, {400, 22}}</string>
+												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="413114016"/>
+												<string key="NSReuseIdentifierKey">_NS:903</string>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSTextFieldCell" key="NSCell" id="901746080">
+													<int key="NSCellFlags">-1804468671</int>
+													<int key="NSCellFlags2">272630784</int>
+													<string key="NSContents"/>
+													<reference key="NSSupport" ref="988758687"/>
+													<string key="NSPlaceholderString">例如 http://example.com/list.pac</string>
+													<string key="NSCellIdentifier">_NS:903</string>
+													<reference key="NSControlView" ref="673428256"/>
+													<bool key="NSDrawsBackground">YES</bool>
+													<reference key="NSBackgroundColor" ref="179273300"/>
+													<reference key="NSTextColor" ref="1011316922"/>
 												</object>
 											</object>
 										</array>
@@ -1890,7 +1911,7 @@ A</string>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
 					</object>
-					<object class="NSMenuItem" id="608564733">
+					<object class="NSMenuItem" id="123161389">
 						<reference key="NSMenu" ref="321136833"/>
 						<string key="NSTitle">检查更新...</string>
 						<string key="NSKeyEquiv"/>
@@ -1919,7 +1940,7 @@ A</string>
 			<object class="NSUserDefaultsController" id="643082621">
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
-			<object class="NSCustomObject" id="425711388">
+			<object class="NSCustomObject" id="181717355">
 				<string key="NSClassName">SUUpdater</string>
 			</object>
 		</array>
@@ -2527,27 +2548,43 @@ A</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.GoAgent:Local:CrlfEnabled</string>
+						<string key="label">value: values.GoAgent:UseCustomPACAddress</string>
 						<reference key="source" ref="872667740"/>
 						<reference key="destination" ref="643082621"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="872667740"/>
 							<reference key="NSDestination" ref="643082621"/>
-							<string key="NSLabel">value: values.GoAgent:Local:CrlfEnabled</string>
+							<string key="NSLabel">value: values.GoAgent:UseCustomPACAddress</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.GoAgent:Local:CrlfEnabled</string>
+							<string key="NSKeyPath">values.GoAgent:UseCustomPACAddress</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">839</int>
+					<int key="connectionID">847</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">checkForUpdates:</string>
-						<reference key="source" ref="425711388"/>
-						<reference key="destination" ref="608564733"/>
+						<reference key="source" ref="181717355"/>
+						<reference key="destination" ref="123161389"/>
 					</object>
 					<int key="connectionID">844</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.GoAgent:CustomPACAddress</string>
+						<reference key="source" ref="673428256"/>
+						<reference key="destination" ref="643082621"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="673428256"/>
+							<reference key="NSDestination" ref="643082621"/>
+							<string key="NSLabel">value: values.GoAgent:CustomPACAddress</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.GoAgent:CustomPACAddress</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">850</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2825,7 +2862,7 @@ A</string>
 							<reference ref="161764298"/>
 							<reference ref="458164728"/>
 							<reference ref="66625676"/>
-							<reference ref="608564733"/>
+							<reference ref="123161389"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -3515,6 +3552,7 @@ A</string>
 							<reference ref="630475160"/>
 							<reference ref="872667740"/>
 							<reference ref="413114016"/>
+							<reference ref="673428256"/>
 						</array>
 						<reference key="parent" ref="704581200"/>
 					</object>
@@ -3659,19 +3697,6 @@ A</string>
 						<reference key="parent" ref="630475160"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">836</int>
-						<reference key="object" ref="872667740"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="583456660"/>
-						</array>
-						<reference key="parent" ref="286464401"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">837</int>
-						<reference key="object" ref="583456660"/>
-						<reference key="parent" ref="872667740"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">840</int>
 						<reference key="object" ref="413114016"/>
 						<array class="NSMutableArray" key="children">
@@ -3686,13 +3711,39 @@ A</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">842</int>
-						<reference key="object" ref="425711388"/>
+						<reference key="object" ref="181717355"/>
 						<reference key="parent" ref="0"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">843</int>
-						<reference key="object" ref="608564733"/>
+						<reference key="object" ref="123161389"/>
 						<reference key="parent" ref="321136833"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">836</int>
+						<reference key="object" ref="872667740"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="583456660"/>
+						</array>
+						<reference key="parent" ref="286464401"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">837</int>
+						<reference key="object" ref="583456660"/>
+						<reference key="parent" ref="872667740"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">848</int>
+						<reference key="object" ref="673428256"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="901746080"/>
+						</array>
+						<reference key="parent" ref="286464401"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">849</int>
+						<reference key="object" ref="901746080"/>
+						<reference key="parent" ref="673428256"/>
 					</object>
 				</array>
 			</object>
@@ -3870,13 +3921,15 @@ A</string>
 				<string key="841.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="842.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="843.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="848.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="849.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">844</int>
+			<int key="maxID">850</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

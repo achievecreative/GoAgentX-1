@@ -50,7 +50,14 @@
 }
 
 
-- (void)setStatusToRunning:(BOOL)running {
+- (void)setStatusToRunning:(NSNumber *)status {
+    if (![NSThread isMainThread]) {
+        [self performSelectorOnMainThread:@selector(setStatusToRunning:) withObject:status waitUntilDone:[NSThread isMainThread]];
+        return;
+    }
+    
+    BOOL running = [status boolValue];
+    
     NSInteger port = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
     NSString *statusText = [NSString stringWithFormat:@"正在运行，端口 %ld", port];
     NSImage *statusImage = [NSImage imageNamed:@"status_running"];
@@ -60,6 +67,7 @@
         statusText = @"已停止";
         statusImage = [NSImage imageNamed:@"status_stopped"];
         buttonTitle = @"启动";
+        [statusLogTextView appendString:@"服务已停止\n"];
     }
     
     statusBarItem.toolTip = statusText;
@@ -199,7 +207,7 @@
     
     if ([runner isTaskRunning]) {
         [runner terminateTask];
-        [self setStatusToRunning:NO];
+        //[self setStatusToRunning:[NSNumber numberWithBool:NO]];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GoAgent:LastRunPID"];
         
     } else {
@@ -241,15 +249,14 @@
                  inputText:nil
             outputTextView:statusLogTextView 
         terminationHandler:^(NSTask *theTask) {
-            [self setStatusToRunning:NO];
-            [statusLogTextView appendString:@"服务已停止\n"];
+            [self setStatusToRunning:[NSNumber numberWithBool:NO]];
         }];
         
         [statusLogTextView appendString:@"启动完成\n"];
         
         [[NSUserDefaults standardUserDefaults] setInteger:[runner processId] forKey:@"GoAgent:LastRunPID"];
         
-        [self setStatusToRunning:YES];
+        [self setStatusToRunning:[NSNumber numberWithBool:YES]];
     }
 }
 
@@ -355,10 +362,13 @@
     if (enabled) {
         NSInteger proxyPort = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
+        BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
+        NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
+        NSString *pacFile = useCustomePAC ? customPAC : @"http://127.0.0.1:8089/goagent.pac";
         
         if (usePAC) {
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
-            [proxies setObject:@"http://127.0.0.1:8089/goagent.pac" forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
+            [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             
         } else {
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
