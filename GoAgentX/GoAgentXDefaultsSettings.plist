@@ -30,5 +30,17 @@
 	<false/>
 	<key>GoAgent:AutoToggleSystemProxyWithPAC</key>
 	<false/>
+	<key>GoAgent:UseCustomPACAddress</key>
+	<false/>
+	<key>GoAgent:CustomPACAddress</key>
+	<string></string>
+	<key>WestChamber:ProxyServer</key>
+	<string>annjonescnch</string>
+	<key>WestChamber:RemoteDNS</key>
+	<string>202.14.67.4</string>
+	<key>WestChamber:LocalPort</key>
+	<integer>1989</integer>
+	<key>GoAgentX:SelectedService</key>
+	<string>GAGoAgentService</string>
 </dict>
 </plist>

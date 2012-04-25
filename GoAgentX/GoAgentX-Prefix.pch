@@ -7,5 +7,6 @@
     #import <SystemConfiguration/SystemConfiguration.h>
 #endif
 
+#import "SynthesizeSingleton.h"
 
 #define CF_RELEASE(var) { if (var != nil) CFRelease(var); }

@@ -1165,6 +1165,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<int key="NSvFlags">265</int>
 												<string key="NSFrame">{{331, 20}, {112, 32}}</string>
 												<reference key="NSSuperview" ref="858414560"/>
+												<reference key="NSNextKeyView" ref="188257455"/>
 												<string key="NSReuseIdentifierKey">_NS:687</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="987784129">
@@ -1437,7 +1438,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																<int key="NSvFlags">2322</int>
 																<string key="NSFrame">{{0, 37}, {418, 36}}</string>
 																<reference key="NSSuperview" ref="103752135"/>
-																<reference key="NSNextKeyView" ref="804722817"/>
+																<reference key="NSNextKeyView" ref="833941106"/>
 																<string key="NSReuseIdentifierKey">_NS:1480</string>
 																<object class="NSTextContainer" key="NSTextContainer" id="923675192">
 																	<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1539,7 +1540,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												</array>
 												<string key="NSFrame">{{17, 17}, {420, 179}}</string>
 												<reference key="NSSuperview" ref="96741697"/>
-												<reference key="NSNextKeyView" ref="103752135"/>
+												<reference key="NSNextKeyView" ref="804722817"/>
 												<string key="NSReuseIdentifierKey">_NS:940</string>
 												<int key="NSsFlags">133138</int>
 												<reference key="NSVScroller" ref="833941106"/>
@@ -1764,7 +1765,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<object class="NSTextFieldCell" key="NSCell" id="134344710">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">在 GoAgentX 启动时，自动设置 Mac OS X 中 AirPort 和 Ethernet 的 “SOCKS 代理”或者“自动代理配置”为 goagent</string>
+													<string key="NSContents">在 GoAgentX 启动时，自动设置 Mac OS X 中 AirPort 和 Ethernet 的 “Web 代理”或者“自动代理配置”为 goagent</string>
 													<reference key="NSSupport" ref="493836830"/>
 													<string key="NSCellIdentifier">_NS:360</string>
 													<reference key="NSControlView" ref="171781092"/>
@@ -1806,6 +1807,7 @@ WCDlkK/liqjmiJDlip/lkI7oh6rliqjlsIbns7vnu5/ku6PnkIborr7nva7kuLogZ29hZ2VudOKAnQ</
 												<int key="NSvFlags">266</int>
 												<string key="NSFrame">{{34, 23}, {406, 17}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSNextKeyView" ref="188257455"/>
 												<string key="NSReuseIdentifierKey">_NS:360</string>
 												<string key="NSAntiCompressionPriority">{250, 750}</string>
 												<bool key="NSEnabled">YES</bool>

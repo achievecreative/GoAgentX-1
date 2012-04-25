@@ -19,7 +19,7 @@
 - (NSString *)pathInApplicationSupportFolder:(NSString *)path {
     NSString *folder = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Library"]
                          stringByAppendingPathComponent:@"Application Support"]
-                        stringByAppendingPathComponent:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"]];
+                        stringByAppendingPathComponent:@"GoAgentX"];
     return [folder stringByAppendingPathComponent:path];
 }
 
