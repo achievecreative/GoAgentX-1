@@ -125,7 +125,8 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (BOOL)isRunning {
-    return [commandRunner isTaskRunning];
+    BOOL running = [commandRunner isTaskRunning];
+    return running;
 }
 
 

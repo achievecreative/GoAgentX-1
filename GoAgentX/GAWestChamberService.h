@@ -10,8 +10,7 @@
 
 #import "GAService.h"
 
-@interface GAWestChamberService : GAService {
-    GACommandRunner         *runner;
-}
+@interface GAWestChamberService : GAService
+
 
 @end
