@@ -146,9 +146,14 @@
 
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    // 初始化服务列表
     [self setupServicesList];
     
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
+    
+    // 启动本机 PAC 服务
+    pacServer = [GAPACHTTPServer sharedServer];
+    [pacServer start:NULL];
     
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;

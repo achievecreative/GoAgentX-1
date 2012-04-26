@@ -10,6 +10,10 @@
 		890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 890DBFC61549002D009FF77F /* GAGoAgentServerService.m */; };
 		894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894107FA1549179D0045DA38 /* GoAgentXServices.plist */; };
 		8941781B15495FFB00E1819C /* GAConfigFieldManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8941781A15495FFB00E1819C /* GAConfigFieldManager.m */; };
+		8941782D1549A02900E1819C /* GAPACHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8941782C1549A02900E1819C /* GAPACHTTPConnection.m */; };
+		894178311549A25700E1819C /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 894178301549A25700E1819C /* NSData+Base64.m */; };
+		894178341549A2C200E1819C /* GAPACHTTPServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 894178331549A2C200E1819C /* GAPACHTTPServer.m */; };
+		894178361549A3DA00E1819C /* pactemplate.pac in Resources */ = {isa = PBXBuildFile; fileRef = 894178351549A3DA00E1819C /* pactemplate.pac */; };
 		894E09D01541642200343BC6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D31541655F00343BC6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 894E09D21541655F00343BC6 /* dsa_pub.pem */; };
@@ -84,6 +88,13 @@
 		894107FA1549179D0045DA38 /* GoAgentXServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentXServices.plist; sourceTree = "<group>"; };
 		8941781915495FFB00E1819C /* GAConfigFieldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAConfigFieldManager.h; sourceTree = "<group>"; };
 		8941781A15495FFB00E1819C /* GAConfigFieldManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAConfigFieldManager.m; sourceTree = "<group>"; };
+		8941782B1549A02900E1819C /* GAPACHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAPACHTTPConnection.h; sourceTree = "<group>"; };
+		8941782C1549A02900E1819C /* GAPACHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAPACHTTPConnection.m; sourceTree = "<group>"; };
+		8941782F1549A25700E1819C /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
+		894178301549A25700E1819C /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
+		894178321549A2C200E1819C /* GAPACHTTPServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAPACHTTPServer.h; sourceTree = "<group>"; };
+		894178331549A2C200E1819C /* GAPACHTTPServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAPACHTTPServer.m; sourceTree = "<group>"; };
+		894178351549A3DA00E1819C /* pactemplate.pac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pactemplate.pac; sourceTree = "<group>"; };
 		894E09CC154163BC00343BC6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		894E09D21541655F00343BC6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		8963E33D14ED4A01008587B7 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
@@ -192,10 +203,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8941782A15499E9200E1819C /* PACServer */ = {
+			isa = PBXGroup;
+			children = (
+				8941782B1549A02900E1819C /* GAPACHTTPConnection.h */,
+				8941782C1549A02900E1819C /* GAPACHTTPConnection.m */,
+				894178321549A2C200E1819C /* GAPACHTTPServer.h */,
+				894178331549A2C200E1819C /* GAPACHTTPServer.m */,
+			);
+			name = PACServer;
+			sourceTree = "<group>";
+		};
+		8941782E1549A25700E1819C /* NSData_Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				8941782F1549A25700E1819C /* NSData+Base64.h */,
+				894178301549A25700E1819C /* NSData+Base64.m */,
+			);
+			path = NSData_Base64;
+			sourceTree = "<group>";
+		};
 		8963E33B14ED4A01008587B7 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
 				8996159015479CA8002DE998 /* SynthesizeSingleton.h */,
+				8941782E1549A25700E1819C /* NSData_Base64 */,
 				899615551545B050002DE998 /* CocoaAsyncSocket */,
 				899615591545B050002DE998 /* CocoaLumberjack */,
 				899615291545AFB5002DE998 /* CocoaHTTPServer */,
@@ -378,6 +410,7 @@
 		89B72C6314E8DF9D0027DC19 /* GoAgentX */ = {
 			isa = PBXGroup;
 			children = (
+				8941782A15499E9200E1819C /* PACServer */,
 				89B72C6414E8DF9D0027DC19 /* Supporting Files */,
 				8996157E154689BA002DE998 /* Components */,
 				8996157D154689AC002DE998 /* Services */,
@@ -418,6 +451,7 @@
 				89B72CD714E9097E0027DC19 /* Icon.icns */,
 				89B72D4914E960BE0027DC19 /* goagent-config-template */,
 				8996158C1546EF73002DE998 /* west-chamber-config-template */,
+				894178351549A3DA00E1819C /* pactemplate.pac */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -494,6 +528,7 @@
 				899615981547A7CB002DE998 /* goagent in Resources */,
 				899615991547A7CB002DE998 /* goagent-server in Resources */,
 				894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */,
+				894178361549A3DA00E1819C /* pactemplate.pac in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +570,9 @@
 				8996158415468A0C002DE998 /* GAWestChamberService.m in Sources */,
 				890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */,
 				8941781B15495FFB00E1819C /* GAConfigFieldManager.m in Sources */,
+				8941782D1549A02900E1819C /* GAPACHTTPConnection.m in Sources */,
+				894178311549A25700E1819C /* NSData+Base64.m in Sources */,
+				894178341549A2C200E1819C /* GAPACHTTPServer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

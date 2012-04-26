@@ -9,15 +9,16 @@
 #import <Cocoa/Cocoa.h>
 
 #import "GAAutoscrollTextView.h"
-#import "GACommandRunner.h"
 #import "GAService.h"
-#import "GAGoAgentService.h"
+#import "GAPACHTTPServer.h"
 
 @interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     NSStatusItem        *statusBarItem;
     
     NSArray             *servicesList;
     GAService           *proxyService;
+    
+    GAPACHTTPServer     *pacServer;
     
     IBOutlet NSMenu     *statusBarItemMenu;
     IBOutlet NSMenuItem *statusMenuItem;
