@@ -35,6 +35,7 @@
 - (void)terminateTask {
     if (task && [task isRunning]) {
         [task terminate];
+        [task waitUntilExit];
     }
 }
 
@@ -73,6 +74,8 @@
     
     NSFileHandle *outputReadHandle = [outputPipe fileHandleForReading];
     
+    __block GACommandRunner *_self = self;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:fileReadCompletionNotificationHandle];
     [[NSNotificationCenter defaultCenter] removeObserver:runnerTerminationNotificationHandle];
     
@@ -92,16 +95,19 @@
     
     [outputReadHandle readInBackgroundAndNotify];
     
+    __block id _task = task;
+    
     runnerTerminationNotificationHandle = [[NSNotificationCenter defaultCenter]
                                            addObserverForName:GACommandRunnerTaskTerminatedNotification
                                            object:self
                                            queue:[NSOperationQueue mainQueue]
                                            usingBlock:^(NSNotification *note) {
-                                               
                                                [outputReadHandle closeFile];
-                                               [self.outputTextView appendString:@"\n"];
+                                               [_self.outputTextView appendString:@"\n"];
                                                
-                                               self.terminationHandler(task);
+                                               if (_self.terminationHandler) {
+                                                   _self.terminationHandler(_task);
+                                               }
                                            }];
     
     [task launch];

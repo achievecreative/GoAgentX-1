@@ -10,14 +10,68 @@
 
 #import "GAService.h"
 
-#import "SynthesizeSingleton.h"
+#import "GAConfigFieldManager.h"
+
+@interface GAService ()
+
+- (NSString *)serviceWorkDirectory;
+
+@end
+
 
 @implementation GAService
 
-@synthesize delegate;
+@synthesize statusChangedHandler;
 @synthesize outputTextView;
 
-SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
+static NSMutableDictionary *sharedContainer = nil;
+
++ (void)initialize {
+    if (self == [GAService class]) {
+        sharedContainer = [NSMutableDictionary new];
+    }
+}
+
+
++ (id)sharedService {
+    NSString *key = NSStringFromClass(self);
+    
+	@synchronized(self) {
+		if ([sharedContainer objectForKey:key] == nil) {
+            [sharedContainer setObject:[[self alloc] init] forKey:key];
+		}
+	}
+    
+	return [sharedContainer objectForKey:key];
+}
+
+
++ (id)allocWithZone:(NSZone *)zone {
+	@synchronized(self) {
+        NSString *key = NSStringFromClass(self);
+		if ([sharedContainer objectForKey:key] == nil) {
+            [sharedContainer setObject:[super allocWithZone:zone] forKey:key];
+            return [sharedContainer objectForKey:key];
+		}
+	}
+    
+	return nil;
+}
+
+
+- (id)copyWithZone:(NSZone *)zone {
+	return self;
+}
+
+
+- (id)init {
+    if (self = [super init]) {
+        previousDeviceProxies = [NSMutableDictionary new];
+    }
+    
+    return self;
+}
+
 
 - (BOOL)hasConfigured {
     NOT_IMPL
@@ -34,9 +88,23 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
 }
 
 
+- (int)proxyPort {
+    return 0;
+}
+
+
+- (NSString *)proxySetting {
+    return nil;
+}
+
+
 - (void)notifyStatusChanged {
-    if ([self.delegate conformsToProtocol:@protocol(GAServiceDelegate)]) {
-        [self.delegate serviceStatusChanged:self];
+    if ([self proxySetting] != nil) {
+        [self toggleSystemProxy:[self isRunning]];
+    }
+
+    if (statusChangedHandler) {
+        statusChangedHandler(self);
     }
 }
 
@@ -47,6 +115,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
     }
     
     commandRunner.outputTextView = self.outputTextView;
+    commandRunner.workDirectory = [self serviceWorkDirectory];
     
     __block id _self = self;
     commandRunner.terminationHandler = ^(NSTask *task) {
@@ -61,16 +130,33 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
 
 
 - (void)start {
+    if (![self hasConfigured]) {
+        NSAlert *alert = [NSAlert alertWithMessageText:@"请进行服务配置"
+                                         defaultButton:nil
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:@""];
+        [alert runModal];
+        return;
+    }
+    
     if (![commandRunner isTaskRunning]) {
+        [self.outputTextView appendString:@"正在启动...\n"];
+        
         // 关闭可能的上次运行的进程
         NSInteger lastRunPID = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:LastRunPID"];
-        if (lastRunPID > 0) {
+        if (lastRunPID > 0 && kill((int)lastRunPID, 0) == 0) {
             kill((int)lastRunPID, 9);
         }
         
         [self setupWorkDirectory];
         [self setupCommandRunner];
         [commandRunner run];
+        
+        [self.outputTextView appendString:@"启动完成\n"];
+        [[NSUserDefaults standardUserDefaults] setInteger:[commandRunner processId] forKey:@"GoAgent:LastRunPID"];
+        
+        [self notifyStatusChanged];
     }
 }
 
@@ -86,6 +172,11 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
 
 - (NSString *)serviceName {
     NOT_IMPL
+}
+
+
+- (NSString *)configValueForKey:(NSString *)key {
+    return [[GAConfigFieldManager sharedManager] configValueForKey:key ofService:[self serviceName]];
 }
 
 
@@ -117,6 +208,10 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
 
 
 - (void)writeConfigFile {
+    if ([self configPath] == nil) {
+        return;
+    }
+    
     NSDictionary *defaults = [self defaultsSettings];
     NSDictionary *valuesMap = [self defaultsValueMap];
     
@@ -124,15 +219,15 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
     NSString *configContent = [self configTemplate];
     
     for (NSString *key in [defaults allKeys]) {
-        NSObject *value = [userDefaults stringForKey:key] ?: @"";
+        NSString *value = [userDefaults stringForKey:key] ?: @"";
         NSArray *valueMap = [valuesMap objectForKey:key];
         
-        if ([value isKindOfClass:[NSNumber class]] && valuesMap != nil) {
-            value = [valueMap objectAtIndex:[(NSNumber *)value intValue]];
+        if (valueMap != nil) {
+            value = [valueMap objectAtIndex:[value intValue]];
         }
         
         configContent = [configContent stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"{%@}", key]
-                                                                 withString:[value description]];
+                                                                 withString:value ?: @""];
     }
     
     NSString *path = [[self serviceWorkDirectory] stringByAppendingPathComponent:[self configPath]];
@@ -164,7 +259,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
 //! 修改代理设置的字典
 - (void)modifyPrefProxiesDictionary:(NSMutableDictionary *)proxies withProxyEnabled:(BOOL)enabled {
     if (enabled) {
-        NSInteger proxyPort = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
+        NSInteger proxyPort = [self proxyPort];
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
@@ -188,6 +283,13 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAService, Service)
 
 
 - (void)toggleSystemProxy:(BOOL)useProxy {
+    // 如果没有设置自动切换系统代理设置，直接返回
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
+        return;
+    }
+    
+    NSLog(@"Toggle system proxy %@", useProxy ? @"YES" : @"NO");
+    
     SCPreferencesRef prefRef;// = SCPreferencesCreate(kCFAllocatorSystemDefault, CFSTR("test"), NULL);
     
     AuthorizationRef auth = nil;

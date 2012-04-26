@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 890DBFC61549002D009FF77F /* GAGoAgentServerService.m */; };
+		894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894107FA1549179D0045DA38 /* GoAgentXServices.plist */; };
+		8941781B15495FFB00E1819C /* GAConfigFieldManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8941781A15495FFB00E1819C /* GAConfigFieldManager.m */; };
 		894E09D01541642200343BC6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D31541655F00343BC6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 894E09D21541655F00343BC6 /* dsa_pub.pem */; };
@@ -40,7 +43,7 @@
 		8996158415468A0C002DE998 /* GAWestChamberService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8996158315468A0C002DE998 /* GAWestChamberService.m */; };
 		8996158A1546EC97002DE998 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 899615891546EC97002DE998 /* www */; };
 		8996158D1546EF73002DE998 /* west-chamber-config-template in Resources */ = {isa = PBXBuildFile; fileRef = 8996158C1546EF73002DE998 /* west-chamber-config-template */; };
-		8996158F1546F43E002DE998 /* GoAgnetXDefaultsValueMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8996158E1546F43E002DE998 /* GoAgnetXDefaultsValueMap.plist */; };
+		8996158F1546F43E002DE998 /* GoAgentXDefaultsValueMap.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8996158E1546F43E002DE998 /* GoAgentXDefaultsValueMap.plist */; };
 		899615981547A7CB002DE998 /* goagent in Resources */ = {isa = PBXBuildFile; fileRef = 899615961547A7CB002DE998 /* goagent */; };
 		899615991547A7CB002DE998 /* goagent-server in Resources */ = {isa = PBXBuildFile; fileRef = 899615971547A7CB002DE998 /* goagent-server */; };
 		89B72C5E14E8DF9D0027DC19 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89B72C5D14E8DF9D0027DC19 /* Cocoa.framework */; };
@@ -76,6 +79,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		890DBFC51549002D009FF77F /* GAGoAgentServerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAGoAgentServerService.h; sourceTree = "<group>"; };
+		890DBFC61549002D009FF77F /* GAGoAgentServerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAGoAgentServerService.m; sourceTree = "<group>"; };
+		894107FA1549179D0045DA38 /* GoAgentXServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentXServices.plist; sourceTree = "<group>"; };
+		8941781915495FFB00E1819C /* GAConfigFieldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAConfigFieldManager.h; sourceTree = "<group>"; };
+		8941781A15495FFB00E1819C /* GAConfigFieldManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAConfigFieldManager.m; sourceTree = "<group>"; };
 		894E09CC154163BC00343BC6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		894E09D21541655F00343BC6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		8963E33D14ED4A01008587B7 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
@@ -137,7 +145,7 @@
 		8996158315468A0C002DE998 /* GAWestChamberService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAWestChamberService.m; sourceTree = "<group>"; };
 		899615891546EC97002DE998 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		8996158C1546EF73002DE998 /* west-chamber-config-template */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west-chamber-config-template"; sourceTree = "<group>"; };
-		8996158E1546F43E002DE998 /* GoAgnetXDefaultsValueMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgnetXDefaultsValueMap.plist; sourceTree = "<group>"; };
+		8996158E1546F43E002DE998 /* GoAgentXDefaultsValueMap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentXDefaultsValueMap.plist; sourceTree = "<group>"; };
 		8996159015479CA8002DE998 /* SynthesizeSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SynthesizeSingleton.h; sourceTree = "<group>"; };
 		899615961547A7CB002DE998 /* goagent */ = {isa = PBXFileReference; lastKnownFileType = folder; path = goagent; sourceTree = "<group>"; };
 		899615971547A7CB002DE998 /* goagent-server */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "goagent-server"; sourceTree = "<group>"; };
@@ -307,6 +315,8 @@
 				89961580154689FE002DE998 /* GAGoAgentService.m */,
 				8996158215468A0C002DE998 /* GAWestChamberService.h */,
 				8996158315468A0C002DE998 /* GAWestChamberService.m */,
+				890DBFC51549002D009FF77F /* GAGoAgentServerService.h */,
+				890DBFC61549002D009FF77F /* GAGoAgentServerService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -318,6 +328,8 @@
 				89B72CF014E931CE0027DC19 /* GAAutoscrollTextView.m */,
 				89B72CF214E934CF0027DC19 /* GACommandRunner.h */,
 				89B72CF314E934CF0027DC19 /* GACommandRunner.m */,
+				8941781915495FFB00E1819C /* GAConfigFieldManager.h */,
+				8941781A15495FFB00E1819C /* GAConfigFieldManager.m */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -370,7 +382,8 @@
 				8996157E154689BA002DE998 /* Components */,
 				8996157D154689AC002DE998 /* Services */,
 				89B72D4514E956340027DC19 /* GoAgentXDefaultsSettings.plist */,
-				8996158E1546F43E002DE998 /* GoAgnetXDefaultsValueMap.plist */,
+				8996158E1546F43E002DE998 /* GoAgentXDefaultsValueMap.plist */,
+				894107FA1549179D0045DA38 /* GoAgentXServices.plist */,
 				89B72C6F14E8DF9D0027DC19 /* GAAppDelegate.h */,
 				89B72C7014E8DF9D0027DC19 /* GAAppDelegate.m */,
 				89B72C7214E8DF9D0027DC19 /* MainMenu.xib */,
@@ -477,9 +490,10 @@
 				899615751545B050002DE998 /* README.txt in Resources */,
 				8996158A1546EC97002DE998 /* www in Resources */,
 				8996158D1546EF73002DE998 /* west-chamber-config-template in Resources */,
-				8996158F1546F43E002DE998 /* GoAgnetXDefaultsValueMap.plist in Resources */,
+				8996158F1546F43E002DE998 /* GoAgentXDefaultsValueMap.plist in Resources */,
 				899615981547A7CB002DE998 /* goagent in Resources */,
 				899615991547A7CB002DE998 /* goagent-server in Resources */,
+				894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -519,6 +533,8 @@
 				8996157C15468981002DE998 /* GAService.m in Sources */,
 				89961581154689FE002DE998 /* GAGoAgentService.m in Sources */,
 				8996158415468A0C002DE998 /* GAWestChamberService.m in Sources */,
+				890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */,
+				8941781B15495FFB00E1819C /* GAConfigFieldManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

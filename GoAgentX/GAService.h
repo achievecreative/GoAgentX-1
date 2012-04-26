@@ -12,12 +12,7 @@
 
 @class GAService;
 
-
-@protocol GAServiceDelegate <NSObject>
-
-- (void)serviceStatusChanged:(GAService *)service;
-
-@end
+typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 
 @interface GAService : NSObject {
@@ -25,6 +20,7 @@
     
     GACommandRunner         *commandRunner;
     GAAutoscrollTextView    *outputTextView;
+    GAServiceStatusChangedHandler   statusChangedHandler;
 }
 
 + (id)sharedService;
@@ -35,7 +31,19 @@
 
 - (NSString *)configPath;
 
+- (NSString *)configValueForKey:(NSString *)key;
+
 - (void)writeConfigFile;
+
+- (NSString *)serviceName;
+
+- (NSString *)serviceWorkDirectory;
+
+- (int)proxyPort;
+
+- (NSString *)proxySetting;
+
+- (void)notifyStatusChanged;
 
 - (void)setupWorkDirectory;
 
@@ -49,7 +57,7 @@
 
 - (void)stop;
 
-@property (nonatomic, assign)   id<GAServiceDelegate>       delegate;
 @property (nonatomic, strong)   GAAutoscrollTextView        *outputTextView;
+@property (nonatomic, copy)     GAServiceStatusChangedHandler   statusChangedHandler;
 
 @end

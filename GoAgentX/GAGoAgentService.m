@@ -32,6 +32,16 @@
 }
 
 
+- (int)proxyPort {
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
+}
+
+
+- (NSString *)proxySetting {
+    return [NSString stringWithFormat:@"PROXY 127.0.0.1:%d", [self proxyPort]];
+}
+
+
 - (void)setupCommandRunner {
     [super setupCommandRunner];
     
