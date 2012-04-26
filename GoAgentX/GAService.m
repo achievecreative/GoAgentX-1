@@ -11,6 +11,7 @@
 #import "GAService.h"
 
 #import "GAConfigFieldManager.h"
+#import "GAPACHTTPServer.h"
 
 @interface GAService ()
 
@@ -264,7 +265,7 @@ static NSMutableDictionary *sharedContainer = nil;
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
-        NSString *pacFile = useCustomePAC ? customPAC : @"http://127.0.0.1:8089/goagent.pac";
+        NSString *pacFile = useCustomePAC ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
         
         if (usePAC) {
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];

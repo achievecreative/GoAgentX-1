@@ -51,7 +51,6 @@
     statusBarItem.image = [NSImage imageNamed:@"status_item_icon"];
     statusBarItem.alternateImage = [NSImage imageNamed:@"status_item_icon_alt"];
     statusBarItem.menu = statusBarItemMenu;
-    statusBarItem.toolTip = @"GoAgent is NOT Running";
     [statusBarItem setHighlightMode:YES];
 }
 
