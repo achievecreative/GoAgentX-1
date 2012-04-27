@@ -3,7 +3,7 @@
 # Based on GAppProxy 2.0.0 by Du XiaoGang <dugang@188.com>
 # Based on WallProxy 0.4.0 by hexieshe <www.ehust@gmail.com>
 
-__version__ = '1.8.3'
+__version__ = '1.8.4'
 __author__  = "{phus.lu,hewigovens}@gmail.com (Phus Lu and Hewig Xu)"
 __config__  = 'proxy.ini'
 
@@ -522,10 +522,12 @@ class CertUtil(object):
             if not OpenSSL:
                 logging.critical('CA.crt is not exist and OpenSSL is disabled, ABORT!')
                 sys.exit(-1)
+            if os.name == 'nt':
+                os.system('certmgr.exe -del -n "GoAgent CA" -c -s -r localMachine Root')
+            [os.remove(os.path.join('certs', x)) for x in os.listdir('certs')]
             key, crt = CertUtil.makeCA()
             CertUtil.writeFile(keyFile, key)
             CertUtil.writeFile(crtFile, crt)
-            [os.remove(os.path.join('certs', x)) for x in os.listdir('certs')]
         #Check CA imported
         cmd = {
                 'win32'  : r'cd /d "%s" && certmgr.exe -add CA.crt -c -s -r localMachine Root >NUL' % os.path.dirname(__file__),
@@ -723,8 +725,8 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def handle_fetch_error(self, error):
         logging.info('handle_fetch_error self.path=%r', self.path)
         if isinstance(error, urllib2.HTTPError):
-            # http error 502/504, swith to https
-            if error.code == 504 or (error.code==502 and common.GAE_PROFILE=='google_cn'):
+            # http error 400/502/504, swith to https
+            if error.code in (400, 504) or (error.code==502 and common.GAE_PROFILE=='google_cn'):
                 common.GOOGLE_MODE = 'https'
                 logging.error('GAE Error(%s) switch to https', error)
             # seems that current appid is overqouta, swith to next appid
@@ -1162,16 +1164,18 @@ class LocalPacHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             proxy = 'PROXY %s:%d' % (socket.gethostbyname(socket.gethostname()), common.LISTEN_PORT)
         else:
             proxy = 'PROXY %s:%d' % (common.LISTEN_IP, common.LISTEN_PORT)
-        PAC_TEMPLATE = '''
+        PAC_TEMPLATE = '''\
             //inspired from https://github.com/Leask/Flora_Pac
             function FindProxyForURL(url, host)
             {
                 if (false %s) {
                     return 'DIRECT';
                 }
-
-                var lists = %s;
                 var ip = dnsResolve(host);
+                if (ip == null) {
+                    return '%s';
+                }
+                var lists = %s;
                 var index  = parseInt(ip.split('.', 1)[0], 10);
                 var list = lists[index];
                 for (var i in list) {
@@ -1182,7 +1186,7 @@ class LocalPacHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 return '%s';
             }'''
         directs = '||'.join(['dnsDomainIs(host, "%s")' % x for x in common.PAC_DIRECTS]) if common.PAC_DIRECTS else ''
-        return PAC_TEMPLATE % (directs, repr(cndataslist), proxy)
+        return PAC_TEMPLATE % (directs, proxy, repr(cndataslist), proxy)
 
     def do_GET(self):
         filename = os.path.join(os.path.dirname(__file__), common.PAC_FILE)
