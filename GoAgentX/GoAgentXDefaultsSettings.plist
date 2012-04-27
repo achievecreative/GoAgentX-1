@@ -29,7 +29,7 @@
 	<key>GoAgent:Local:CrlfEnabled</key>
 	<false/>
 	<key>GoAgent:AutoToggleSystemProxyWithPAC</key>
-	<false/>
+	<true/>
 	<key>GoAgent:UseCustomPACAddress</key>
 	<false/>
 	<key>GoAgent:CustomPACAddress</key>
