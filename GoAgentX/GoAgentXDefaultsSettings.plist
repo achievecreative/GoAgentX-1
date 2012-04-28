@@ -34,13 +34,15 @@
 	<false/>
 	<key>GoAgent:CustomPACAddress</key>
 	<string></string>
-	<key>WestChamber:ProxyServer</key>
-	<string>annjonescnch</string>
+	<key>WestChamber:GoAgentProxyServer</key>
+	<string>goagent-hrd.appspot.com</string>
 	<key>WestChamber:RemoteDNS</key>
-	<string>202.14.67.4</string>
+	<string>168.95.1.1</string>
 	<key>WestChamber:LocalPort</key>
 	<integer>1989</integer>
 	<key>GoAgentX:SelectedService</key>
 	<string>GAGoAgentService</string>
+	<key>WestChamber:GoAgentProxyPassword</key>
+	<string></string>
 </dict>
 </plist>

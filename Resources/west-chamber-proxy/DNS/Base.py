@@ -35,6 +35,19 @@ defaults= { 'protocol':'udp', 'port':53, 'opcode':Opcode.QUERY,
             'server_rotate': 0 }
 
 defaults['server']=[]
+defaults["blackholes"] = [
+    '243.185.187.30', 
+    '243.185.187.39', 
+    '46.82.174.68', 
+    '78.16.49.15', 
+    '93.46.8.89', 
+    '37.61.54.158', 
+    '159.24.3.173', 
+    '203.98.7.65', 
+    '8.7.198.45', 
+    '159.106.121.75', 
+    '59.24.3.173'
+]
 
 def ParseResolvConf(resolv_path="/etc/resolv.conf"):
     "parses the /etc/resolv.conf file and sets defaults for name servers"
@@ -251,7 +264,10 @@ class DnsRequest:
                         # but do make sure it's actually a DNS request that the
                         # packet is in reply to.
                         while r.header['id'] != self.tid        \
-                                or self.from_address[1] != self.port:
+                                or self.from_address[1] != self.port \
+                                or ( len(r.answers)==0 and len(r.authority)==0) \
+                                or ( len(r.answers)==1 and r.answers[0]["data"] in defaults["blackholes"] )   :
+                            print "ignored answers: " + str(r.answers)
                             r=self.processUDPReply()
                         self.response = r
                         # FIXME: check waiting async queries
