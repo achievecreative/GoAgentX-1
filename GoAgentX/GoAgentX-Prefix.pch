@@ -5,7 +5,9 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
     #import <SystemConfiguration/SystemConfiguration.h>
+    #import "NSData+Base64.h"
 #endif
 
+#import "SynthesizeSingleton.h"
 
 #define CF_RELEASE(var) { if (var != nil) CFRelease(var); }
