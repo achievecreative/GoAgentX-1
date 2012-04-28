@@ -6,6 +6,19 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.1.0</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.1.0 Changelog</h2>
+                <ul>
+                    <li>[NEW] [NEW] 集成 goagent 1.8.4，不再需要单独下载</li>
+                    <li>[NEW] 集成 west-chamber-season-3 20120428</li>
+                    <li>[NEW] 集成 PAC 支持</li>
+                </ul>
+            ]]></description>
+            <pubDate>Sat, 28 Apr 2012 20:41:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.1.0.dmg" sparkle:shortVersionString="1.1.0" sparkle:version="8" length="2368297" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCx1IlclmXX3Axubfr5Rq+mRml/dgIUQn+v+VJBj/g3KZvFqRedJEhQ1tQ=" />
+         </item>
+         <item>
             <title>GoAgentX v1.0.5</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.0.5 Changelog</h2>
