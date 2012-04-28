@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>GoAgent:Local:GAEProfile</key>
+	<array>
+		<string>google_cn</string>
+		<string>google_hk</string>
+		<string>google_ipv6</string>
+	</array>
+	<key>GoAgent:Local:ConnectMode</key>
+	<array>
+		<string>HTTP</string>
+		<string>HTTPS</string>
+	</array>
+</dict>
+</plist>

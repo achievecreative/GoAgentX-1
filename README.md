@@ -1,34 +1,42 @@
 # GoAgentX
 
-GoAgentX 是一个 goagent 在 Mac OS X 下的图形界面控制软件，方便一般用户在 Mac OS X 上部署、配置和使用 goagent。
+GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件，方便一般用户在 Mac OS X 上部署、配置和使用 goagent 和 west-chamber-season-3。
 
 关于 goagent 的介绍请参见 <http://code.google.com/p/goagent/>。
 
+关于 west-chamber-season-3 请参见 <https://github.com/liruqi/west-chamber-season-3>。
+
 ## 功能
 
-* 部署 goagent 服务端到 App Engine
-* 自动设置系统 HTTP 代理或者 PAC 设置（PAC 支持需要 goagent 1.8.0 以上版本）
+* 支持 goagent，west-chamber-season-3
+* 支持部署 goagent 服务端到 App Engine
+* 自动设置系统 HTTP 代理或者 PAC 设置
+* 集成 goagent 1.8.4 与 west-chamber-season-3 20120428
 * 图形化界面设置客户端连接参数
-* MenuBar 图标，直接控制连接状态
-* 启动时自动连接 goagent
+* 菜单栏图标，直接控制连接状态
+* 用户登录时自动启动代理服务
 
 ## 要求
 
 * Mac OS X 10.6 及以上版本系统
 * 支持 64 位的 Intel CPU
 
-## 如何使用
+## 如何使用 goagent
 
 1. 申请 Google App Engine 并创建 appid
-1. 前往 [goagent 主页](http://code.google.com/p/goagent/) 下载 [goagent v1.8.0 稳定版](http://goo.gl/pTt0W)
 1. 下载 GoAgentX <https://github.com/ohdarling/GoAgentX/downloads>
-1. 运行 GoAgentX，根据提示安装 goagent
-1. 进入 GoAgentX 服务端部署标签，填写相关信息后，点部署来部署 goagent 到 App Engine
-1. 进入 GoAgentX 客户端设置标签，填写之前申请的 App Engine appid 以及服务密码，并根据实际情况选择连接方式和服务器
-1. 进入 GoAgentX 状态标签，点击启动，如果显示启动成功则可以开始使用
-1. 剩余使用方式步骤请参见 [goagent 简易教程](http://code.google.com/p/goagent/#简易教程)
+1. 进入 GoAgentX 服务设置标签，选择“goagent 服务端”，填写相关信息后，进入状态标签页点击启动来部署 goagent 到 App Engine
+1. 进入 GoAgentX 服务设置标签，选择“goagent”，填写之前申请的 App Engine appid 以及服务密码，并根据实际情况选择连接方式和服务器
+1. 进入 GoAgentX 状态标签，选择服务为 goagent，点击启动，如果显示启动成功则可以开始使用
+
+
+其他相关情况请参见 [goagent 简易教程](http://code.google.com/p/goagent/#简易教程)
 
 如果需要 GoAgentX 在用户登录时自动运行，可在“其他设置”中勾选“在用户登录时自动启动 GoAgentX”。
+
+## 如何使用西厢
+
+进入状态标签页，选择服务为“西厢第3季”，点击启动即可。
 
 ## 程序截图
 
@@ -52,6 +60,8 @@ GoAgentX 是一个 goagent 在 Mac OS X 下的图形界面控制软件，方便�
 
 * [goagent](http://code.google.com/p/goagent/)
 * [Google App Engine](https://appengine.google.com/)
+* [west-chamber-season-3](https://github.com/liruqi/west-chamber-season-3)
+* [CocoaHTTPServer](https://github.com/robbiehanson/CocoaHTTPServer)
 
 ## 关于
 
@@ -85,3 +95,4 @@ GoAgentX 代码使用 BSD-2 许可证，此外不允许将软件以完整二进�
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+goagent 使用 [GNU GPL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html) 协议。

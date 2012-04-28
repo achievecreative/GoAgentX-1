@@ -12,6 +12,13 @@
 
 @implementation GACommandRunner
 
+@synthesize workDirectory = _workDirectory;
+@synthesize commandPath = _commandPath;
+@synthesize arguments = _arguments;
+@synthesize inputText = _inputText;
+@synthesize outputTextView = _outputTextView;
+@synthesize terminationHandler = _terminationHandler;
+
 - (id)init {
     if (self = [super init]) {
     }
@@ -28,6 +35,7 @@
 - (void)terminateTask {
     if (task && [task isRunning]) {
         [task terminate];
+        [task waitUntilExit];
     }
 }
 
@@ -45,23 +53,17 @@
 }
 
 
-- (void)runCommand:(NSString *)path
-  currentDirectory:(NSString *)curDir
-         arguments:(NSArray *)arguments
-         inputText:(NSString *)inputText
-    outputTextView:(GAAutoscrollTextView *)textView
-terminationHandler:(void (^)(NSTask *))terminationHandler {
-    
+- (void)run {
     [self terminateTask];
     
     task = [NSTask new];
-    [task setCurrentDirectoryPath:curDir];
-    [task setLaunchPath:path];
-    [task setArguments:arguments];
+    [task setCurrentDirectoryPath:self.workDirectory];
+    [task setLaunchPath:self.commandPath];
+    [task setArguments:self.arguments];
     
-    if (inputText) {
+    if (self.inputText) {
         NSPipe *pipe = [NSPipe new];
-        [[pipe fileHandleForWriting] writeData:[inputText dataUsingEncoding:NSUTF8StringEncoding]];
+        [[pipe fileHandleForWriting] writeData:[self.inputText dataUsingEncoding:NSUTF8StringEncoding]];
         NSFileHandle *inputHandle = [pipe fileHandleForReading];
         [task setStandardInput:inputHandle];
     }
@@ -71,6 +73,8 @@ terminationHandler:(void (^)(NSTask *))terminationHandler {
     [task setStandardError:outputPipe];
     
     NSFileHandle *outputReadHandle = [outputPipe fileHandleForReading];
+    
+    __block GACommandRunner *_self = self;
     
     [[NSNotificationCenter defaultCenter] removeObserver:fileReadCompletionNotificationHandle];
     [[NSNotificationCenter defaultCenter] removeObserver:runnerTerminationNotificationHandle];
@@ -84,29 +88,50 @@ terminationHandler:(void (^)(NSTask *))terminationHandler {
                                                 NSData *data = [note.userInfo objectForKey:NSFileHandleNotificationDataItem];
                                                 if ([data length] > 0) {
                                                     NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                                                    [textView appendString:str];
+                                                    [self.outputTextView appendString:str];
                                                     [outputReadHandle readInBackgroundAndNotify];
                                                 } 
                                             }];
     
     [outputReadHandle readInBackgroundAndNotify];
     
+    __block id _task = task;
+    
     runnerTerminationNotificationHandle = [[NSNotificationCenter defaultCenter]
                                            addObserverForName:GACommandRunnerTaskTerminatedNotification
                                            object:self
                                            queue:[NSOperationQueue mainQueue]
                                            usingBlock:^(NSNotification *note) {
-                                               
                                                [outputReadHandle closeFile];
-                                               [textView appendString:@"\n"];
+                                               [_self.outputTextView appendString:@"\n"];
                                                
-                                               terminationHandler(task);
+                                               if (_self.terminationHandler) {
+                                                   _self.terminationHandler(_task);
+                                               }
                                            }];
     
     [task launch];
     
     // 新启线程来等待进程结束
     [NSThread detachNewThreadSelector:@selector(waitTaskUntilDone:) toTarget:self withObject:self];
+}
+
+
+- (void)runCommand:(NSString *)path
+  currentDirectory:(NSString *)curDir
+         arguments:(NSArray *)arguments
+         inputText:(NSString *)inputText
+    outputTextView:(GAAutoscrollTextView *)textView
+terminationHandler:(GACommandRunnerTerminationHandler)terminationHandler {
+    
+    self.commandPath = path;
+    self.workDirectory = curDir;
+    self.arguments = arguments;
+    self.inputText = inputText;
+    self.outputTextView = textView;
+    self.terminationHandler = terminationHandler;
+    
+    [self run];
 }
 
 

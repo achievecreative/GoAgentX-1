@@ -1,3 +1,12 @@
+## GoAgentX v1.1.0
+
+* [NEW] 集成 goagent 1.8.4，不再需要单独下载
+* [NEW] 集成 west-chamber-season-3 20120428
+* [NEW] 集成 PAC 支持
+
+*Released on 2012.04.28*
+
+
 ## GoAgentX v1.0.5
 
 * [NEW] 兼容 goagent 1.8.3
