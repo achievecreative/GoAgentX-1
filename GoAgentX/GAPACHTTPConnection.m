@@ -26,12 +26,15 @@
 	}
 	
 	NSString *relativePath = [filePath substringFromIndex:[documentRoot length]];
-	
+    
 	if ([relativePath isEqualToString:@"/proxy.pac"]) {
         NSString *pacTemplate = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pactemplate" ofType:@"pac"] encoding:NSUTF8StringEncoding error:NULL];
         pacTemplate = [[NSString alloc] initWithData:[NSData dataFromBase64String:pacTemplate] encoding:NSUTF8StringEncoding];
         
-        NSString *query = [[path substringFromIndex:[@"/proxy.pac?" length]] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *query = [path substringFromIndex:[@"/proxy.pac?" length]];
+        query = [query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        query = [query stringByReplacingOccurrencesOfString:@"/" withString:@" "];
+        
         NSString *pacContent = [pacTemplate stringByReplacingOccurrencesOfString:@"PROXY 127.0.0.1:65536" withString:query];
         
         NSMutableDictionary *replacementDict = [NSMutableDictionary dictionaryWithObject:pacContent forKey:@"PAC_CONTENT"];
