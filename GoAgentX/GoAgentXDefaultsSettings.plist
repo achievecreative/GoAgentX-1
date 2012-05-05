@@ -44,5 +44,11 @@
 	<string>GAGoAgentService</string>
 	<key>WestChamber:GoAgentProxyPassword</key>
 	<string></string>
+	<key>SSH:RemotePort</key>
+	<string>22</string>
+	<key>SSH:LocalPort</key>
+	<integer>7070</integer>
+	<key>SSH:UsePublicKeyForLogin</key>
+	<false/>
 </dict>
 </plist>

@@ -5,5 +5,6 @@
 	<string>GAGoAgentService</string>
 	<string>GAGoAgentServerService</string>
 	<string>GAWestChamberService</string>
+	<string>GASSHService</string>
 </array>
 </plist>
