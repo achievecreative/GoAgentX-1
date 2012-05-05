@@ -32,6 +32,11 @@
 }
 
 
+- (NSString *)serviceTitle {
+    return @"西厢第3季";
+}
+
+
 - (int)proxyPort {
     return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"WestChamber:LocalPort"];
 }

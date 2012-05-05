@@ -89,6 +89,11 @@ static NSMutableDictionary *sharedContainer = nil;
 }
 
 
+- (NSString *)serviceTitle {
+    NOT_IMPL
+}
+
+
 - (int)proxyPort {
     return 0;
 }
@@ -100,7 +105,8 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)notifyStatusChanged {
-    if ([self proxySetting] != nil) {
+    // 如果有设置自动切换系统代理设置，切换系统代理设置
+    if ([self proxySetting] != nil && [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
         [self toggleSystemProxy:[self isRunning]];
     }
 
@@ -267,12 +273,13 @@ static NSMutableDictionary *sharedContainer = nil;
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
         NSString *pacFile = useCustomePAC ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
         
+        [proxies setObject:[NSNumber numberWithInt:usePAC ? 1 : 0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+        [proxies setObject:[NSNumber numberWithInt:usePAC ? 0 : 1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+        
         if (usePAC) {
-            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
             [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             
         } else {
-            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
         }
@@ -285,12 +292,8 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)toggleSystemProxy:(BOOL)useProxy {
-    // 如果没有设置自动切换系统代理设置，直接返回
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
-        return;
-    }
-    
-    NSLog(@"Toggle system proxy %@", useProxy ? @"YES" : @"NO");
+    BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
+    NSLog(@"Toggle system proxy %@ with PAC %@", useProxy ? @"YES" : @"NO", usePAC ? @"YES" : @"NO");
     
     SCPreferencesRef prefRef;// = SCPreferencesCreate(kCFAllocatorSystemDefault, CFSTR("test"), NULL);
     

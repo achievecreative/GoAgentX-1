@@ -20,6 +20,11 @@
 }
 
 
+- (NSString *)serviceTitle {
+    return @"goagent 服务端部署";
+}
+
+
 - (NSString *)configPath {
     return nil;
 }

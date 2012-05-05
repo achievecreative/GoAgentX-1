@@ -32,6 +32,11 @@
 }
 
 
+- (NSString *)serviceTitle {
+    return @"goagent";
+}
+
+
 - (int)proxyPort {
     return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
 }

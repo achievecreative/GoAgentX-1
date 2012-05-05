@@ -15,15 +15,16 @@
 @interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
     NSStatusItem        *statusBarItem;
     
-    NSArray             *servicesList;
+    NSMutableArray      *servicesList;
     GAService           *proxyService;
     
     GAPACHTTPServer     *pacServer;
     
-    IBOutlet NSMenu     *statusBarItemMenu;
-    IBOutlet NSMenuItem *statusMenuItem;
+    IBOutlet NSMenu                 *statusBarItemMenu;
+    IBOutlet NSMenuItem             *statusMenuItem;
     
     IBOutlet NSPopUpButton          *servicesListPopButton;
+    IBOutlet NSMenu                 *servicesListMenu;
     IBOutlet NSTabView              *servicesConfigTabView;
     
     // 状态
@@ -39,7 +40,9 @@
 - (IBAction)showHelp:(id)sender;
 - (IBAction)showAbout:(id)sender;
 
+- (IBAction)selectedServiceChanged:(id)sender;
 - (IBAction)toggleServiceStatus:(id)sender;
+- (IBAction)togglePACSetting:(id)sender;
 - (IBAction)clearStatusLog:(id)sender;
 
 

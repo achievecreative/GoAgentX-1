@@ -626,7 +626,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<int key="NSvFlags">265</int>
 												<string key="NSFrame">{{361, 276}, {82, 32}}</string>
 												<reference key="NSSuperview" ref="132769909"/>
-												<reference key="NSNextKeyView" ref="188257455"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:687</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="1063828481">
@@ -697,7 +697,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<int key="NSvFlags">12</int>
 												<string key="NSFrameSize">{454, 339}</string>
 												<reference key="NSSuperview" ref="854588309"/>
-												<reference key="NSNextKeyView" ref="527241600"/>
 												<string key="NSReuseIdentifierKey">_NS:608</string>
 												<array class="NSMutableArray" key="NSTabViewItems">
 													<object class="NSTabViewItem" id="1064764408">
@@ -999,7 +998,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">266</int>
 																	<string key="NSFrame">{{108, 16}, {319, 22}}</string>
 																	<reference key="NSSuperview" ref="1046457737"/>
-																	<reference key="NSNextKeyView"/>
 																	<string key="NSReuseIdentifierKey">_NS:903</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSTextFieldCell" key="NSCell" id="173129711">
@@ -1360,7 +1358,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 119}, {426, 57}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSNextKeyView"/>
 																	<string key="NSReuseIdentifierKey">_NS:360</string>
 																	<string key="NSAntiCompressionPriority">{250, 750}</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1555,7 +1552,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 84}, {426, 85}}</string>
 																	<reference key="NSSuperview" ref="527241600"/>
-																	<reference key="NSNextKeyView"/>
 																	<string key="NSReuseIdentifierKey">_NS:9</string>
 																	<string key="NSAntiCompressionPriority">{250, 750}</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1882,6 +1878,28 @@ b0FnZW50WOKAnQ</string>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
 					</object>
+					<object class="NSMenuItem" id="337315345">
+						<reference key="NSMenu" ref="321136833"/>
+						<string key="NSTitle">切换服务</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+						<string key="NSAction">submenuAction:</string>
+						<object class="NSMenu" key="NSSubmenu" id="28163808">
+							<string key="NSTitle"/>
+							<array class="NSMutableArray" key="NSMenuItems"/>
+						</object>
+					</object>
+					<object class="NSMenuItem" id="709263140">
+						<reference key="NSMenu" ref="321136833"/>
+						<string key="NSTitle">使用“自动代理配置（PAC）”</string>
+						<string key="NSKeyEquiv"/>
+						<int key="NSMnemonicLoc">2147483647</int>
+						<int key="NSState">1</int>
+						<reference key="NSOnImage" ref="35465992"/>
+						<reference key="NSMixedImage" ref="502551668"/>
+					</object>
 					<object class="NSMenuItem" id="458164728">
 						<reference key="NSMenu" ref="321136833"/>
 						<bool key="NSIsDisabled">YES</bool>
@@ -2198,6 +2216,30 @@ b0FnZW50WOKAnQ</string>
 						<reference key="destination" ref="66625676"/>
 					</object>
 					<int key="connectionID">954</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectedServiceChanged:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="346263813"/>
+					</object>
+					<int key="connectionID">1009</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">servicesListMenu</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="28163808"/>
+					</object>
+					<int key="connectionID">1021</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">togglePACSetting:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="709263140"/>
+					</object>
+					<int key="connectionID">1022</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2575,6 +2617,22 @@ b0FnZW50WOKAnQ</string>
 					</object>
 					<int key="connectionID">1007</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.GoAgent:AutoToggleSystemProxyWithPAC</string>
+						<reference key="source" ref="709263140"/>
+						<reference key="destination" ref="643082621"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="709263140"/>
+							<reference key="NSDestination" ref="643082621"/>
+							<string key="NSLabel">value: values.GoAgent:AutoToggleSystemProxyWithPAC</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.GoAgent:AutoToggleSystemProxyWithPAC</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1020</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -2813,6 +2871,8 @@ b0FnZW50WOKAnQ</string>
 							<reference ref="458164728"/>
 							<reference ref="66625676"/>
 							<reference ref="123161389"/>
+							<reference ref="337315345"/>
+							<reference ref="709263140"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -3799,12 +3859,34 @@ b0FnZW50WOKAnQ</string>
 						<reference key="object" ref="694354835"/>
 						<reference key="parent" ref="305393405"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1010</int>
+						<reference key="object" ref="337315345"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="28163808"/>
+						</array>
+						<reference key="parent" ref="321136833"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1014</int>
+						<reference key="object" ref="28163808"/>
+						<array class="NSMutableArray" key="children"/>
+						<reference key="parent" ref="337315345"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1018</int>
+						<reference key="object" ref="709263140"/>
+						<reference key="parent" ref="321136833"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="-3.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1010.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1014.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1018.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4010,7 +4092,7 @@ b0FnZW50WOKAnQ</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1008</int>
+			<int key="maxID">1022</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4020,9 +4102,11 @@ b0FnZW50WOKAnQ</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="clearStatusLog:">id</string>
 						<string key="exitApplication:">id</string>
+						<string key="selectedServiceChanged:">id</string>
 						<string key="showAbout:">id</string>
 						<string key="showHelp:">id</string>
 						<string key="showMainWindow:">id</string>
+						<string key="togglePACSetting:">id</string>
 						<string key="toggleServiceStatus:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -4032,6 +4116,10 @@ b0FnZW50WOKAnQ</string>
 						</object>
 						<object class="IBActionInfo" key="exitApplication:">
 							<string key="name">exitApplication:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectedServiceChanged:">
+							<string key="name">selectedServiceChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showAbout:">
@@ -4046,6 +4134,10 @@ b0FnZW50WOKAnQ</string>
 							<string key="name">showMainWindow:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="togglePACSetting:">
+							<string key="name">togglePACSetting:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="toggleServiceStatus:">
 							<string key="name">toggleServiceStatus:</string>
 							<string key="candidateClassName">id</string>
@@ -4053,6 +4145,7 @@ b0FnZW50WOKAnQ</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="servicesConfigTabView">NSTabView</string>
+						<string key="servicesListMenu">NSMenu</string>
 						<string key="servicesListPopButton">NSPopUpButton</string>
 						<string key="statusBarItemMenu">NSMenu</string>
 						<string key="statusImageView">NSImageView</string>
@@ -4066,6 +4159,10 @@ b0FnZW50WOKAnQ</string>
 						<object class="IBToOneOutletInfo" key="servicesConfigTabView">
 							<string key="name">servicesConfigTabView</string>
 							<string key="candidateClassName">NSTabView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="servicesListMenu">
+							<string key="name">servicesListMenu</string>
+							<string key="candidateClassName">NSMenu</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="servicesListPopButton">
 							<string key="name">servicesListPopButton</string>

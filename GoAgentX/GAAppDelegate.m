@@ -34,11 +34,11 @@
         buttonTitle = @"启动";
     }
     
-    statusBarItem.toolTip = statusText;
     statusTextLabel.stringValue = statusText;
     statusImageView.image = statusImage;
-    statusMenuItem.title = statusText;
+    statusMenuItem.title = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
     statusMenuItem.image = statusImage;
+    statusBarItem.toolTip = statusMenuItem.title;
     statusToggleButton.title = buttonTitle;
 }
 
@@ -83,6 +83,30 @@
 #pragma mark -
 #pragma mark 运行状态
 
+- (void)refreshSystemProxySettings:(id)sender {
+    [proxyService toggleSystemProxy:YES];
+}
+
+
+- (void)togglePACSetting:(id)sender {
+    if ([proxyService isRunning]) {
+        [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
+    }
+}
+
+
+- (void)selectedServiceChanged:(id)sender {
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        [servicesListPopButton selectItemWithTitle:[sender title]];
+    }
+    
+    if ([proxyService isRunning]) {
+        [proxyService stop];
+        [self performSelector:@selector(toggleServiceStatus:) withObject:nil afterDelay:1.0];
+    }
+}
+
+
 - (void)toggleServiceStatus:(id)sender {
     if ([proxyService isRunning]) {
         [proxyService stop];
@@ -93,16 +117,8 @@
             return;
         }
         
-        NSString *className = [[servicesList objectAtIndex:index] objectForKey:@"ClassName"];
-        Class serviceCls = NSClassFromString(className);
-        
-        proxyService = [serviceCls sharedService];
-        __block id _self = self;
-        proxyService.outputTextView = statusLogTextView;
-        proxyService.statusChangedHandler = ^(GAService *service) {
-            [_self setStatusToRunning:[NSNumber numberWithBool:[service isRunning]]];
-        };
-        
+        proxyService = [servicesList objectAtIndex:index];
+        NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
     }
 }
@@ -125,12 +141,27 @@
 #pragma mark -
 #pragma mark App delegate
 
-- (void)setupServicesList {
-    servicesList = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoAgentXServices" ofType:@"plist"]];
+- (void)loadServicesList {
+    servicesList = [NSMutableArray new];
+    
+    NSArray *classList = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoAgentXServices" ofType:@"plist"]];
     
     [servicesListPopButton removeAllItems];
-    for (NSDictionary *service in servicesList) {
-        [servicesListPopButton addItemWithTitle:[service objectForKey:@"Title"]];
+    for (NSString *clsName in classList) {
+        Class cls = NSClassFromString(clsName);
+        if (cls != nil) {
+            GAService *service = [cls sharedService];
+            [servicesList addObject:service];
+            
+            __block id _self = self;
+            service.outputTextView = statusLogTextView;
+            service.statusChangedHandler = ^(GAService *service) {
+                [_self setStatusToRunning:[NSNumber numberWithBool:[service isRunning]]];
+            };
+            
+            [servicesListPopButton addItemWithTitle:[service serviceTitle]];
+            [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+        }
     }
     
     [servicesListPopButton selectItemWithTitle:[[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgentX:SelectedService"]];
@@ -146,7 +177,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // 初始化服务列表
-    [self setupServicesList];
+    [self loadServicesList];
     
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
     
