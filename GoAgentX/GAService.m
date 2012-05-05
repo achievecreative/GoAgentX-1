@@ -268,6 +268,8 @@ static NSMutableDictionary *sharedContainer = nil;
 - (void)modifyPrefProxiesDictionary:(NSMutableDictionary *)proxies withProxyEnabled:(BOOL)enabled {
     if (enabled) {
         NSInteger proxyPort = [self proxyPort];
+        NSString *proxySetting = [self proxySetting];
+        
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
@@ -275,18 +277,24 @@ static NSMutableDictionary *sharedContainer = nil;
         
         [proxies setObject:[NSNumber numberWithInt:usePAC ? 1 : 0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
         [proxies setObject:[NSNumber numberWithInt:usePAC ? 0 : 1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+        [proxies setObject:[NSNumber numberWithInt:usePAC ? 0 : 1] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
         
         if (usePAC) {
             [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             
-        } else {
+        } else if ([proxySetting hasPrefix:@"PROXY"]) {
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
+            
+        } else if ([proxySetting hasPrefix:@"SOCKS"]) {
+            [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
+            [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
         }
         
     } else {
         [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
         [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
     }
 }
 
