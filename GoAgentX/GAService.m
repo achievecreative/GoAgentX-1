@@ -275,20 +275,23 @@ static NSMutableDictionary *sharedContainer = nil;
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
         NSString *pacFile = useCustomePAC ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
         
-        [proxies setObject:[NSNumber numberWithInt:usePAC ? 1 : 0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
-        [proxies setObject:[NSNumber numberWithInt:usePAC ? 0 : 1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
-        [proxies setObject:[NSNumber numberWithInt:usePAC ? 0 : 1] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
         
         if (usePAC) {
             [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
             
         } else if ([proxySetting hasPrefix:@"PROXY"]) {
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
             
         } else if ([proxySetting hasPrefix:@"SOCKS"]) {
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
         }
         
     } else {
