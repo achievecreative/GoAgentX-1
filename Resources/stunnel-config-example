@@ -1,0 +1,16 @@
+只有一个服务器：
+example.com:8888
+
+同时连接两个服务器，stunnel 使用 round-robin 算法挑选服务器：
+example.com:8888
+example2.com:8888
+
+将两个服务器分为两个 service，分别独立使用：
+example.com:8888
+
+example2.com:8888
+
+指定 service 在本地监听的端口，方便同时使用多个服务器：
+9000:example.com:8888
+
+9001:example2.com:8888

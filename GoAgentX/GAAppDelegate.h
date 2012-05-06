@@ -48,6 +48,8 @@
 - (IBAction)togglePACSetting:(id)sender;
 - (IBAction)clearStatusLog:(id)sender;
 
+- (IBAction)showStunnelConfigurationExample:(id)sender;
+
 
 @property (assign) IBOutlet NSWindow *window;
 

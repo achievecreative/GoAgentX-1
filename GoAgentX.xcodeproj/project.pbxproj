@@ -12,6 +12,7 @@
 		8905D9D715557CEC00E0E13A /* stunnel-config-template in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9D615557CEC00E0E13A /* stunnel-config-template */; };
 		8905D9D915557CF900E0E13A /* stunnel in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9D815557CF900E0E13A /* stunnel */; };
 		8905D9E015562F0A00E0E13A /* GAStunnelService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905D9DF15562F0A00E0E13A /* GAStunnelService.m */; };
+		8905D9E71556DCA800E0E13A /* stunnel-config-example in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9E61556DCA700E0E13A /* stunnel-config-example */; };
 		890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 890DBFC61549002D009FF77F /* GAGoAgentServerService.m */; };
 		894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894107FA1549179D0045DA38 /* GoAgentXServices.plist */; };
 		8941781B15495FFB00E1819C /* GAConfigFieldManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8941781A15495FFB00E1819C /* GAConfigFieldManager.m */; };
@@ -95,6 +96,7 @@
 		8905D9D815557CF900E0E13A /* stunnel */ = {isa = PBXFileReference; lastKnownFileType = folder; path = stunnel; sourceTree = "<group>"; };
 		8905D9DE15562F0A00E0E13A /* GAStunnelService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAStunnelService.h; sourceTree = "<group>"; };
 		8905D9DF15562F0A00E0E13A /* GAStunnelService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAStunnelService.m; sourceTree = "<group>"; };
+		8905D9E61556DCA700E0E13A /* stunnel-config-example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "stunnel-config-example"; sourceTree = "<group>"; };
 		890DBFC51549002D009FF77F /* GAGoAgentServerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAGoAgentServerService.h; sourceTree = "<group>"; };
 		890DBFC61549002D009FF77F /* GAGoAgentServerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAGoAgentServerService.m; sourceTree = "<group>"; };
 		894107FA1549179D0045DA38 /* GoAgentXServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentXServices.plist; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 				8996158C1546EF73002DE998 /* west-chamber-config-template */,
 				8905D9D615557CEC00E0E13A /* stunnel-config-template */,
 				894178351549A3DA00E1819C /* pactemplate.pac */,
+				8905D9E61556DCA700E0E13A /* stunnel-config-example */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -551,6 +554,7 @@
 				8905D9D515552D4000E0E13A /* ssh in Resources */,
 				8905D9D715557CEC00E0E13A /* stunnel-config-template in Resources */,
 				8905D9D915557CF900E0E13A /* stunnel in Resources */,
+				8905D9E71556DCA800E0E13A /* stunnel-config-example in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

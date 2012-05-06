@@ -237,4 +237,20 @@
 }
 
 
+#pragma mark -
+#pragma mark Other delegate
+
+- (void)showStunnelConfigurationExample:(id)sender {
+    NSString *content = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"stunnel-config-example" ofType:@""]
+                                                        encoding:NSUTF8StringEncoding
+                                                           error:NULL];
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Stunnel 服务器列表示例"
+                                     defaultButton:nil
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:content ?: @""];
+    [alert runModal];
+}
+
+
 @end
