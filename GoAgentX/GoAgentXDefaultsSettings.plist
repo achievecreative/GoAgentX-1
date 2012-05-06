@@ -52,5 +52,7 @@
 	<false/>
 	<key>Stunnel:LocalPort</key>
 	<string>8800</string>
+	<key>Stunnel:SSLVersion</key>
+	<integer>2</integer>
 </dict>
 </plist>
