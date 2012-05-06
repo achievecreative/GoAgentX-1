@@ -9,6 +9,7 @@
 #import "GAAppDelegate.h"
 
 #import "GAConfigFieldManager.h"
+#import "GAStunnelService.h"
 
 
 @implementation GAAppDelegate
@@ -42,9 +43,6 @@
     statusToggleButton.title = buttonTitle;
 }
 
-
-#pragma mark -
-#pragma mark Setup
 
 - (void)setupStatusItem {
     statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:23.0];
@@ -95,6 +93,16 @@
 }
 
 
+- (void)loadProxyService {
+    NSInteger index = [servicesListPopButton.itemArray indexOfObject:[servicesListPopButton selectedItem]];
+    if (index == NSNotFound) {
+        return;
+    }
+    
+    proxyService = [servicesList objectAtIndex:index];
+}
+
+
 - (void)selectedServiceChanged:(id)sender {
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         [servicesListPopButton selectItemWithTitle:[sender title]];
@@ -103,6 +111,9 @@
     if ([proxyService isRunning]) {
         [proxyService stop];
         [self performSelector:@selector(toggleServiceStatus:) withObject:nil afterDelay:1.0];
+    } else {
+        [self loadProxyService];
+        [self setStatusToRunning:[NSNumber numberWithBool:NO]];
     }
 }
 
@@ -112,12 +123,7 @@
         [proxyService stop];
         
     } else {
-        NSInteger index = [servicesListPopButton.itemArray indexOfObject:[servicesListPopButton selectedItem]];
-        if (index == NSNotFound) {
-            return;
-        }
-        
-        proxyService = [servicesList objectAtIndex:index];
+        [self loadProxyService];
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
     }
@@ -126,6 +132,18 @@
 
 - (void)clearStatusLog:(id)sender {
     [statusLogTextView clear];
+}
+
+
+#pragma mark -
+#pragma mark TextView delegate
+
+- (void)stunnelServerListDidChange:(NSNotification *)notification {
+    NSTextView *textView = stunnelServerListTextView;
+    NSString *text = textView.string;
+    
+    [GAStunnelService loadServices:[GAStunnelService parseServicesList:text]
+                      toPopupButton:stunnelSelectedServerPopupButton];
 }
 
 
@@ -168,6 +186,16 @@
 }
 
 
+- (void)setupStunnelPrefs {
+    // 监听 Stunnel 服务器列表改变事件
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stunnelServerListDidChange:)
+                                                 name:NSTextDidChangeNotification 
+                                               object:stunnelServerListTextView];
+    [self stunnelServerListDidChange:nil];
+}
+
+
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     [proxyService stop];
     
@@ -192,6 +220,9 @@
     [[NSUserDefaults standardUserDefaults] registerDefaults:
      [NSDictionary dictionaryWithContentsOfFile:
       [[NSBundle mainBundle] pathForResource:@"GoAgentXDefaultsSettings" ofType:@"plist"]]];
+    
+    // 初始化 stunnel 设置
+    [self setupStunnelPrefs];
     
     // 设置 MenuBar 图标
     [self setupStatusItem];

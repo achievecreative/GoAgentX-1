@@ -12,7 +12,7 @@
 #import "GAService.h"
 #import "GAPACHTTPServer.h"
 
-@interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
+@interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextViewDelegate> {
     NSStatusItem        *statusBarItem;
     
     NSMutableArray      *servicesList;
@@ -32,6 +32,9 @@
     IBOutlet NSImageView            *statusImageView;
     IBOutlet NSButton               *statusToggleButton;
     IBOutlet GAAutoscrollTextView   *statusLogTextView;
+    
+    IBOutlet NSPopUpButton          *stunnelSelectedServerPopupButton;
+    IBOutlet NSTextView             *stunnelServerListTextView;
 }
 
 

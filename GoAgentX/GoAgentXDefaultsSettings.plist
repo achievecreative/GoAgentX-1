@@ -50,5 +50,7 @@
 	<integer>7070</integer>
 	<key>SSH:UsePublicKeyForLogin</key>
 	<false/>
+	<key>Stunnel:LocalPort</key>
+	<string>8800</string>
 </dict>
 </plist>
