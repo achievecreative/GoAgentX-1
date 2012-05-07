@@ -9,9 +9,9 @@
 	<key>GoAgent:Local:ServicePassword</key>
 	<string></string>
 	<key>GoAgent:Local:GAEProfile</key>
-	<string>google_cn</string>
+	<real>0</real>
 	<key>GoAgent:Local:ConnectMode</key>
-	<string>HTTP</string>
+	<integer>0</integer>
 	<key>GoAgent:Local:ProxyEnabled</key>
 	<false/>
 	<key>GoAgent:Local:ProxyHost</key>
@@ -44,5 +44,15 @@
 	<string>GAGoAgentService</string>
 	<key>WestChamber:GoAgentProxyPassword</key>
 	<string></string>
+	<key>SSH:RemotePort</key>
+	<string>22</string>
+	<key>SSH:LocalPort</key>
+	<integer>7070</integer>
+	<key>SSH:UsePublicKeyForLogin</key>
+	<false/>
+	<key>Stunnel:LocalPort</key>
+	<string>8800</string>
+	<key>Stunnel:SSLVersion</key>
+	<integer>2</integer>
 </dict>
 </plist>

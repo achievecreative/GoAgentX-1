@@ -14,6 +14,7 @@
 
 @synthesize workDirectory = _workDirectory;
 @synthesize commandPath = _commandPath;
+@synthesize environment = _environment;
 @synthesize arguments = _arguments;
 @synthesize inputText = _inputText;
 @synthesize outputTextView = _outputTextView;
@@ -57,9 +58,27 @@
     [self terminateTask];
     
     task = [NSTask new];
-    [task setCurrentDirectoryPath:self.workDirectory];
-    [task setLaunchPath:self.commandPath];
-    [task setArguments:self.arguments];
+    if ([self.commandPath hasPrefix:@"/"]) {
+        [task setLaunchPath:self.commandPath];
+        [task setArguments:self.arguments ?: [NSArray array]];
+    } else {
+        [task setLaunchPath:@"/usr/bin/env"];
+        NSMutableArray *args = [NSMutableArray arrayWithArray:self.arguments];
+        [args insertObject:self.commandPath atIndex:0];
+        [task setArguments:args];
+    }
+    
+    if (self.workDirectory) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:self.workDirectory]) {
+            [task setCurrentDirectoryPath:self.workDirectory];
+        } else {
+            NSLog(@"Work directory %@ does not exists", self.workDirectory);
+        }
+    }
+    
+    if (self.environment) {
+        [task setEnvironment:self.environment];
+    }
     
     if (self.inputText) {
         NSPipe *pipe = [NSPipe new];

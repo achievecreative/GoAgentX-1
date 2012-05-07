@@ -13,5 +13,12 @@
 		<string>HTTP</string>
 		<string>HTTPS</string>
 	</array>
+	<key>Stunnel:SSLVersion</key>
+	<array>
+		<string>all</string>
+		<string>SSLv2</string>
+		<string>SSLv3</string>
+		<string>TLSv1</string>
+	</array>
 </dict>
 </plist>

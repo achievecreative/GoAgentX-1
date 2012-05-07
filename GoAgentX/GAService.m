@@ -89,6 +89,11 @@ static NSMutableDictionary *sharedContainer = nil;
 }
 
 
+- (NSString *)serviceTitle {
+    NOT_IMPL
+}
+
+
 - (int)proxyPort {
     return 0;
 }
@@ -100,7 +105,8 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)notifyStatusChanged {
-    if ([self proxySetting] != nil) {
+    // 如果有设置自动切换系统代理设置，切换系统代理设置
+    if ([self proxySetting] != nil && [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
         [self toggleSystemProxy:[self isRunning]];
     }
 
@@ -260,37 +266,48 @@ static NSMutableDictionary *sharedContainer = nil;
 
 //! 修改代理设置的字典
 - (void)modifyPrefProxiesDictionary:(NSMutableDictionary *)proxies withProxyEnabled:(BOOL)enabled {
+    // 先禁用所有代理，防止之前已经设置过一些会导致冲突
+    [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+    [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPSEnable];
+    [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+    [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
+    
     if (enabled) {
         NSInteger proxyPort = [self proxyPort];
+        NSString *proxySetting = [self proxySetting];
+        
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
         NSString *pacFile = useCustomePAC ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
         
         if (usePAC) {
-            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
+            // 使用 PAC
             [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
             
-        } else {
-            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+        } else if ([proxySetting hasPrefix:@"PROXY"]) {
+            // 使用 HTTP 代理
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
+            [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPSPort];
+            [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPSProxy];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPSEnable];
+            
+        } else if ([proxySetting hasPrefix:@"SOCKS"]) {
+            // 使用 SOCKS 代理
+            [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
+            [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
+            [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
         }
-        
-    } else {
-        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
-        [proxies setObject:[NSNumber numberWithInt:0] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
     }
 }
 
 
 - (void)toggleSystemProxy:(BOOL)useProxy {
-    // 如果没有设置自动切换系统代理设置，直接返回
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
-        return;
-    }
-    
-    NSLog(@"Toggle system proxy %@", useProxy ? @"YES" : @"NO");
+    BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
+    NSLog(@"Toggle system proxy %@ with PAC %@", useProxy ? @"YES" : @"NO", usePAC ? @"YES" : @"NO");
     
     SCPreferencesRef prefRef;// = SCPreferencesCreate(kCFAllocatorSystemDefault, CFSTR("test"), NULL);
     
@@ -310,11 +327,13 @@ static NSMutableDictionary *sharedContainer = nil;
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
     
     // 遍历系统中的网络设备列表，设置 AirPort 和 Ethernet 的代理
-    for (NSString *key in [sets allKeys]) {
-        NSMutableDictionary *dict = [sets objectForKey:key];
-        NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
-        if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
-            [previousDeviceProxies setObject:[dict mutableCopy] forKey:key];
+    if (previousDeviceProxies.count == 0) {
+        for (NSString *key in [sets allKeys]) {
+            NSMutableDictionary *dict = [sets objectForKey:key];
+            NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
+            if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
+                [previousDeviceProxies setObject:[[dict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy] forKey:key];
+            }
         }
     }
     
@@ -329,7 +348,7 @@ static NSMutableDictionary *sharedContainer = nil;
     } else {
         for (NSString *deviceId in previousDeviceProxies) {
             // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
-            NSMutableDictionary *dict = [[previousDeviceProxies objectForKey:deviceId] objectForKey:(NSString *)kSCEntNetProxies];
+            NSMutableDictionary *dict = [previousDeviceProxies objectForKey:deviceId];
             [self modifyPrefProxiesDictionary:dict withProxyEnabled:NO];
             SCPreferencesPathSetValue(prefRef, (__bridge CFStringRef)[self proxiesPathOfDevice:deviceId], (__bridge CFDictionaryRef)dict);
         }

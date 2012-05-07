@@ -14,7 +14,7 @@ mulconn = 1
 [php]
 enable = 0
 listen = 127.0.0.1:8088|127.0.0.1:8089
-fetchserver = http://scan.org/fetch.php|http://goagent.sinaapp.com/fetch.php
+fetchserver = http://scan.org/index.php
 
 [proxy]
 enable = {GoAgent:Local:ProxyEnabled}

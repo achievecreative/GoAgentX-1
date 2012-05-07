@@ -1,19 +1,16 @@
 # GoAgentX
 
-GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件，方便一般用户在 Mac OS X 上部署、配置和使用 goagent 和 west-chamber-season-3。
-
-关于 goagent 的介绍请参见 <http://code.google.com/p/goagent/>。
-
-关于 west-chamber-season-3 请参见 <https://github.com/liruqi/west-chamber-season-3>。
+GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件，方便一般用户在 Mac OS X 上配置和使用 goagent、west-chamber-season-3、SSH 以及 stunnel。
 
 ## 功能
 
-* 支持 goagent，west-chamber-season-3
+* 支持 goagent，west-chamber-season-3，SSH，stunnel
 * 支持部署 goagent 服务端到 App Engine
 * 自动设置系统 HTTP 代理或者 PAC 设置
 * 集成 goagent 1.8.4 与 west-chamber-season-3 20120428
 * 图形化界面设置客户端连接参数
 * 菜单栏图标，直接控制连接状态
+* 菜单栏快速切换服务以及是否使用 PAC
 * 用户登录时自动启动代理服务
 
 ## 要求
@@ -21,7 +18,11 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 * Mac OS X 10.6 及以上版本系统
 * 支持 64 位的 Intel CPU
 
-## 如何使用 goagent
+## 如何使用
+
+### goagent
+
+关于 goagent 的介绍请参见 <http://code.google.com/p/goagent/>。
 
 1. 申请 Google App Engine 并创建 appid
 1. 下载 GoAgentX <https://github.com/ohdarling/GoAgentX/downloads>
@@ -32,11 +33,22 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 
 其他相关情况请参见 [goagent 简易教程](http://code.google.com/p/goagent/#简易教程)
 
-如果需要 GoAgentX 在用户登录时自动运行，可在“其他设置”中勾选“在用户登录时自动启动 GoAgentX”。
+### 西厢第3季
 
-## 如何使用西厢
+关于 west-chamber-season-3 请参见 <https://github.com/liruqi/west-chamber-season-3>。
 
 进入状态标签页，选择服务为“西厢第3季”，点击启动即可。
+
+### SSH
+
+1. 进入服务配置标签页，并选择 SSH，填入 SSH 服务相关信息。
+1. 进入状态标签页，选择 SSH，点击启动
+
+### Stunnel
+
+关于 stunnel 请参见 <http://www.stunnel.org/>。
+
+服务端配置请参考 <https://www.google.com/search?q=stunnel+代理>。
 
 ## 程序截图
 
@@ -62,6 +74,7 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 * [Google App Engine](https://appengine.google.com/)
 * [west-chamber-season-3](https://github.com/liruqi/west-chamber-season-3)
 * [CocoaHTTPServer](https://github.com/robbiehanson/CocoaHTTPServer)
+* [stunnel](http://www.stunnel.org/)
 
 ## 关于
 

@@ -37,6 +37,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 - (NSString *)serviceName;
 
+- (NSString *)serviceTitle;
+
 - (NSString *)serviceWorkDirectory;
 
 - (int)proxyPort;

@@ -35,6 +35,7 @@ terminationHandler:(GACommandRunnerTerminationHandler)terminationHandler;
 @property (nonatomic, strong)   NSString        *commandPath;
 @property (nonatomic, strong)   NSString        *workDirectory;
 @property (nonatomic, strong)   NSArray         *arguments;
+@property (nonatomic, strong)   NSDictionary    *environment;
 @property (nonatomic, strong)   NSString        *inputText;
 @property (nonatomic, strong)   GAAutoscrollTextView    *outputTextView;
 @property (nonatomic, copy)     GACommandRunnerTerminationHandler   terminationHandler;

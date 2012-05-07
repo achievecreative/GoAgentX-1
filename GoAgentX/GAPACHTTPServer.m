@@ -26,7 +26,8 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAPACHTTPServer, Server)
 
 
 - (NSString *)pacAddressForProxy:(NSString *)proxySetting {
-    return [NSString stringWithFormat:@"http://127.0.0.1:%d/proxy.pac?%@", [self listeningPort], [proxySetting stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    proxySetting = [proxySetting stringByReplacingOccurrencesOfString:@" " withString:@"/"];
+    return [NSString stringWithFormat:@"http://127.0.0.1:%d/proxy.pac?%@", [self listeningPort], proxySetting];
 }
 
 @end

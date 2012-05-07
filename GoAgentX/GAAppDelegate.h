@@ -12,18 +12,19 @@
 #import "GAService.h"
 #import "GAPACHTTPServer.h"
 
-@interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate> {
+@interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextViewDelegate> {
     NSStatusItem        *statusBarItem;
     
-    NSArray             *servicesList;
+    NSMutableArray      *servicesList;
     GAService           *proxyService;
     
     GAPACHTTPServer     *pacServer;
     
-    IBOutlet NSMenu     *statusBarItemMenu;
-    IBOutlet NSMenuItem *statusMenuItem;
+    IBOutlet NSMenu                 *statusBarItemMenu;
+    IBOutlet NSMenuItem             *statusMenuItem;
     
     IBOutlet NSPopUpButton          *servicesListPopButton;
+    IBOutlet NSMenu                 *servicesListMenu;
     IBOutlet NSTabView              *servicesConfigTabView;
     
     // 状态
@@ -31,6 +32,9 @@
     IBOutlet NSImageView            *statusImageView;
     IBOutlet NSButton               *statusToggleButton;
     IBOutlet GAAutoscrollTextView   *statusLogTextView;
+    
+    IBOutlet NSPopUpButton          *stunnelSelectedServerPopupButton;
+    IBOutlet NSTextView             *stunnelServerListTextView;
 }
 
 
@@ -39,8 +43,12 @@
 - (IBAction)showHelp:(id)sender;
 - (IBAction)showAbout:(id)sender;
 
+- (IBAction)selectedServiceChanged:(id)sender;
 - (IBAction)toggleServiceStatus:(id)sender;
+- (IBAction)togglePACSetting:(id)sender;
 - (IBAction)clearStatusLog:(id)sender;
+
+- (IBAction)showStunnelConfigurationExample:(id)sender;
 
 
 @property (assign) IBOutlet NSWindow *window;

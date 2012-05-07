@@ -9,6 +9,7 @@
 #import "GAAppDelegate.h"
 
 #import "GAConfigFieldManager.h"
+#import "GAStunnelService.h"
 
 
 @implementation GAAppDelegate
@@ -34,17 +35,14 @@
         buttonTitle = @"启动";
     }
     
-    statusBarItem.toolTip = statusText;
     statusTextLabel.stringValue = statusText;
     statusImageView.image = statusImage;
-    statusMenuItem.title = statusText;
+    statusMenuItem.title = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
     statusMenuItem.image = statusImage;
+    statusBarItem.toolTip = statusMenuItem.title;
     statusToggleButton.title = buttonTitle;
 }
 
-
-#pragma mark -
-#pragma mark Setup
 
 - (void)setupStatusItem {
     statusBarItem = [[NSStatusBar systemStatusBar] statusItemWithLength:23.0];
@@ -83,26 +81,50 @@
 #pragma mark -
 #pragma mark 运行状态
 
+- (void)refreshSystemProxySettings:(id)sender {
+    [proxyService toggleSystemProxy:YES];
+}
+
+
+- (void)togglePACSetting:(id)sender {
+    if ([proxyService isRunning]) {
+        [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
+    }
+}
+
+
+- (void)loadProxyService {
+    NSInteger index = [servicesListPopButton.itemArray indexOfObject:[servicesListPopButton selectedItem]];
+    if (index == NSNotFound) {
+        return;
+    }
+    
+    proxyService = [servicesList objectAtIndex:index];
+}
+
+
+- (void)selectedServiceChanged:(id)sender {
+    if ([sender isKindOfClass:[NSMenuItem class]]) {
+        [servicesListPopButton selectItemWithTitle:[sender title]];
+    }
+    
+    if ([proxyService isRunning]) {
+        [proxyService stop];
+        [self performSelector:@selector(toggleServiceStatus:) withObject:nil afterDelay:1.0];
+    } else {
+        [self loadProxyService];
+        [self setStatusToRunning:[NSNumber numberWithBool:NO]];
+    }
+}
+
+
 - (void)toggleServiceStatus:(id)sender {
     if ([proxyService isRunning]) {
         [proxyService stop];
         
     } else {
-        NSInteger index = [servicesListPopButton.itemArray indexOfObject:[servicesListPopButton selectedItem]];
-        if (index == NSNotFound) {
-            return;
-        }
-        
-        NSString *className = [[servicesList objectAtIndex:index] objectForKey:@"ClassName"];
-        Class serviceCls = NSClassFromString(className);
-        
-        proxyService = [serviceCls sharedService];
-        __block id _self = self;
-        proxyService.outputTextView = statusLogTextView;
-        proxyService.statusChangedHandler = ^(GAService *service) {
-            [_self setStatusToRunning:[NSNumber numberWithBool:[service isRunning]]];
-        };
-        
+        [self loadProxyService];
+        NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
     }
 }
@@ -110,6 +132,18 @@
 
 - (void)clearStatusLog:(id)sender {
     [statusLogTextView clear];
+}
+
+
+#pragma mark -
+#pragma mark TextView delegate
+
+- (void)stunnelServerListDidChange:(NSNotification *)notification {
+    NSTextView *textView = stunnelServerListTextView;
+    NSString *text = textView.string;
+    
+    [GAStunnelService loadServices:[GAStunnelService parseServicesList:text]
+                      toPopupButton:stunnelSelectedServerPopupButton];
 }
 
 
@@ -125,15 +159,40 @@
 #pragma mark -
 #pragma mark App delegate
 
-- (void)setupServicesList {
-    servicesList = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoAgentXServices" ofType:@"plist"]];
+- (void)loadServicesList {
+    servicesList = [NSMutableArray new];
+    
+    NSArray *classList = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoAgentXServices" ofType:@"plist"]];
     
     [servicesListPopButton removeAllItems];
-    for (NSDictionary *service in servicesList) {
-        [servicesListPopButton addItemWithTitle:[service objectForKey:@"Title"]];
+    for (NSString *clsName in classList) {
+        Class cls = NSClassFromString(clsName);
+        if (cls != nil) {
+            GAService *service = [cls sharedService];
+            [servicesList addObject:service];
+            
+            __block id _self = self;
+            service.outputTextView = statusLogTextView;
+            service.statusChangedHandler = ^(GAService *service) {
+                [_self setStatusToRunning:[NSNumber numberWithBool:[service isRunning]]];
+            };
+            
+            [servicesListPopButton addItemWithTitle:[service serviceTitle]];
+            [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+        }
     }
     
     [servicesListPopButton selectItemWithTitle:[[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgentX:SelectedService"]];
+}
+
+
+- (void)setupStunnelPrefs {
+    // 监听 Stunnel 服务器列表改变事件
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stunnelServerListDidChange:)
+                                                 name:NSTextDidChangeNotification 
+                                               object:stunnelServerListTextView];
+    [self stunnelServerListDidChange:nil];
 }
 
 
@@ -146,7 +205,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // 初始化服务列表
-    [self setupServicesList];
+    [self loadServicesList];
     
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
     
@@ -162,6 +221,9 @@
      [NSDictionary dictionaryWithContentsOfFile:
       [[NSBundle mainBundle] pathForResource:@"GoAgentXDefaultsSettings" ofType:@"plist"]]];
     
+    // 初始化 stunnel 设置
+    [self setupStunnelPrefs];
+    
     // 设置 MenuBar 图标
     [self setupStatusItem];
     
@@ -172,6 +234,22 @@
     if (![proxyService hasConfigured]) {
         [self showMainWindow:nil];
     }
+}
+
+
+#pragma mark -
+#pragma mark Other delegate
+
+- (void)showStunnelConfigurationExample:(id)sender {
+    NSString *content = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"stunnel-config-example" ofType:@""]
+                                                        encoding:NSUTF8StringEncoding
+                                                           error:NULL];
+    NSAlert *alert = [NSAlert alertWithMessageText:@"Stunnel 服务器列表示例"
+                                     defaultButton:nil
+                                   alternateButton:nil
+                                       otherButton:nil
+                         informativeTextWithFormat:content ?: @""];
+    [alert runModal];
 }
 
 
