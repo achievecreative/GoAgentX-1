@@ -1,3 +1,15 @@
+## GoAgentX v1.2.0
+
+* [NEW] 集成 SSH 服务
+* [NEW] 集成 stunnel 服务
+* [NEW] 添加菜单栏图标切换服务功能
+* [NEW] 添加菜单栏图标切换使用 PAC 和不使用 PAC 功能
+* [FIX] 修正自动切换 PAC 时在 Safari 下不工作的 bug
+* [MOD] 更新 goagent 到 1.8.5 稳定版
+* [MOD] 更新西厢第3季到 20120505
+
+*Released on 2012.05.07*
+
 ## GoAgentX v1.1.0
 
 * [NEW] 集成 goagent 1.8.4，不再需要单独下载
