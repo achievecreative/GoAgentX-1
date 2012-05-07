@@ -11,7 +11,7 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from SocketServer import ThreadingMixIn
 from httplib import HTTPResponse, BadStatusLine
-import os, re, socket, struct, threading, traceback, sys, select, urlparse, signal, urllib, urllib2, time, hashlib, binascii, zlib, httplib, errno
+import os, re, socket, struct, threading, traceback, sys, select, urlparse, signal, urllib, urllib2, time, hashlib, binascii, zlib, httplib, errno, string
 try:
     import OpenSSL
 except ImportError:
@@ -234,6 +234,14 @@ def isIpBlocked(ip):
             return True
     return False
 
+def isDomainBlocked(host):
+    rootDomain = string.join(host.split('.')[-2:], '.')
+    if (host in gConfig["BLOCKED_DOMAINS"]):
+        return True
+    if rootDomain not in ["nicovideo.jp", "facebook.com", "twitter.com"]:
+        return rootDomain in gConfig["BLOCKED_DOMAINS"]
+    return False
+
 def urlfetch(url, payload, method, headers, fetchhost, fetchserver, password=None, dns=None, on_error=None):
     errors = []
     params = {'url':url, 'method':method, 'headers':headers, 'payload':payload}
@@ -249,6 +257,7 @@ def urlfetch(url, payload, method, headers, fetchhost, fetchserver, password=Non
             logging.debug('urlfetch %r by %r', url, fetchserver)
             request = urllib2.Request(fetchserver, zlib.compress(params, 9))
             request.add_header('Content-Type', '')
+            request.add_header("X-WCProxy", gConfig["VERSION"])
             response = urllib2.urlopen(request)
             compressed = response.read(1)
 
@@ -440,6 +449,7 @@ class ThreadingHTTPServer(ThreadingMixIn, HTTPServer): pass
 class ProxyHandler(BaseHTTPRequestHandler):
     remote = None
     dnsCache = {}
+    dnsCacheLock = 0
     now = 0
     depth = 0
     MessageClass = SimpleMessageClass
@@ -541,10 +551,19 @@ class ProxyHandler(BaseHTTPRequestHandler):
                     continue
                 ip = a["data"]
         if (ip != ""):
-            self.dnsCache[host] = {"ip":ip, "expire":self.now + ttl*2 + 60}
-            return ip;
+            if len(self.dnsCache) >= gConfig["DNS_CACHE_MAXSZ"] and self.dnsCacheLock <=0 :
+                self.dnsCacheLock = 1
+                logging.debug("purge DNS cache...")
+                for h in self.dnsCache:
+                    if self.now >= self.dnsCache[h]["expire"]:
+                        del self.dnsCache[h]
+                logging.debug("purge DNS cache done, now %d" % len(self.dnsCache))
+                self.dnsCacheLock = 0
+
+            if len(self.dnsCache) < gConfig["DNS_CACHE_MAXSZ"]: self.dnsCache[host] = {"ip":ip, "expire":self.now + ttl*2 + 60}
+            return ip
         if (blockedIp != ""):
-            return blockedIp;
+            return blockedIp
         if (cname != ""):
             return self.getip(cname)
 
@@ -606,9 +625,11 @@ class ProxyHandler(BaseHTTPRequestHandler):
             path = self.path[self.path.find(netloc) + len(netloc):]
 
             connectHost = self.getip(host)
-            if (host in gConfig["BLOCKED_DOMAINS"]) or isIpBlocked(connectHost):
+            rootDomain = string.join(host.split('.')[-2:], '.')
+            
+            if isDomainBlocked(host) or isIpBlocked(connectHost):
                 gConfig["BLOCKED_DOMAINS"][host] = True
-                if gOptions.log>0 : print "add ip "+ connectHost + " to block list"
+                logging.debug(host + " blocked, try goagent.")
                 return self.do_METHOD_Tunnel()
             
             if True:
@@ -631,11 +652,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
                     path = "/"
                 print " ".join((self.command, path, self.request_version)) + "\r\n"
                 self.remote.send(" ".join((self.command, path, self.request_version)) + "\r\n")
-                # Send headers
-                if host[-12:] == ".appspot.com":
-                    print "add version code " + gConfig["VERSION"] + " in HTTP header"
-                    self.headers["X-WCProxy"] = gConfig["VERSION"]
-                    self.headers["X-WCPasswd"] = gConfig["PROXY_PASSWD"]
+                
                 self.remote.send(str(self.headers) + "\r\n")
                 # Send Post data
                 if(self.command=='POST'):
@@ -732,7 +749,7 @@ class ProxyHandler(BaseHTTPRequestHandler):
         host, port = self.path.split(":")
         ip = self.getip(host)
         try:
-            if not isIpBlocked(ip):
+            if not (isDomainBlocked(host) or isIpBlocked(ip)):
                 self.remote = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 print ("SSL: connect " + host + ":ip:" + ip)
                 self.remote.connect((ip, int(port)))

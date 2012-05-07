@@ -14,7 +14,7 @@
     3. Windows 版本更新比较慢。如果希望使用最新代码，先下载 python 2.7，[32位](http://python.org/ftp/python/2.7.2/python-2.7.2.msi) / [64位](http://python.org/ftp/python/2.7.2/python-2.7.2.amd64.msi) ，然后下载[代码](https://github.com/liruqi/west-chamber-season-3/zipball/master)，解压缩，进入 west-chamber-proxy 文件夹，双击 westchamberproxy.py。
 
 * Mac 
-    1. 下载[客户端](https://github.com/downloads/liruqi/GoAgentX/GoAgentX-20120325.zip)，解压缩，双击打开
+    1. 去GoAgentX for WCProxy的[下载列表](https://github.com/liruqi/GoAgentX/downloads)下载最新的客户端，解压缩，双击打开
     2. 把浏览器HTTP/HTTPS 代理设置为 127.0.0.1:1998，或者使用pac 脚本设置自动代理。
     
 * Linux
@@ -63,7 +63,7 @@
 
 TODO
 ----
-* [ALL] 网页代理用Range 方法处理大文件下载
+* [ALL] 把80端口和443端口的IP封锁区分开来
 * [Android] 实现系统HTTP 代理的设置，这样系统自带的浏览器也可以用。
 * [Android] 用 Java 重写代理逻辑，用户就不用下载依赖的 python 软件包。
 
@@ -80,4 +80,3 @@ UPDATE LOG
 * 2012-04-14 DNS解析结果中，移除被GFW 封锁的IP。
 * 2012-04-14 支持UDP方式DNS解析，并丢弃GFW伪包。
 * 2012-04-24 基本完成与GoAgent 的整合，直连失败后会走GoAgent 代理。
-
