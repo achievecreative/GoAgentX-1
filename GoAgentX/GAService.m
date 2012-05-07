@@ -282,10 +282,12 @@ static NSMutableDictionary *sharedContainer = nil;
         NSString *pacFile = useCustomePAC ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
         
         if (usePAC) {
+            // 使用 PAC
             [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
             
         } else if ([proxySetting hasPrefix:@"PROXY"]) {
+            // 使用 HTTP 代理
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPEnable];
@@ -294,6 +296,7 @@ static NSMutableDictionary *sharedContainer = nil;
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPSEnable];
             
         } else if ([proxySetting hasPrefix:@"SOCKS"]) {
+            // 使用 SOCKS 代理
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesSOCKSEnable];
@@ -324,11 +327,13 @@ static NSMutableDictionary *sharedContainer = nil;
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
     
     // 遍历系统中的网络设备列表，设置 AirPort 和 Ethernet 的代理
-    for (NSString *key in [sets allKeys]) {
-        NSMutableDictionary *dict = [sets objectForKey:key];
-        NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
-        if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
-            [previousDeviceProxies setObject:[dict mutableCopy] forKey:key];
+    if (previousDeviceProxies.count == 0) {
+        for (NSString *key in [sets allKeys]) {
+            NSMutableDictionary *dict = [sets objectForKey:key];
+            NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
+            if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
+                [previousDeviceProxies setObject:[[dict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy] forKey:key];
+            }
         }
     }
     
@@ -343,7 +348,7 @@ static NSMutableDictionary *sharedContainer = nil;
     } else {
         for (NSString *deviceId in previousDeviceProxies) {
             // 防止之前获取的代理配置还是启用了 SOCKS 代理或者 PAC 的，直接将两种代理方式禁用
-            NSMutableDictionary *dict = [[previousDeviceProxies objectForKey:deviceId] objectForKey:(NSString *)kSCEntNetProxies];
+            NSMutableDictionary *dict = [previousDeviceProxies objectForKey:deviceId];
             [self modifyPrefProxiesDictionary:dict withProxyEnabled:NO];
             SCPreferencesPathSetValue(prefRef, (__bridge CFStringRef)[self proxiesPathOfDevice:deviceId], (__bridge CFDictionaryRef)dict);
         }
