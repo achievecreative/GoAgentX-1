@@ -6,6 +6,25 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.2.0</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.2.0 Changelog</h2>
+                <ul>
+                    <li>[NEW] 集成 SSH 服务</li>
+                    <li>[NEW] 集成 stunnel 服务</li>
+                    <li>[NEW] 添加菜单栏图标切换服务功能</li>
+                    <li>[NEW] 添加菜单栏图标切换使用 PAC 和不使用 PAC 功能</li>
+                    <li>[FIX] 修正自动切换 PAC 时在 Safari 下不工作的 bug</li>
+                    <li>[FIX] 修正不使用 PAC 时没有设置 HTTPS 代理的 bug</li>
+                    <li>[FIX] 修正停止服务时，没有恢复代理设置为原始设置的 bug</li>
+                    <li>[MOD] 更新 goagent 到 1.8.5 稳定版</li>
+                    <li>[MOD] 更新西厢第3季到 20120505</li>
+                </ul>
+            ]]></description>
+            <pubDate>Mon, 07 May 2012 20:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.2.0.dmg" sparkle:shortVersionString="1.2.0" sparkle:version="12" length="2446709" type="application/octet-stream" sparkle:dsaSignature="MCwCFCuHTVOlB5acVv14gsjtzTwb/JudAhQRKQCo8uLJTl2aD0q4dMrfOEn+sA==" />
+         </item>
+         <item>
             <title>GoAgentX v1.1.0</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.1.0 Changelog</h2>
