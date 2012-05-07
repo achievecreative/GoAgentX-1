@@ -3,17 +3,15 @@
 # Based on GAppProxy 2.0.0 by Du XiaoGang <dugang@188.com>
 # Based on WallProxy 0.4.0 by hexieshe <www.ehust@gmail.com>
 
-__version__ = '1.8.4'
+from __future__ import with_statement
+
+__version__ = '1.8.5'
 __author__  = "{phus.lu,hewigovens}@gmail.com (Phus Lu and Hewig Xu)"
 __config__  = 'proxy.ini'
 
-import sys
-# check python 2.6 or 2.7
-sys.version[:3] in ('2.6', '2.7') or sys.exit(sys.stderr.write('Must python 2.6/2.7'))
-
 try:
     import gevent, gevent.monkey
-    gevent.monkey.patch_all(dns=gevent.version_info>(1,))
+    gevent.monkey.patch_all(dns=gevent.version_info[0]>=1)
 except:
     pass
 
@@ -61,7 +59,7 @@ class Common(object):
         """load config from proxy.ini"""
         ConfigParser.RawConfigParser.OPTCRE = re.compile(r'(?P<option>[^=\s][^=]*)\s*(?P<vi>[=])\s*(?P<value>.*)$')
         self.CONFIG = ConfigParser.ConfigParser()
-        self.CONFIG.read(os.path.abspath(os.path.dirname(__file__))+'/'+ __config__)
+        self.CONFIG.read(os.path.join(os.path.dirname(__file__), __config__))
 
         self.LISTEN_IP            = self.CONFIG.get('listen', 'ip')
         self.LISTEN_PORT          = self.CONFIG.getint('listen', 'port')
@@ -79,6 +77,14 @@ class Common(object):
         self.PHP_LISTEN           = self.CONFIG.get('php', 'listen')
         self.PHP_PASSWORD         = self.CONFIG.get('php', 'password') if self.CONFIG.has_option('php', 'password') else ''
         self.PHP_FETCHSERVER      = self.CONFIG.get('php', 'fetchserver')
+
+        if self.CONFIG.has_section('udp'):
+            self.UDP_ENABLE      = self.CONFIG.getint('udp', 'enable')
+            self.UDP_LISTEN      = self.CONFIG.get('udp', 'listen')
+            self.UDP_PASSWORD    = self.CONFIG.get('udp', 'password')
+            self.UDP_FETCHSERVER = self.CONFIG.get('udp', 'fetchserver')
+        else:
+            self.UDP_ENABLE      = 0
 
         if self.CONFIG.has_section('pac'):
             # XXX, cowork with GoAgentX
@@ -174,6 +180,9 @@ class Common(object):
             for (ip, port),(fetchhost, fetchserver) in common.PHP_FETCH_INFO.iteritems():
                 info += 'PHP Mode Listen : %s:%d\n' % (ip, port)
                 info += 'PHP FetchServer : %s\n' % fetchserver
+        if common.UDP_ENABLE:
+            info += 'UDP Mode Listen : %s\n' % common.UDP_LISTEN
+            info += 'UDP FetchServer : %s\n' % common.UDP_FETCHSERVER
         if common.PAC_ENABLE:
             info += 'Pac Server      : http://%s:%d/%s\n' % (self.PAC_IP,self.PAC_PORT,self.PAC_FILE)
         if common.CRLF_ENABLE:
@@ -243,6 +252,7 @@ class MultiplexConnection(object):
             MultiplexConnection.timeout = min(int(round(timeout*1.5)), self.timeout_max)
             MultiplexConnection.timeout_ack = 0
             logging.warning(r'MultiplexConnection Connect hosts %s:%s fail %d times!', hosts, port, MultiplexConnection.retry)
+            raise socket.error('MultiplexConnection connect hosts=%s failed' % repr(hosts))
     def connect_single(self, hostlist, port, timeout, window):
         for host in hostlist:
             logging.debug('MultiplexConnection try connect host=%s, port=%d', host, port)
@@ -253,7 +263,7 @@ class MultiplexConnection(object):
                 sock.settimeout(timeout)
                 sock.connect((host, port))
                 self.socket = sock
-            except socket.error, msg:
+            except socket.error:
                 if sock is not None:
                     sock.close()
                 raise
@@ -262,7 +272,6 @@ class MultiplexConnection(object):
         for sock in self._sockets:
             try:
                 sock.close()
-                del sock
             except:
                 pass
         del self._sockets
@@ -276,7 +285,7 @@ def socket_create_connection((host, port), timeout=None, source_address=None):
             sock = conn.socket
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, True)
             return sock
-        except socket.error, msg:
+        except socket.error:
             logging.error('socket_create_connection connect fail: (%r, %r)', common.GOOGLE_HOSTS, port)
             sock = None
         if not sock:
@@ -292,7 +301,7 @@ def socket_create_connection((host, port), timeout=None, source_address=None):
             sock = conn.socket
             sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, True)
             return sock
-        except socket.error, msg:
+        except socket.error:
             logging.error('socket_create_connection connect fail: (%r, %r)', common.HOSTS[host], port)
             sock = None
         if not sock:
@@ -310,7 +319,7 @@ def socket_create_connection((host, port), timeout=None, source_address=None):
                     sock.bind(source_address)
                 sock.connect(sa)
                 return sock
-            except socket.error, msg:
+            except socket.error:
                 if sock is not None:
                     sock.close()
         raise socket.error, msg
@@ -342,12 +351,12 @@ def socket_forward(local, remote, timeout=60, tick=2, bufsize=8192, maxping=None
                 if idlecall:
                     try:
                         idlecall()
-                    except Exception, e:
-                        logging.warning('socket_forward idlecall fail:%s', e)
+                    except Exception:
+                        logging.exception('socket_forward idlecall fail')
                     finally:
                         idlecall = None
-    except Exception, ex:
-        logging.warning('socket_forward error=%s', ex)
+    except Exception:
+        logging.exception('socket_forward error')
         raise
     finally:
         if idlecall:
@@ -373,8 +382,8 @@ def dns_resolve(host, dnsserver='8.8.8.8', dnscache=common.HOSTS, dnslock=thread
                     iplist = tuple('.'.join(str(ord(x)) for x in s) for s in iplist)
                     logging.info('dns_resolve(host=%r) return %s', host, iplist)
                     dnscache[host] = iplist
-                except socket.error, e:
-                    logging.exception('dns_resolve(host=%r) fail:%s', host, e)
+                except socket.error:
+                    logging.exception('dns_resolve(host=%r) fail', host)
                 finally:
                     if sock:
                         sock.close()
@@ -382,7 +391,7 @@ def dns_resolve(host, dnsserver='8.8.8.8', dnscache=common.HOSTS, dnslock=thread
 
 _httplib_HTTPConnection_putrequest = httplib.HTTPConnection.putrequest
 def httplib_HTTPConnection_putrequest(self, method, url, skip_host=0, skip_accept_encoding=1):
-    self._buffer.append('\r\n\r\n')
+    self._output('\r\n\r\n')
     return _httplib_HTTPConnection_putrequest(self, method, url, skip_host, skip_accept_encoding)
 httplib.HTTPConnection.putrequest = httplib_HTTPConnection_putrequest
 
@@ -703,7 +712,7 @@ def urlfetch(url, payload, method, headers, fetchhost, fetchserver, password=Non
                 raise ValueError('Data format not match(%s)' % url)
 
             return (0, data)
-        except Exception, e:
+        except Exception as e:
             if on_error:
                 logging.info('urlfetch error=%s on_error=%s', str(e), str(on_error))
                 data = on_error(e)
@@ -741,7 +750,7 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             #common.GOOGLE_MODE = 'https'
             pass
         else:
-            logging.warning('LocalProxyHandler.handle_fetch_error Exception %s', error, exc_info=True)
+            logging.warning('LocalProxyHandler.handle_fetch_error Exception %s', error)
             return {}
         common.build_gae_fetchserver()
         return {'fetchhost':common.GAE_FETCHHOST, 'fetchserver':common.GAE_FETCHSERVER}
@@ -921,10 +930,10 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     del self.headers['Host']
                 if common.PROXY_USERNAME and 'Proxy-Authorization' not in self.headers:
                     self.headers['Proxy-Authorization'] = 'Basic %s' + base64.b64encode('%s:%s'%(common.PROXY_USERNAME, common.PROXY_PASSWROD))
-                data = '%s %s:%s %s\r\n%s\r\n' % (self.command, random.choice(iplist), port, self.protocol_version, self.headers)
+                data = '\r\n\r\n%s %s:%s %s\r\n%s\r\n' % (self.command, random.choice(iplist), port, self.protocol_version, self.headers)
                 sock.sendall(data)
             socket_forward(self.connection, sock, idlecall=idlecall)
-        except:
+        except Exception:
             logging.exception('LocalProxyHandler.do_CONNECT_Direct Error')
         finally:
             try:
@@ -958,8 +967,8 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     self.path = 'https://%s%s' % (self._realpath, self.path)
                 self.requestline = '%s %s %s' % (self.command, self.path, self.protocol_version)
             self.do_METHOD_Tunnel()
-        except socket.error, e:
-            logging.exception('do_CONNECT_Tunnel socket.error: %s', e)
+        except socket.error:
+            logging.exception('do_CONNECT_Tunnel socket.error')
         finally:
             try:
                 self.connection.shutdown(socket.SHUT_WR)
@@ -1034,8 +1043,8 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 data += self.rfile.read(content_length)
             sock.sendall(data)
             socket_forward(self.connection, sock, idlecall=idlecall)
-        except Exception, ex:
-            logging.exception('LocalProxyHandler.do_GET Error, %s', ex)
+        except Exception:
+            logging.exception('LocalProxyHandler.do_GET Error')
         finally:
             try:
                 sock.close()
@@ -1102,9 +1111,9 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     self.connection.sendall(content)
             if 'close' == headers.get('Connection',''):
                 self.close_connection = 1
-        except socket.error, (err, _):
+        except socket.error as e:
             # Connection closed before proxy return
-            if err in (10053, errno.EPIPE):
+            if e[0] in (10053, errno.EPIPE):
                 return
 
 class PHPProxyHandler(LocalProxyHandler):
@@ -1136,8 +1145,8 @@ class PHPProxyHandler(LocalProxyHandler):
                                 logging.info('Resole php fetchserver address.')
                                 common.HOSTS[fetchhost] = tuple(x[-1][0] for x in socket.getaddrinfo(fetchhost, 80))
                                 logging.info('Resole php fetchserver address OK. %s', common.HOSTS[fetchhost])
-                            except Exception, e:
-                                logging.exception('PHPProxyHandler.setup resolve fail: %s', e)
+                            except Exception:
+                                logging.exception('PHPProxyHandler.setup resolve fail')
         PHPProxyHandler.do_CONNECT = LocalProxyHandler.do_CONNECT_Tunnel
         PHPProxyHandler.do_GET     = LocalProxyHandler.do_METHOD_Tunnel
         PHPProxyHandler.do_POST    = LocalProxyHandler.do_METHOD_Tunnel
@@ -1199,8 +1208,8 @@ class LocalPacHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 with open(filename, 'wb') as fp:
                     fp.write(content)
                 logging.info('LocalPacHandler end sync remote pac')
-            except Exception, e:
-                logging.exception('LocalPacHandler sync remote pac failed:%s', e)
+            except Exception:
+                logging.exception('LocalPacHandler sync remote pac failed')
         with open(filename, 'rb') as fp:
             data = fp.read()
             self.send_response(200)
@@ -1215,6 +1224,45 @@ class LocalProxyAndPacHandler(LocalProxyHandler, LocalPacHandler):
             LocalPacHandler.do_GET(self)
         else:
             LocalProxyHandler.do_METHOD(self)
+
+def udpfetch(url, payload, method, headers, fetchserver, password=None, dns=None, on_error=None):
+    errors = []
+    params = {'url':url, 'method':method, 'headers':headers, 'payload':payload}
+    logging.debug('urlfetch params %s', params)
+    if password:
+        params['password'] = password
+    if common.FETCHMAX_SERVER:
+        params['fetchmax'] = common.FETCHMAX_SERVER
+    if dns:
+        params['dns'] = dns
+    params =  '&'.join('%s=%s' % (k, binascii.b2a_hex(v)) for k, v in params.iteritems())
+    for i in xrange(common.FETCHMAX_LOCAL):
+        try:
+            logging.debug('udpfetch %r by %r', url, fetchserver)
+            data = zlib.compress(params, 9)
+            # TODO: tcp over udp
+            return (0, data)
+        except Exception:
+            time.sleep(i+1)
+            continue
+    return (-1, errors)
+
+class LocalUDPHandler(LocalProxyHandler):
+    def handle_fetch_error(self, error):
+        logging.error('LocalUDPHandler handle_fetch_error %s', error)
+
+    def fetch(self, url, payload, method, headers):
+        return udpfetch(url, payload, method, headers, common.UDP_FETCHSERVER, password=common.UDP_PASSWORD, on_error=self.handle_fetch_error)
+
+    def setup(self):
+        LocalUDPHandler.do_CONNECT = LocalProxyHandler.do_CONNECT_Tunnel
+        LocalUDPHandler.do_GET     = LocalProxyHandler.do_METHOD_Tunnel
+        LocalUDPHandler.do_POST    = LocalProxyHandler.do_METHOD_Tunnel
+        LocalUDPHandler.do_PUT     = LocalProxyHandler.do_METHOD_Tunnel
+        LocalUDPHandler.do_DELETE  = LocalProxyHandler.do_METHOD_Tunnel
+        LocalUDPHandler.do_HEAD    = LocalUDPHandler.do_METHOD
+        LocalUDPHandler.setup      = BaseHTTPServer.BaseHTTPRequestHandler.setup
+        BaseHTTPServer.BaseHTTPRequestHandler.setup(self)
 
 class LocalProxyServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
     daemon_threads = True
@@ -1269,6 +1317,11 @@ def main():
     if common.PAC_ENABLE and common.PAC_PORT != common.LISTEN_PORT:
         httpd = LocalProxyServer((common.PAC_IP,common.PAC_PORT),LocalPacHandler)
         thread.start_new_thread(httpd.serve_forever,())
+
+    if common.UDP_ENABLE:
+        host, _, port = common.UDP_LISTEN.partition(':')
+        httpd = LocalProxyServer((host, int(port)), LocalUDPHandler)
+        thread.start_new_thread(httpd.serve_forever, ())
 
     if common.PAC_ENABLE and common.PAC_PORT == common.LISTEN_PORT:
         httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), LocalProxyAndPacHandler)
