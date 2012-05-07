@@ -9,9 +9,9 @@
 	<key>GoAgent:Local:ServicePassword</key>
 	<string></string>
 	<key>GoAgent:Local:GAEProfile</key>
-	<string>google_cn</string>
+	<real>0</real>
 	<key>GoAgent:Local:ConnectMode</key>
-	<string>HTTP</string>
+	<integer>0</integer>
 	<key>GoAgent:Local:ProxyEnabled</key>
 	<false/>
 	<key>GoAgent:Local:ProxyHost</key>
