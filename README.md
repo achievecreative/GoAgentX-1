@@ -2,6 +2,10 @@
 
 GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件，方便一般用户在 Mac OS X 上配置和使用 goagent、west-chamber-season-3、SSH 以及 stunnel。
 
+## 下载
+
+<https://github.com/ohdarling/GoAgentX/downloads>
+
 ## 功能
 
 * 支持 goagent，west-chamber-season-3，SSH，stunnel
