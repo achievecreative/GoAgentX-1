@@ -11,10 +11,11 @@ path = /fetch.py
 profile = {GoAgent:Local:GAEProfile}
 mulconn = 1
 
-[php]
+[paas]
 enable = 0
-listen = 127.0.0.1:8088|127.0.0.1:8089
-fetchserver = http://scan.org/index.php
+password = {GoAgent:Local:ServicePassword}
+listen = 127.0.0.1:{GoAgent:Local:Port}
+fetchserver = http://pyfetchphustest.cloud.com/
 
 [proxy]
 enable = {GoAgent:Local:ProxyEnabled}
@@ -63,12 +64,6 @@ update = 0
 remote = http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest
 timeout = 16
 direct = .253874.com|.cnn.com
-
-[crlf]
-enable = 0
-dns = 8.8.8.8
-cname = .google.com=www.google.com.hk|.appspot.com=www.google.com,mail.google.com,www.google.com.tw
-sites = .youtube.com|.ytimg.com|.appspot.com|.google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
 
 [useragent]
 enable = 0

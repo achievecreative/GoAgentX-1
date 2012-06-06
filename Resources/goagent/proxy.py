@@ -5,7 +5,7 @@
 
 from __future__ import with_statement
 
-__version__ = '1.8.5'
+__version__ = '1.8.9'
 __author__  = "{phus.lu,hewigovens}@gmail.com (Phus Lu and Hewig Xu)"
 __config__  = 'proxy.ini'
 
@@ -73,18 +73,11 @@ class Common(object):
         self.GAE_MULCONN          = self.CONFIG.getint('gae', 'mulconn')
         self.GAE_DEBUGLEVEL       = self.CONFIG.getint('gae', 'debuglevel') if self.CONFIG.has_option('gae', 'debuglevel') else 0
 
-        self.PHP_ENABLE           = self.CONFIG.getint('php', 'enable')
-        self.PHP_LISTEN           = self.CONFIG.get('php', 'listen')
-        self.PHP_PASSWORD         = self.CONFIG.get('php', 'password') if self.CONFIG.has_option('php', 'password') else ''
-        self.PHP_FETCHSERVER      = self.CONFIG.get('php', 'fetchserver')
-
-        if self.CONFIG.has_section('udp'):
-            self.UDP_ENABLE      = self.CONFIG.getint('udp', 'enable')
-            self.UDP_LISTEN      = self.CONFIG.get('udp', 'listen')
-            self.UDP_PASSWORD    = self.CONFIG.get('udp', 'password')
-            self.UDP_FETCHSERVER = self.CONFIG.get('udp', 'fetchserver')
-        else:
-            self.UDP_ENABLE      = 0
+        paas_section = 'paas' if self.CONFIG.has_section('paas') else 'php'
+        self.PAAS_ENABLE           = self.CONFIG.getint(paas_section, 'enable')
+        self.PAAS_LISTEN           = self.CONFIG.get(paas_section, 'listen')
+        self.PAAS_PASSWORD         = self.CONFIG.get(paas_section, 'password') if self.CONFIG.has_option(paas_section, 'password') else ''
+        self.PAAS_FETCHSERVER      = self.CONFIG.get(paas_section, 'fetchserver')
 
         if self.CONFIG.has_section('pac'):
             # XXX, cowork with GoAgentX
@@ -141,7 +134,7 @@ class Common(object):
         self.HOSTS                = dict((k, tuple(v.split('|')) if v else tuple()) for k, v in self.CONFIG.items('hosts'))
 
         self.build_gae_fetchserver()
-        self.PHP_FETCH_INFO       = dict(((listen.rpartition(':')[0], int(listen.rpartition(':')[-1])), (re.sub(r':\d+$', '', urlparse.urlparse(server).netloc), server)) for listen, server in zip(self.PHP_LISTEN.split('|'), self.PHP_FETCHSERVER.split('|')))
+        self.PAAS_FETCH_INFO       = dict(((listen.rpartition(':')[0], int(listen.rpartition(':')[-1])), (re.sub(r':\d+$', '', urlparse.urlparse(server).netloc), server)) for listen, server in zip(self.PAAS_LISTEN.split('|'), [re.sub(r'/index\.[^/]+$','/',x) for x in self.PAAS_FETCHSERVER.split('|')]))
 
     def build_gae_fetchserver(self):
         """rebuild gae fetch server config"""
@@ -169,25 +162,22 @@ class Common(object):
     def info(self):
         info = ''
         info += '------------------------------------------------------\n'
-        info += 'GoAgent Version : %s (python/%s pyopenssl/%s)\n' % (__version__, sys.version.partition(' ')[0], (OpenSSL.version.__version__ if OpenSSL else 'Disabled'))
-        info += 'Listen Address  : %s:%d\n' % (self.LISTEN_IP,self.LISTEN_PORT)
-        info += 'Local Proxy     : %s:%s\n' % (self.PROXY_HOST, self.PROXY_PORT) if self.PROXY_ENABLE else ''
-        info += 'Debug Level     : %s\n' % self.GAE_DEBUGLEVEL if self.GAE_DEBUGLEVEL else ''
-        info += 'GAE Mode        : %s\n' % self.GOOGLE_MODE if self.GAE_ENABLE else ''
-        info += 'GAE Profile     : %s\n' % self.GAE_PROFILE
-        info += 'GAE APPID       : %s\n' % '|'.join(self.GAE_APPIDS)
-        if common.PHP_ENABLE:
-            for (ip, port),(fetchhost, fetchserver) in common.PHP_FETCH_INFO.iteritems():
-                info += 'PHP Mode Listen : %s:%d\n' % (ip, port)
-                info += 'PHP FetchServer : %s\n' % fetchserver
-        if common.UDP_ENABLE:
-            info += 'UDP Mode Listen : %s\n' % common.UDP_LISTEN
-            info += 'UDP FetchServer : %s\n' % common.UDP_FETCHSERVER
+        info += 'GoAgent Version  : %s (python/%s pyopenssl/%s)\n' % (__version__, sys.version.partition(' ')[0], (OpenSSL.version.__version__ if OpenSSL else 'Disabled'))
+        info += 'Listen Address   : %s:%d\n' % (self.LISTEN_IP,self.LISTEN_PORT)
+        info += 'Local Proxy      : %s:%s\n' % (self.PROXY_HOST, self.PROXY_PORT) if self.PROXY_ENABLE else ''
+        info += 'Debug Level      : %s\n' % self.GAE_DEBUGLEVEL if self.GAE_DEBUGLEVEL else ''
+        info += 'GAE Mode         : %s\n' % self.GOOGLE_MODE if self.GAE_ENABLE else ''
+        info += 'GAE Profile      : %s\n' % self.GAE_PROFILE
+        info += 'GAE APPID        : %s\n' % '|'.join(self.GAE_APPIDS)
+        if common.PAAS_ENABLE:
+            for (ip, port),(fetchhost, fetchserver) in common.PAAS_FETCH_INFO.iteritems():
+                info += 'PAAS Listen      : %s:%d\n' % (ip, port)
+                info += 'PAAS FetchServer : %s\n' % fetchserver
         if common.PAC_ENABLE:
-            info += 'Pac Server      : http://%s:%d/%s\n' % (self.PAC_IP,self.PAC_PORT,self.PAC_FILE)
+            info += 'Pac Server       : http://%s:%d/%s\n' % (self.PAC_IP,self.PAC_PORT,self.PAC_FILE)
         if common.CRLF_ENABLE:
             #http://www.acunetix.com/websitesecurity/crlf-injection.htm
-            info += 'CRLF Injection  : %s\n' % '|'.join(self.CRLF_SITES)
+            info += 'CRLF Injection   : %s\n' % '|'.join(self.CRLF_SITES)
         info += '------------------------------------------------------\n'
         return info
 
@@ -726,10 +716,11 @@ def urlfetch(url, payload, method, headers, fetchhost, fetchserver, password=Non
             continue
     return (-1, errors)
 
-class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class GAEProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     skip_headers = frozenset(['Host', 'Vary', 'Via', 'X-Forwarded-For', 'Proxy-Authorization', 'Proxy-Connection', 'Upgrade', 'Keep-Alive'])
     SetupLock = threading.Lock()
     MessageClass = SimpleMessageClass
+    DefaultHosts = 'eJxdztsNgDAMQ9GNIvIoSXZjeApSqc3nUVT3ZojakFTR47wSNEhB8qXhorXg+kMjckGtQM9efDKf\n91Km4W+N4M1CldNIYMu+qSVoTm7MsG5E4KPd8apInNUUMo4betRQjg=='
 
     def handle_fetch_error(self, error):
         logging.info('handle_fetch_error self.path=%r', self.path)
@@ -742,15 +733,18 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             if error.code == 503:
                 common.GAE_APPIDS.append(common.GAE_APPIDS.pop(0))
                 logging.error('GAE Error(%s) switch to appid(%r)', error, common.GAE_APPIDS[0])
+            # 405 method not allowed, disable CRLF
+            if error.code == 405:
+                httplib.HTTPConnection.putrequest = _httplib_HTTPConnection_putrequest
         elif isinstance(error, urllib2.URLError):
             if error.reason[0] in (11004, 10051, 10060, 'timed out', 10054):
                 # it seems that google.cn is reseted, switch to https
                 common.GOOGLE_MODE = 'https'
         elif isinstance(error, httplib.HTTPException):
-            #common.GOOGLE_MODE = 'https'
-            pass
+            common.GOOGLE_MODE = 'https'
+            httplib.HTTPConnection.putrequest = _httplib_HTTPConnection_putrequest
         else:
-            logging.warning('LocalProxyHandler.handle_fetch_error Exception %s', error)
+            logging.warning('GAEProxyHandler.handle_fetch_error Exception %s', error)
             return {}
         common.build_gae_fetchserver()
         return {'fetchhost':common.GAE_FETCHHOST, 'fetchserver':common.GAE_FETCHSERVER}
@@ -858,25 +852,38 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.connection.sendall(data)
 
     def setup(self):
-        if not common.PROXY_ENABLE:
+        if not common.PROXY_ENABLE and common.GAE_PROFILE != 'google_ipv6':
             logging.info('resolve common.GOOGLE_HOSTS domian=%r to iplist', common.GOOGLE_HOSTS)
-            if any(x[-1] not in '1234567890' for x in common.GOOGLE_HOSTS):
-                with LocalProxyHandler.SetupLock:
-                    if any(x[-1] not in '1234567890' for x in common.GOOGLE_HOSTS):
-                        common.GOOGLE_HOSTS = tuple(set(sum((tuple(x[-1][0] for x in socket.getaddrinfo(host, 80)) if host[-1] not in '1234567890' else (host,) for host in common.GOOGLE_HOSTS), ())))
+            if any(not re.match(r'\d+\.\d+\.\d+\.\d+', x) for x in common.GOOGLE_HOSTS):
+                with GAEProxyHandler.SetupLock:
+                    if any(not re.match(r'\d+\.\d+\.\d+\.\d+', x) for x in common.GOOGLE_HOSTS):
+                        google_iplist = [host for host in common.GOOGLE_HOSTS if re.match(r'\d+\.\d+\.\d+\.\d+', host)]
+                        google_hosts = [host for host in common.GOOGLE_HOSTS if not re.match(r'\d+\.\d+\.\d+\.\d+', host)]
+                        try:
+                            google_hosts_iplist = [[x[-1][0] for x in socket.getaddrinfo(host, 80)] for host in google_hosts]
+                            need_remote_dns = google_hosts and any(len(iplist)==1 for iplist in google_hosts_iplist)
+                        except socket.gaierror:
+                            need_remote_dns = True
+                        if need_remote_dns:
+                            logging.warning('OOOPS, there are some mistake in socket.getaddrinfo, try remote dns_resolve')
+                            google_hosts_iplist = [list(dns_resolve(host)) for host in google_hosts]
+                        common.GOOGLE_HOSTS = tuple(set(sum(google_hosts_iplist, google_iplist)))
+                        if len(common.GOOGLE_HOSTS) == 0:
+                            logging.error('resolve common.GOOGLE_HOSTS domian to iplist return empty! use default iplist')
+                            common.GOOGLE_HOSTS = zlib.decompress(base64.b64decode(self.DefaultHosts)).split('|')
                         logging.info('resolve common.GOOGLE_HOSTS domian to iplist=%r', common.GOOGLE_HOSTS)
         if not common.GAE_MULCONN:
             MultiplexConnection.connect = MultiplexConnection.connect_single
         if not common.GAE_ENABLE:
-            LocalProxyHandler.do_CONNECT = LocalProxyHandler.do_CONNECT_Direct
-            LocalProxyHandler.do_METHOD  = LocalProxyHandler.do_METHOD_Direct
-        LocalProxyHandler.do_GET     = LocalProxyHandler.do_METHOD
-        LocalProxyHandler.do_POST    = LocalProxyHandler.do_METHOD
-        LocalProxyHandler.do_PUT     = LocalProxyHandler.do_METHOD
-        LocalProxyHandler.do_DELETE  = LocalProxyHandler.do_METHOD
-        LocalProxyHandler.do_OPTIONS = LocalProxyHandler.do_METHOD
-        LocalProxyHandler.do_HEAD    = LocalProxyHandler.do_METHOD
-        LocalProxyHandler.setup = BaseHTTPServer.BaseHTTPRequestHandler.setup
+            GAEProxyHandler.do_CONNECT = GAEProxyHandler.do_CONNECT_Direct
+            GAEProxyHandler.do_METHOD  = GAEProxyHandler.do_METHOD_Direct
+        GAEProxyHandler.do_GET     = GAEProxyHandler.do_METHOD
+        GAEProxyHandler.do_POST    = GAEProxyHandler.do_METHOD
+        GAEProxyHandler.do_PUT     = GAEProxyHandler.do_METHOD
+        GAEProxyHandler.do_DELETE  = GAEProxyHandler.do_METHOD
+        GAEProxyHandler.do_OPTIONS = GAEProxyHandler.do_METHOD
+        GAEProxyHandler.do_HEAD    = GAEProxyHandler.do_METHOD
+        GAEProxyHandler.setup = BaseHTTPServer.BaseHTTPRequestHandler.setup
         BaseHTTPServer.BaseHTTPRequestHandler.setup(self)
 
     def do_CONNECT(self):
@@ -893,7 +900,7 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 except StopIteration:
                     cname = host
                 logging.info('crlf dns_resolve(host=%r, cname=%r dnsserver=%r)', host, cname, common.CRLF_DNS)
-                iplist = tuple(set(sum((dns_resolve(x, common.CRLF_DNS) if host[-1] not in '1234567890' else (host,) for x in cname.split(',')), ())))
+                iplist = tuple(set(sum((dns_resolve(x, common.CRLF_DNS) if not re.match(r'\d+\.\d+\.\d+\.\d+', host) else (host,) for x in cname.split(',')), ())))
                 common.HOSTS[host] = iplist
             return self.do_CONNECT_Direct()
         else:
@@ -901,7 +908,7 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     def do_CONNECT_Direct(self):
         try:
-            logging.debug('LocalProxyHandler.do_CONNECT_Directt %s' % self.path)
+            logging.debug('GAEProxyHandler.do_CONNECT_Directt %s' % self.path)
             host, _, port = self.path.rpartition(':')
             port = int(port)
             idlecall = None
@@ -934,7 +941,7 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 sock.sendall(data)
             socket_forward(self.connection, sock, idlecall=idlecall)
         except Exception:
-            logging.exception('LocalProxyHandler.do_CONNECT_Direct Error')
+            logging.exception('GAEProxyHandler.do_CONNECT_Direct Error')
         finally:
             try:
                 sock.close()
@@ -997,7 +1004,7 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 except StopIteration:
                     cname = host
                 logging.info('crlf dns_resolve(host=%r, cname=%r dnsserver=%r)', host, cname, common.CRLF_DNS)
-                iplist = tuple(set(sum((dns_resolve(x, common.CRLF_DNS) if host[-1] not in '1234567890' else (host,) for x in cname.split(',')), ())))
+                iplist = tuple(set(sum((dns_resolve(x, common.CRLF_DNS) if re.match(r'\d+\.\d+\.\d+\.\d+', host) else (host,) for x in cname.split(',')), ())))
                 common.HOSTS[host] = iplist
             return self.do_METHOD_Direct()
         else:
@@ -1044,7 +1051,7 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             sock.sendall(data)
             socket_forward(self.connection, sock, idlecall=idlecall)
         except Exception:
-            logging.exception('LocalProxyHandler.do_GET Error')
+            logging.exception('GAEProxyHandler.do_GET Error')
         finally:
             try:
                 sock.close()
@@ -1116,53 +1123,54 @@ class LocalProxyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             if e[0] in (10053, errno.EPIPE):
                 return
 
-class PHPProxyHandler(LocalProxyHandler):
+class PAASProxyHandler(GAEProxyHandler):
 
     HOSTS = {}
 
     def handle_fetch_error(self, error):
-        logging.error('PHPProxyHandler handle_fetch_error %s', error)
+        logging.error('PAASProxyHandler handle_fetch_error %s', error)
+        httplib.HTTPConnection.putrequest = _httplib_HTTPConnection_putrequest
 
     def fetch(self, url, payload, method, headers):
-        fetchhost, fetchserver = common.PHP_FETCH_INFO[self.server.server_address]
+        fetchhost, fetchserver = common.PAAS_FETCH_INFO[self.server.server_address]
         dns  = None
         host = self.headers.get('Host')
-        if host in PHPProxyHandler.HOSTS:
+        if host in PAASProxyHandler.HOSTS:
             dns = random.choice(tuple(x[-1][0] for x in socket.getaddrinfo(host, 80)))
-        return urlfetch(url, payload, method, headers, fetchhost, fetchserver, password=common.PHP_PASSWORD, dns=dns, on_error=self.handle_fetch_error)
+        return urlfetch(url, payload, method, headers, fetchhost, fetchserver, password=common.PAAS_PASSWORD, dns=dns, on_error=self.handle_fetch_error)
 
     def setup(self):
-        PHPProxyHandler.HOSTS = dict((k, tuple(v.split('|')) if v else None) for k, v in common.CONFIG.items('hosts'))
+        PAASProxyHandler.HOSTS = dict((k, tuple(v.split('|')) if v else None) for k, v in common.CONFIG.items('hosts'))
         if common.PROXY_ENABLE:
-            logging.info('Local Proxy is enable, PHPProxyHandler dont resole DNS')
+            logging.info('Local Proxy is enable, PAASProxyHandler dont resole DNS')
         else:
-            for fetchhost, _ in common.PHP_FETCH_INFO.itervalues():
-                logging.info('PHPProxyHandler.setup check %s is in common.HOSTS', fetchhost)
+            for fetchhost, _ in common.PAAS_FETCH_INFO.itervalues():
+                logging.info('PAASProxyHandler.setup check %s is in common.HOSTS', fetchhost)
                 if fetchhost not in common.HOSTS:
-                    with LocalProxyHandler.SetupLock:
+                    with GAEProxyHandler.SetupLock:
                         if fetchhost not in common.HOSTS:
                             try:
-                                logging.info('Resole php fetchserver address.')
+                                logging.info('Resole PAAS fetchserver address.')
                                 common.HOSTS[fetchhost] = tuple(x[-1][0] for x in socket.getaddrinfo(fetchhost, 80))
-                                logging.info('Resole php fetchserver address OK. %s', common.HOSTS[fetchhost])
+                                logging.info('Resole PAAS fetchserver address OK. %s', common.HOSTS[fetchhost])
                             except Exception:
-                                logging.exception('PHPProxyHandler.setup resolve fail')
-        PHPProxyHandler.do_CONNECT = LocalProxyHandler.do_CONNECT_Tunnel
-        PHPProxyHandler.do_GET     = LocalProxyHandler.do_METHOD_Tunnel
-        PHPProxyHandler.do_POST    = LocalProxyHandler.do_METHOD_Tunnel
-        PHPProxyHandler.do_PUT     = LocalProxyHandler.do_METHOD_Tunnel
-        PHPProxyHandler.do_DELETE  = LocalProxyHandler.do_METHOD_Tunnel
-        PHPProxyHandler.do_HEAD    = PHPProxyHandler.do_METHOD
-        PHPProxyHandler.setup      = BaseHTTPServer.BaseHTTPRequestHandler.setup
+                                logging.exception('PAASProxyHandler.setup resolve fail')
+        PAASProxyHandler.do_CONNECT = GAEProxyHandler.do_CONNECT_Tunnel
+        PAASProxyHandler.do_GET     = GAEProxyHandler.do_METHOD_Tunnel
+        PAASProxyHandler.do_POST    = GAEProxyHandler.do_METHOD_Tunnel
+        PAASProxyHandler.do_PUT     = GAEProxyHandler.do_METHOD_Tunnel
+        PAASProxyHandler.do_DELETE  = GAEProxyHandler.do_METHOD_Tunnel
+        PAASProxyHandler.do_HEAD    = PAASProxyHandler.do_METHOD
+        PAASProxyHandler.setup      = BaseHTTPServer.BaseHTTPRequestHandler.setup
         BaseHTTPServer.BaseHTTPRequestHandler.setup(self)
 
-class LocalPacHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class PacServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def _generate_pac(self):
         url = common.PAC_REMOTE
-        logging.info('LocalPacHandler._generate_pac url=%r, timeout=%r', url, common.PAC_TIMEOUT)
+        logging.info('PacServerHandler._generate_pac url=%r, timeout=%r', url, common.PAC_TIMEOUT)
         content = urllib2.urlopen(url, timeout=common.PAC_TIMEOUT).read()
         cndatas = re.findall(r'(?i)apnic\|cn\|ipv4\|([0-9\.]+)\|([0-9]+)\|[0-9]+\|a.*', content)
-        logging.info('LocalPacHandler._generate_pac download %s bytes %s items', len(content), len(cndatas))
+        logging.info('PacServerHandler._generate_pac download %s bytes %s items', len(content), len(cndatas))
         assert len(cndatas) > 0
         cndatas = [(ip, socket.inet_ntoa(struct.pack('!I', (int(n)-1)^0xffffffff))) for ip, n in cndatas]
         cndataslist = [[] for i in xrange(256)]
@@ -1203,13 +1211,13 @@ class LocalPacHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             return self.send_error(404, 'Not Found')
         if common.PAC_UPDATE and time.time() - os.path.getmtime(common.PAC_FILE) > 86400:
             try:
-                logging.info('LocalPacHandler begin sync remote pac')
+                logging.info('PacServerHandler begin sync remote pac')
                 content = self._generate_pac()
                 with open(filename, 'wb') as fp:
                     fp.write(content)
-                logging.info('LocalPacHandler end sync remote pac')
+                logging.info('PacServerHandler end sync remote pac')
             except Exception:
-                logging.exception('LocalPacHandler sync remote pac failed')
+                logging.exception('PacServerHandler sync remote pac failed')
         with open(filename, 'rb') as fp:
             data = fp.read()
             self.send_response(200)
@@ -1218,51 +1226,12 @@ class LocalPacHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             self.wfile.write(data)
             self.wfile.close()
 
-class LocalProxyAndPacHandler(LocalProxyHandler, LocalPacHandler):
+class ProxyAndPacHandler(GAEProxyHandler, PacServerHandler):
     def do_GET(self):
         if self.path == '/'+common.PAC_FILE:
-            LocalPacHandler.do_GET(self)
+            PacServerHandler.do_GET(self)
         else:
-            LocalProxyHandler.do_METHOD(self)
-
-def udpfetch(url, payload, method, headers, fetchserver, password=None, dns=None, on_error=None):
-    errors = []
-    params = {'url':url, 'method':method, 'headers':headers, 'payload':payload}
-    logging.debug('urlfetch params %s', params)
-    if password:
-        params['password'] = password
-    if common.FETCHMAX_SERVER:
-        params['fetchmax'] = common.FETCHMAX_SERVER
-    if dns:
-        params['dns'] = dns
-    params =  '&'.join('%s=%s' % (k, binascii.b2a_hex(v)) for k, v in params.iteritems())
-    for i in xrange(common.FETCHMAX_LOCAL):
-        try:
-            logging.debug('udpfetch %r by %r', url, fetchserver)
-            data = zlib.compress(params, 9)
-            # TODO: tcp over udp
-            return (0, data)
-        except Exception:
-            time.sleep(i+1)
-            continue
-    return (-1, errors)
-
-class LocalUDPHandler(LocalProxyHandler):
-    def handle_fetch_error(self, error):
-        logging.error('LocalUDPHandler handle_fetch_error %s', error)
-
-    def fetch(self, url, payload, method, headers):
-        return udpfetch(url, payload, method, headers, common.UDP_FETCHSERVER, password=common.UDP_PASSWORD, on_error=self.handle_fetch_error)
-
-    def setup(self):
-        LocalUDPHandler.do_CONNECT = LocalProxyHandler.do_CONNECT_Tunnel
-        LocalUDPHandler.do_GET     = LocalProxyHandler.do_METHOD_Tunnel
-        LocalUDPHandler.do_POST    = LocalProxyHandler.do_METHOD_Tunnel
-        LocalUDPHandler.do_PUT     = LocalProxyHandler.do_METHOD_Tunnel
-        LocalUDPHandler.do_DELETE  = LocalProxyHandler.do_METHOD_Tunnel
-        LocalUDPHandler.do_HEAD    = LocalUDPHandler.do_METHOD
-        LocalUDPHandler.setup      = BaseHTTPServer.BaseHTTPRequestHandler.setup
-        BaseHTTPServer.BaseHTTPRequestHandler.setup(self)
+            GAEProxyHandler.do_METHOD(self)
 
 class LocalProxyServer(SocketServer.ThreadingMixIn, BaseHTTPServer.HTTPServer):
     daemon_threads = True
@@ -1309,12 +1278,27 @@ def main():
 
     LocalProxyServer.address_family = (socket.AF_INET, socket.AF_INET6)[':' in common.LISTEN_IP]
 
-    if common.PHP_ENABLE:
-        for address in common.PHP_FETCH_INFO:
-            httpd = LocalProxyServer(address, PHPProxyHandler)
+    if common.PAAS_ENABLE:
+        for address in common.PAAS_FETCH_INFO:
+            httpd = LocalProxyServer(address, PAASProxyHandler)
             thread.start_new_thread(httpd.serve_forever, ())
 
     if common.PAC_ENABLE and common.PAC_PORT != common.LISTEN_PORT:
+        httpd = LocalProxyServer((common.PAC_IP,common.PAC_PORT),PacServerHandler)
+        thread.start_new_thread(httpd.serve_forever,())
+
+    if common.PAC_ENABLE and common.PAC_PORT == common.LISTEN_PORT:
+        httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), ProxyAndPacHandler)
+    else:
+        httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), GAEProxyHandler)
+    httpd.serve_forever()
+
+if __name__ == '__main__':
+   try:
+       main()
+   except KeyboardInterrupt:
+       pass
+RT != common.LISTEN_PORT:
         httpd = LocalProxyServer((common.PAC_IP,common.PAC_PORT),LocalPacHandler)
         thread.start_new_thread(httpd.serve_forever,())
 

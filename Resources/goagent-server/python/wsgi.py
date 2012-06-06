@@ -3,7 +3,7 @@
 # Based on GAppProxy by Du XiaoGang <dugang@188.com>
 # Based on WallProxy 0.4.0 by hexieshe <www.ehust@gmail.com>
 
-__version__ = '1.8.5'
+__version__ = '1.8.9'
 __author__ =  'phus.lu@gmail.com'
 __password__ = ''
 
@@ -12,6 +12,7 @@ try:
     from google.appengine.api import urlfetch
     from google.appengine.runtime import apiproxy_errors, DeadlineExceededError
 except ImportError:
+    import httplib, urlparse
     urlfetch = None
 
 FetchMax = 3
@@ -22,16 +23,16 @@ def encode_data(dic):
     return '&'.join('%s=%s' % (k, binascii.b2a_hex(v)) for k, v in dic.iteritems() if v)
 
 def decode_data(qs):
-    return dict((k, binascii.a2b_hex(v)) for k, _, v in (x.partition('=') for x in qs.split('&')))
+    return dict((k,binascii.a2b_hex(v)) for k, _, v in (x.partition('=') for x in qs.split('&')))
 
-def send_response(start_response, status, headers, content):
+def send_response(start_response, status, headers, content, content_type='image/gif'):
     strheaders = encode_data(headers)
     #logging.debug('response status=%s, headers=%s, content length=%d', status, headers, len(content))
     if headers.get('content-type', '').startswith(('text/', 'application/json', 'application/javascript')):
         data = '1' + zlib.compress('%s%s%s' % (struct.pack('>3I', status, len(strheaders), len(content)), strheaders, content))
     else:
         data = '0%s%s%s' % (struct.pack('>3I', status, len(strheaders), len(content)), strheaders, content)
-    start_response('200 OK', [('Content-type', 'image/gif')])
+    start_response('200 OK', [('Content-type', content_type)])
     return [data]
 
 def send_notify(start_response, method, url, status, content):
@@ -40,8 +41,6 @@ def send_notify(start_response, method, url, status, content):
     send_response(start_response, status, {'content-type':'text/html'}, content)
 
 def paas_post(environ, start_response):
-    import httplib, urlparse
-
     request = decode_data(zlib.decompress(environ['wsgi.input'].read(int(environ.get('CONTENT_LENGTH') or -1))))
     #logging.debug('post() get fetch request %s', request)
 
@@ -49,14 +48,19 @@ def paas_post(environ, start_response):
     url = request['url']
     payload = request['payload'] or None
 
-    if __password__ and __password__ != request.get('password', ''):
-        return send_notify(start_response, method, url, 403, 'Wrong password.')
-
-    deadline = Deadline
-
-    headers = dict((k.title(), v.lstrip()) for k, _, v in (line.partition(':') for line in request['headers'].splitlines()))
+    headers = dict((k.title(),v.lstrip()) for k, _, v in (line.partition(':') for line in request['headers'].splitlines()))
     headers['Connection'] = 'close'
 
+    if 'dns' in request:
+        headers['Host'] = urlparse.urlparse(url).netloc
+        url = re.sub(r'://.+?([:/])', '://%s\\1' % request['dns'], url)
+
+    if __password__ and __password__ != request.get('password', ''):
+        # return send_notify(start_response, method, url, 403, 'Wrong password.')
+        # avoid GFW detect
+        return paas_get(environ, start_response)
+
+    deadline = Deadline
     errors = []
 
     scheme, netloc, path, params, query, fragment = urlparse.urlparse(url)
@@ -65,11 +69,18 @@ def paas_post(environ, start_response):
         path += ';' + params
     if query:
         path += '?' + query
-    for i in xrange(int(request.get('fetchmax', FetchMax))):
+    for i in xrange(FetchMax if 'fetchmax' not in request else int(request['fetchmax'])):
         try:
             conn = HTTPConnection(netloc, timeout=deadline)
             conn.request(method, path, body=payload, headers=headers)
             response = conn.getresponse()
+            content_length = response.getheader('content-length')
+            if content_length and int(content_length) > FetchMaxSize:
+                m = re.search('bytes=(\d+)-', headers.get('Range', ''))
+                start = int(m.group(1) if m else 0)
+                headers['Range'] = 'bytes=%d-%d' % (start, start+FetchMaxSize-1)
+                response.close()
+                continue
             break
         except Exception, e:
             errors.append(str(e))
@@ -87,11 +98,11 @@ def paas_post(environ, start_response):
             headers[key] = value
     headers['connection'] = 'close'
 
-    return send_response(start_response, response.status, headers, response.read())
+    return send_response(start_response, response.status, headers, response.read(), 'text/html; charset=UTF-8')
 
 def paas_get(environ, start_response):
     redirect_url = 'http://www.google.cn/webhp?source=g_cn'
-    start_response('302 Found', [('Location', redirect_url)])
+    start_response('200 OK', [('Content-Type', 'text/html; charset=UTF-8')])
     return ['']
 
 def gae_post(environ, start_response):
@@ -109,16 +120,13 @@ def gae_post(environ, start_response):
     if not fetchmethod:
         return send_notify(start_response, method, url, 501, 'Invalid Method')
 
-    if 'http' != url[:4]:
-        return send_notify(start_response, method, url, 501, 'Unsupported Scheme')
-
     deadline = Deadline
 
-    headers = dict((k.title(), v.lstrip()) for k, _, v in (line.partition(':') for line in request['headers'].splitlines()))
+    headers = dict((k.title(),v.lstrip()) for k, _, v in (line.partition(':') for line in request['headers'].splitlines()))
     headers['Connection'] = 'close'
 
     errors = []
-    for i in xrange(int(request.get('fetchmax', FetchMax))):
+    for i in xrange(FetchMax if 'fetchmax' not in request else int(request['fetchmax'])):
         try:
             response = urlfetch.fetch(url, payload, fetchmethod, headers, False, False, deadline, False)
             break
@@ -184,23 +192,29 @@ def application(environ, start_response):
     if urlfetch and environ['REQUEST_METHOD'] == 'POST':
         return gae_post(environ, start_response)
     elif environ['REQUEST_METHOD'] == 'POST':
-        return paas_post(environ, start_response)
+        try:
+            return paas_post(environ, start_response)
+        except Exception as e:
+            logging.exception('paas_post(environ, start_response) exception:%s', e)
     elif urlfetch and environ['REQUEST_METHOD'] == 'GET':
         return gae_get(environ, start_response)
     else:
         return paas_get(environ, start_response)
 
+app = application
+
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s - - %(asctime)s %(message)s', datefmt='[%b %d %H:%M:%S]')
     import gevent, gevent.pywsgi, gevent.monkey
     gevent.monkey.patch_all(dns=gevent.version_info[0]>=1)
-    def WSGIHandler_read_requestline(self):
+    def read_requestline(self):
         line = self.rfile.readline(8192)
         while line == '\r\n':
             line = self.rfile.readline(8192)
         return line
-    gevent.pywsgi.WSGIHandler.read_requestline = WSGIHandler_read_requestline
-    server = gevent.pywsgi.WSGIServer(('', 80), application)
+    gevent.pywsgi.WSGIHandler.read_requestline = read_requestline
+    host, _, port = sys.argv[1].rpartition(':') if len(sys.argv) == 2 else ('', ':', 8080)
+    server = gevent.pywsgi.WSGIServer((host, int(port)), application)
     logging.info('serving http://%s:%s/wsgi.py', server.address[0] or '0.0.0.0', server.address[1])
     server.serve_forever()
 
