@@ -13,7 +13,7 @@ except IOError:
 # line, it's possible required libraries won't be in your searchable path
 # 
 
-from wsgi import application
+from wsgi import app as application
 
 #
 # Below for testing only

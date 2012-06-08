@@ -5,7 +5,7 @@
 
 from __future__ import with_statement
 
-__version__ = '1.8.9'
+__version__ = '1.8.10'
 __author__  = "{phus.lu,hewigovens}@gmail.com (Phus Lu and Hewig Xu)"
 __config__  = 'proxy.ini'
 
@@ -205,10 +205,9 @@ class MultiplexConnection(object):
             hosts = random.sample(hostlist, window) if len(hostlist) > window else hostlist
             logging.debug('MultiplexConnection try connect hosts=%s, port=%d', hosts, port)
             socks = []
-            sock_family = socket.AF_INET6 if ':' in hosts[0] else socket.AF_INET
             # multiple connect start here
             for host in hosts:
-                sock = socket.socket(sock_family, socket.SOCK_STREAM)
+                sock = socket.socket(2 if ':' not in host else 23)
                 sock.setblocking(0)
                 #logging.debug('MultiplexConnection connect_ex (%r, %r)', host, port)
                 err = sock.connect_ex((host, port))
@@ -1291,26 +1290,6 @@ def main():
         httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), ProxyAndPacHandler)
     else:
         httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), GAEProxyHandler)
-    httpd.serve_forever()
-
-if __name__ == '__main__':
-   try:
-       main()
-   except KeyboardInterrupt:
-       pass
-RT != common.LISTEN_PORT:
-        httpd = LocalProxyServer((common.PAC_IP,common.PAC_PORT),LocalPacHandler)
-        thread.start_new_thread(httpd.serve_forever,())
-
-    if common.UDP_ENABLE:
-        host, _, port = common.UDP_LISTEN.partition(':')
-        httpd = LocalProxyServer((host, int(port)), LocalUDPHandler)
-        thread.start_new_thread(httpd.serve_forever, ())
-
-    if common.PAC_ENABLE and common.PAC_PORT == common.LISTEN_PORT:
-        httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), LocalProxyAndPacHandler)
-    else:
-        httpd = LocalProxyServer((common.LISTEN_IP, common.LISTEN_PORT), LocalProxyHandler)
     httpd.serve_forever()
 
 if __name__ == '__main__':

@@ -6,5 +6,5 @@ threadsafe: true
 
 handlers:
 - url: /fetch\.py
-  script: wsgi.application
+  script: wsgi.app
   secure: optional

@@ -1,1 +1,1 @@
-警告：请勿传播 Python PAAS 部署方法。
+警告：请勿传播 Python PAAS 部署方法。使用是请务必使用https和password

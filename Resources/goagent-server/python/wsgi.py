@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # coding=utf-8
-# Based on GAppProxy by Du XiaoGang <dugang@188.com>
-# Based on WallProxy 0.4.0 by hexieshe <www.ehust@gmail.com>
 
-__version__ = '1.8.9'
+__version__ = '1.8.10'
 __author__ =  'phus.lu@gmail.com'
 __password__ = ''
 
-import sys, os, re, time, struct, zlib, binascii, logging
+import sys, os, re, time, struct, zlib, binascii, logging, httplib, urlparse
 try:
     from google.appengine.api import urlfetch
     from google.appengine.runtime import apiproxy_errors, DeadlineExceededError
 except ImportError:
-    import httplib, urlparse
     urlfetch = None
+try:
+    import sae
+except ImportError:
+    sae = None
 
 FetchMax = 3
 FetchMaxSize = 1024*1024*4
@@ -74,8 +75,7 @@ def paas_post(environ, start_response):
             conn = HTTPConnection(netloc, timeout=deadline)
             conn.request(method, path, body=payload, headers=headers)
             response = conn.getresponse()
-            content_length = response.getheader('content-length')
-            if content_length and int(content_length) > FetchMaxSize:
+            if response.length and response.length > FetchMaxSize:
                 m = re.search('bytes=(\d+)-', headers.get('Range', ''))
                 start = int(m.group(1) if m else 0)
                 headers['Range'] = 'bytes=%d-%d' % (start, start+FetchMaxSize-1)
@@ -101,9 +101,17 @@ def paas_post(environ, start_response):
     return send_response(start_response, response.status, headers, response.read(), 'text/html; charset=UTF-8')
 
 def paas_get(environ, start_response):
-    redirect_url = 'http://www.google.cn/webhp?source=g_cn'
-    start_response('200 OK', [('Content-Type', 'text/html; charset=UTF-8')])
-    return ['']
+    host = 'go%s%s' % (int(time.time()*1000000), environ['HTTP_HOST'])
+    try:
+        conn = httplib.HTTPConnection(host)
+        conn.request('GET', '/')
+        response = conn.getresponse()
+        message = '%s %s' % (response.status, response.reason)
+        start_response(message, response.getheaders())
+        return [response.read()]
+    except Exception as e:
+        start_response('503 Service Unavailable', [('Content-Type', 'text/html; charset=UTF-8')])
+        return ['']
 
 def gae_post(environ, start_response):
     request = decode_data(zlib.decompress(environ['wsgi.input'].read(int(environ['CONTENT_LENGTH']))))
@@ -184,11 +192,11 @@ def gae_post(environ, start_response):
 def gae_get(environ, start_response):
     timestamp = long(os.environ['CURRENT_VERSION_ID'].split('.')[1])/pow(2,28)
     ctime = time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime(timestamp+8*3600))
-    html = u'GoAgent Python Server %s 已经在工作了，部署时间 %s\n' % (__version__, ctime)
+    html = u'GoAgent Python Server %s \u5df2\u7ecf\u5728\u5de5\u4f5c\u4e86\uff0c\u90e8\u7f72\u65f6\u95f4 %s\n' % (__version__, ctime)
     start_response('200 OK', [('Content-type', 'text/plain; charset=utf-8')])
     return [html.encode('utf8')]
 
-def application(environ, start_response):
+def app(environ, start_response):
     if urlfetch and environ['REQUEST_METHOD'] == 'POST':
         return gae_post(environ, start_response)
     elif environ['REQUEST_METHOD'] == 'POST':
@@ -201,7 +209,10 @@ def application(environ, start_response):
     else:
         return paas_get(environ, start_response)
 
-app = application
+if sae:
+    application = sae.create_wsgi_app(app)
+else:
+    application = app
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s - - %(asctime)s %(message)s', datefmt='[%b %d %H:%M:%S]')
@@ -215,6 +226,7 @@ if __name__ == '__main__':
     gevent.pywsgi.WSGIHandler.read_requestline = read_requestline
     host, _, port = sys.argv[1].rpartition(':') if len(sys.argv) == 2 else ('', ':', 8080)
     server = gevent.pywsgi.WSGIServer((host, int(port)), application)
+    server.environ.pop('SERVER_SOFTWARE')
     logging.info('serving http://%s:%s/wsgi.py', server.address[0] or '0.0.0.0', server.address[1])
     server.serve_forever()
 
