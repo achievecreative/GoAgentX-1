@@ -356,7 +356,7 @@
 							<string key="NSFrame">{{13, 10}, {474, 384}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView" ref="854588309"/>
+							<reference key="NSNextKeyView" ref="286464401"/>
 							<string key="NSReuseIdentifierKey">_NS:608</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="827758957">
@@ -688,7 +688,7 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 								</object>
 								<object class="NSTabViewItem" id="778794159">
 									<object class="NSView" key="NSView" id="854588309">
-										<reference key="NSNextResponder" ref="188257455"/>
+										<nil key="NSNextResponder"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSTabView" id="721796931">
@@ -696,7 +696,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 												<int key="NSvFlags">18</int>
 												<string key="NSFrameSize">{454, 339}</string>
 												<reference key="NSSuperview" ref="854588309"/>
-												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="314639335"/>
 												<string key="NSReuseIdentifierKey">_NS:608</string>
 												<array class="NSMutableArray" key="NSTabViewItems">
@@ -1196,7 +1195,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 276}, {60, 17}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="987232730"/>
 																	<string key="NSReuseIdentifierKey">_NS:3944</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1216,7 +1214,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">266</int>
 																	<string key="NSFrame">{{68, 273}, {359, 22}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="168205738"/>
 																	<string key="NSReuseIdentifierKey">_NS:903</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1238,7 +1235,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">266</int>
 																	<string key="NSFrame">{{68, 192}, {359, 22}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="574488379"/>
 																	<string key="NSReuseIdentifierKey">_NS:903</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1260,7 +1256,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">266</int>
 																	<string key="NSFrame">{{68, 246}, {359, 22}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="482539214"/>
 																	<string key="NSReuseIdentifierKey">_NS:903</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1282,7 +1277,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 249}, {56, 17}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="342968477"/>
 																	<string key="NSReuseIdentifierKey">_NS:3944</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1302,7 +1296,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 222}, {43, 17}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="269618483"/>
 																	<string key="NSReuseIdentifierKey">_NS:3944</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1322,7 +1315,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">266</int>
 																	<string key="NSFrame">{{68, 219}, {359, 22}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="455253129"/>
 																	<string key="NSReuseIdentifierKey">_NS:3279</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1347,7 +1339,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 195}, {69, 17}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView" ref="488773996"/>
 																	<string key="NSReuseIdentifierKey">_NS:3944</string>
 																	<bool key="NSEnabled">YES</bool>
@@ -1367,7 +1358,6 @@ AAEAAQAAAT0AAwAAAAEAAgAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 																	<int key="NSvFlags">268</int>
 																	<string key="NSFrame">{{4, 110}, {426, 68}}</string>
 																	<reference key="NSSuperview" ref="314639335"/>
-																	<reference key="NSWindow"/>
 																	<reference key="NSNextKeyView"/>
 																	<string key="NSReuseIdentifierKey">_NS:360</string>
 																	<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -1388,7 +1378,6 @@ jOaIkOmFjee9ruWQjuivt+i/m+WFpeKAnOeKtuaAgeKAneagh+etvuW8gOWni+mDqOe9suOAgg</stri
 															</array>
 															<string key="NSFrame">{{10, 7}, {434, 301}}</string>
 															<reference key="NSSuperview" ref="721796931"/>
-															<reference key="NSWindow"/>
 															<reference key="NSNextKeyView" ref="361275938"/>
 															<string key="NSReuseIdentifierKey">_NS:620</string>
 														</object>
@@ -2226,8 +2215,6 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 											</object>
 										</array>
 										<string key="NSFrame">{{10, 33}, {454, 338}}</string>
-										<reference key="NSSuperview" ref="188257455"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="721796931"/>
 									</object>
 									<string key="NSLabel">服务配置</string>
@@ -2236,7 +2223,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 								</object>
 								<object class="NSTabViewItem" id="704581200">
 									<object class="NSView" key="NSView" id="286464401">
-										<nil key="NSNextResponder"/>
+										<reference key="NSNextResponder" ref="188257455"/>
 										<int key="NSvFlags">256</int>
 										<array class="NSMutableArray" key="NSSubviews">
 											<object class="NSButton" id="803527211">
@@ -2244,6 +2231,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 												<int key="NSvFlags">266</int>
 												<string key="NSFrame">{{15, 319}, {424, 18}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="445164988"/>
 												<string key="NSReuseIdentifierKey">_NS:771</string>
 												<bool key="NSEnabled">YES</bool>
@@ -2267,22 +2255,54 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 											<object class="NSButton" id="30936361">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{15, 271}, {424, 18}}</string>
+												<string key="NSFrame">{{15, 215}, {424, 18}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="171781092"/>
 												<string key="NSReuseIdentifierKey">_NS:771</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="2412763">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">GoAgentX 启动成功后自动设置系统代理</string>
+													<string key="NSContents">GoAgentX 启动成功后修改系统代理设置为“全局通过代理访问”</string>
 													<reference key="NSSupport" ref="988758687"/>
 													<string key="NSCellIdentifier">_NS:771</string>
 													<reference key="NSControlView" ref="30936361"/>
 													<int key="NSButtonFlags">1211912703</int>
 													<int key="NSButtonFlags2">2</int>
-													<reference key="NSNormalImage" ref="904317318"/>
-													<reference key="NSAlternateImage" ref="302537133"/>
+													<object class="NSCustomResource" key="NSNormalImage" id="512120556">
+														<string key="NSClassName">NSImage</string>
+														<string key="NSResourceName">NSRadioButton</string>
+													</object>
+													<object class="NSButtonImageSource" key="NSAlternateImage" id="787226254">
+														<string key="NSImageName">NSRadioButton</string>
+													</object>
+													<string key="NSAlternateContents"/>
+													<string key="NSKeyEquivalent"/>
+													<int key="NSPeriodicDelay">200</int>
+													<int key="NSPeriodicInterval">25</int>
+												</object>
+											</object>
+											<object class="NSButton" id="274476089">
+												<reference key="NSNextResponder" ref="286464401"/>
+												<int key="NSvFlags">266</int>
+												<string key="NSFrame">{{15, 274}, {424, 18}}</string>
+												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="775111976"/>
+												<string key="NSReuseIdentifierKey">_NS:771</string>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSButtonCell" key="NSCell" id="292858014">
+													<int key="NSCellFlags">-2080244224</int>
+													<int key="NSCellFlags2">0</int>
+													<string key="NSContents">GoAgentX 启动成功后不修改系统代理设置</string>
+													<reference key="NSSupport" ref="988758687"/>
+													<string key="NSCellIdentifier">_NS:771</string>
+													<reference key="NSControlView" ref="274476089"/>
+													<int key="NSButtonFlags">1211912703</int>
+													<int key="NSButtonFlags2">2</int>
+													<reference key="NSNormalImage" ref="512120556"/>
+													<reference key="NSAlternateImage" ref="787226254"/>
 													<string key="NSAlternateContents"/>
 													<string key="NSKeyEquivalent"/>
 													<int key="NSPeriodicDelay">200</int>
@@ -2292,22 +2312,23 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 											<object class="NSButton" id="1590065">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{15, 209}, {424, 18}}</string>
+												<string key="NSFrame">{{15, 170}, {424, 18}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="630475160"/>
 												<string key="NSReuseIdentifierKey">_NS:771</string>
 												<bool key="NSEnabled">YES</bool>
 												<object class="NSButtonCell" key="NSCell" id="396307989">
 													<int key="NSCellFlags">-2080244224</int>
 													<int key="NSCellFlags2">0</int>
-													<string key="NSContents">GoAgentX 自动配置系统代理时设置代理为“自动代理配置（PAC）”</string>
+													<string key="NSContents">GoAgentX 启动成功后修改系统代理设置为“自动代理配置（PAC）”</string>
 													<reference key="NSSupport" ref="988758687"/>
 													<string key="NSCellIdentifier">_NS:771</string>
 													<reference key="NSControlView" ref="1590065"/>
 													<int key="NSButtonFlags">1211912703</int>
 													<int key="NSButtonFlags2">2</int>
-													<reference key="NSNormalImage" ref="904317318"/>
-													<reference key="NSAlternateImage" ref="302537133"/>
+													<reference key="NSNormalImage" ref="512120556"/>
+													<reference key="NSAlternateImage" ref="787226254"/>
 													<string key="NSAlternateContents"/>
 													<string key="NSKeyEquivalent"/>
 													<int key="NSPeriodicDelay">200</int>
@@ -2317,8 +2338,9 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 											<object class="NSButton" id="872667740">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{15, 120}, {424, 18}}</string>
+												<string key="NSFrame">{{15, 81}, {424, 18}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="673428256"/>
 												<string key="NSReuseIdentifierKey">_NS:771</string>
 												<bool key="NSEnabled">YES</bool>
@@ -2344,7 +2366,8 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 												<int key="NSvFlags">266</int>
 												<string key="NSFrame">{{34, 299}, {406, 14}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
-												<reference key="NSNextKeyView" ref="30936361"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="274476089"/>
 												<string key="NSReuseIdentifierKey">_NS:360</string>
 												<string key="NSAntiCompressionPriority">{250, 750}</string>
 												<bool key="NSEnabled">YES</bool>
@@ -2370,8 +2393,9 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 											<object class="NSTextField" id="171781092">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{34, 237}, {406, 28}}</string>
+												<string key="NSFrame">{{34, 195}, {406, 14}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="1590065"/>
 												<string key="NSReuseIdentifierKey">_NS:360</string>
 												<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -2379,7 +2403,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 												<object class="NSTextFieldCell" key="NSCell" id="134344710">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272629760</int>
-													<string key="NSContents">在 GoAgentX 启动后，自动设置 Mac OS X 中 AirPort 和 Ethernet 的 “Web 代理”或者“自动代理配置”为 GoAgentX</string>
+													<string key="NSContents">在 GoAgentX 启动后，系统中所有网络请求都将通过代理发出。</string>
 													<reference key="NSSupport" ref="493836830"/>
 													<string key="NSCellIdentifier">_NS:360</string>
 													<reference key="NSControlView" ref="171781092"/>
@@ -2387,11 +2411,33 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 													<reference key="NSTextColor" ref="787258990"/>
 												</object>
 											</object>
+											<object class="NSTextField" id="775111976">
+												<reference key="NSNextResponder" ref="286464401"/>
+												<int key="NSvFlags">266</int>
+												<string key="NSFrame">{{34, 240}, {406, 28}}</string>
+												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView" ref="30936361"/>
+												<string key="NSReuseIdentifierKey">_NS:360</string>
+												<string key="NSAntiCompressionPriority">{250, 750}</string>
+												<bool key="NSEnabled">YES</bool>
+												<object class="NSTextFieldCell" key="NSCell" id="901216523">
+													<int key="NSCellFlags">67239424</int>
+													<int key="NSCellFlags2">272629760</int>
+													<string key="NSContents">在 GoAgentX 启动后，不修改系统中的代理设置，您需要自己通过浏览器与相关插件配合使用。</string>
+													<reference key="NSSupport" ref="493836830"/>
+													<string key="NSCellIdentifier">_NS:360</string>
+													<reference key="NSControlView" ref="775111976"/>
+													<reference key="NSBackgroundColor" ref="698184804"/>
+													<reference key="NSTextColor" ref="787258990"/>
+												</object>
+											</object>
 											<object class="NSTextField" id="630475160">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{34, 147}, {406, 56}}</string>
+												<string key="NSFrame">{{34, 108}, {406, 56}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="872667740"/>
 												<string key="NSReuseIdentifierKey">_NS:360</string>
 												<string key="NSAntiCompressionPriority">{250, 750}</string>
@@ -2419,8 +2465,10 @@ b0FnZW50WOKAnQ</string>
 											<object class="NSTextField" id="413114016">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{34, 71}, {406, 17}}</string>
+												<string key="NSFrame">{{34, 32}, {406, 17}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
+												<reference key="NSNextKeyView"/>
 												<string key="NSReuseIdentifierKey">_NS:360</string>
 												<string key="NSAntiCompressionPriority">{250, 750}</string>
 												<bool key="NSEnabled">YES</bool>
@@ -2438,8 +2486,9 @@ b0FnZW50WOKAnQ</string>
 											<object class="NSTextField" id="673428256">
 												<reference key="NSNextResponder" ref="286464401"/>
 												<int key="NSvFlags">266</int>
-												<string key="NSFrame">{{37, 92}, {400, 22}}</string>
+												<string key="NSFrame">{{37, 53}, {400, 22}}</string>
 												<reference key="NSSuperview" ref="286464401"/>
+												<reference key="NSWindow"/>
 												<reference key="NSNextKeyView" ref="413114016"/>
 												<string key="NSReuseIdentifierKey">_NS:903</string>
 												<bool key="NSEnabled">YES</bool>
@@ -2458,6 +2507,8 @@ b0FnZW50WOKAnQ</string>
 											</object>
 										</array>
 										<string key="NSFrame">{{10, 33}, {454, 338}}</string>
+										<reference key="NSSuperview" ref="188257455"/>
+										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="803527211"/>
 									</object>
 									<string key="NSLabel">其他设置</string>
@@ -2465,13 +2516,13 @@ b0FnZW50WOKAnQ</string>
 									<reference key="NSTabView" ref="188257455"/>
 								</object>
 							</array>
-							<reference key="NSSelectedTabViewItem" ref="778794159"/>
+							<reference key="NSSelectedTabViewItem" ref="704581200"/>
 							<reference key="NSFont" ref="988758687"/>
 							<int key="NSTvFlags">0</int>
 							<bool key="NSAllowTruncatedLabels">YES</bool>
 							<bool key="NSDrawsBackground">YES</bool>
 							<array class="NSMutableArray" key="NSSubviews">
-								<reference ref="854588309"/>
+								<reference ref="286464401"/>
 							</array>
 						</object>
 					</array>
@@ -2522,12 +2573,41 @@ b0FnZW50WOKAnQ</string>
 					</object>
 					<object class="NSMenuItem" id="709263140">
 						<reference key="NSMenu" ref="321136833"/>
-						<string key="NSTitle">使用“自动代理配置（PAC）”</string>
+						<string key="NSTitle">代理设置</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSMnemonicLoc">2147483647</int>
-						<int key="NSState">1</int>
 						<reference key="NSOnImage" ref="35465992"/>
 						<reference key="NSMixedImage" ref="502551668"/>
+						<string key="NSAction">submenuAction:</string>
+						<object class="NSMenu" key="NSSubmenu" id="497132864">
+							<string key="NSTitle">代理设置</string>
+							<array class="NSMutableArray" key="NSMenuItems">
+								<object class="NSMenuItem" id="394916769">
+									<reference key="NSMenu" ref="497132864"/>
+									<string key="NSTitle">不修改系统代理设置</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="933406318">
+									<reference key="NSMenu" ref="497132864"/>
+									<string key="NSTitle">作为系统全局代理</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+								<object class="NSMenuItem" id="742780761">
+									<reference key="NSMenu" ref="497132864"/>
+									<string key="NSTitle">使用“自动代理配置（PAC）”</string>
+									<string key="NSKeyEquiv"/>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="35465992"/>
+									<reference key="NSMixedImage" ref="502551668"/>
+								</object>
+							</array>
+						</object>
 					</object>
 					<object class="NSMenuItem" id="458164728">
 						<reference key="NSMenu" ref="321136833"/>
@@ -2863,14 +2943,6 @@ b0FnZW50WOKAnQ</string>
 					<int key="connectionID">1021</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">togglePACSetting:</string>
-						<reference key="source" ref="976324537"/>
-						<reference key="destination" ref="709263140"/>
-					</object>
-					<int key="connectionID">1022</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">stunnelServerListTextView</string>
 						<reference key="source" ref="976324537"/>
@@ -2893,6 +2965,54 @@ b0FnZW50WOKAnQ</string>
 						<reference key="destination" ref="948881824"/>
 					</object>
 					<int key="connectionID">1151</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setAutoToggleProxySettingType:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1590065"/>
+					</object>
+					<int key="connectionID">1165</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setAutoToggleProxySettingType:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="30936361"/>
+					</object>
+					<int key="connectionID">1164</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setAutoToggleProxySettingType:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="274476089"/>
+					</object>
+					<int key="connectionID">1163</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setAutoToggleProxySettingType:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="394916769"/>
+					</object>
+					<int key="connectionID">1176</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setAutoToggleProxySettingType:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="933406318"/>
+					</object>
+					<int key="connectionID">1177</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">setAutoToggleProxySettingType:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="742780761"/>
+					</object>
+					<int key="connectionID">1178</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2956,7 +3076,7 @@ b0FnZW50WOKAnQ</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">833</int>
+					<int key="connectionID">1174</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3304,22 +3424,6 @@ b0FnZW50WOKAnQ</string>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: values.GoAgent:AutoToggleSystemProxyWithPAC</string>
-						<reference key="source" ref="709263140"/>
-						<reference key="destination" ref="643082621"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="709263140"/>
-							<reference key="NSDestination" ref="643082621"/>
-							<string key="NSLabel">value: values.GoAgent:AutoToggleSystemProxyWithPAC</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">values.GoAgent:AutoToggleSystemProxyWithPAC</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1020</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.SSH:LocalPort</string>
 						<reference key="source" ref="187955070"/>
 						<reference key="destination" ref="643082621"/>
@@ -3505,6 +3609,70 @@ b0FnZW50WOKAnQ</string>
 						</object>
 					</object>
 					<int key="connectionID">1150</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.GoAgent:DontAutoToggleSystemProxySettings</string>
+						<reference key="source" ref="274476089"/>
+						<reference key="destination" ref="643082621"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="274476089"/>
+							<reference key="NSDestination" ref="643082621"/>
+							<string key="NSLabel">value: values.GoAgent:DontAutoToggleSystemProxySettings</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.GoAgent:DontAutoToggleSystemProxySettings</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1162</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.GoAgent:DontAutoToggleSystemProxySettings</string>
+						<reference key="source" ref="394916769"/>
+						<reference key="destination" ref="643082621"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="394916769"/>
+							<reference key="NSDestination" ref="643082621"/>
+							<string key="NSLabel">value: values.GoAgent:DontAutoToggleSystemProxySettings</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.GoAgent:DontAutoToggleSystemProxySettings</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1172</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.GoAgent:AutoToggleSystemProxySettings</string>
+						<reference key="source" ref="933406318"/>
+						<reference key="destination" ref="643082621"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="933406318"/>
+							<reference key="NSDestination" ref="643082621"/>
+							<string key="NSLabel">value: values.GoAgent:AutoToggleSystemProxySettings</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.GoAgent:AutoToggleSystemProxySettings</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1173</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.GoAgent:AutoToggleSystemProxyWithPAC</string>
+						<reference key="source" ref="742780761"/>
+						<reference key="destination" ref="643082621"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="742780761"/>
+							<reference key="NSDestination" ref="643082621"/>
+							<string key="NSLabel">value: values.GoAgent:AutoToggleSystemProxyWithPAC</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.GoAgent:AutoToggleSystemProxyWithPAC</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1175</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3945,12 +4113,14 @@ b0FnZW50WOKAnQ</string>
 						<reference key="object" ref="286464401"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="803527211"/>
+							<reference ref="445164988"/>
+							<reference ref="274476089"/>
+							<reference ref="775111976"/>
 							<reference ref="30936361"/>
 							<reference ref="1590065"/>
-							<reference ref="445164988"/>
+							<reference ref="872667740"/>
 							<reference ref="171781092"/>
 							<reference ref="630475160"/>
-							<reference ref="872667740"/>
 							<reference ref="413114016"/>
 							<reference ref="673428256"/>
 						</array>
@@ -4006,19 +4176,6 @@ b0FnZW50WOKAnQ</string>
 						<reference key="parent" ref="445164988"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">827</int>
-						<reference key="object" ref="171781092"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="134344710"/>
-						</array>
-						<reference key="parent" ref="286464401"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">828</int>
-						<reference key="object" ref="134344710"/>
-						<reference key="parent" ref="171781092"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">830</int>
 						<reference key="object" ref="1590065"/>
 						<array class="NSMutableArray" key="children">
@@ -4030,19 +4187,6 @@ b0FnZW50WOKAnQ</string>
 						<int key="objectID">831</int>
 						<reference key="object" ref="396307989"/>
 						<reference key="parent" ref="1590065"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">834</int>
-						<reference key="object" ref="630475160"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="792445064"/>
-						</array>
-						<reference key="parent" ref="286464401"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">835</int>
-						<reference key="object" ref="792445064"/>
-						<reference key="parent" ref="630475160"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">840</int>
@@ -4751,6 +4895,9 @@ b0FnZW50WOKAnQ</string>
 					<object class="IBObjectRecord">
 						<int key="objectID">1018</int>
 						<reference key="object" ref="709263140"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="497132864"/>
+						</array>
 						<reference key="parent" ref="321136833"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -5117,6 +5264,83 @@ b0FnZW50WOKAnQ</string>
 						<reference key="object" ref="614810635"/>
 						<reference key="parent" ref="215901625"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">834</int>
+						<reference key="object" ref="630475160"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="792445064"/>
+						</array>
+						<reference key="parent" ref="286464401"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">835</int>
+						<reference key="object" ref="792445064"/>
+						<reference key="parent" ref="630475160"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">827</int>
+						<reference key="object" ref="171781092"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="134344710"/>
+						</array>
+						<reference key="parent" ref="286464401"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">828</int>
+						<reference key="object" ref="134344710"/>
+						<reference key="parent" ref="171781092"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1157</int>
+						<reference key="object" ref="274476089"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="292858014"/>
+						</array>
+						<reference key="parent" ref="286464401"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1158</int>
+						<reference key="object" ref="292858014"/>
+						<reference key="parent" ref="274476089"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1160</int>
+						<reference key="object" ref="775111976"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="901216523"/>
+						</array>
+						<reference key="parent" ref="286464401"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1161</int>
+						<reference key="object" ref="901216523"/>
+						<reference key="parent" ref="775111976"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1167</int>
+						<reference key="object" ref="497132864"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="394916769"/>
+							<reference ref="933406318"/>
+							<reference ref="742780761"/>
+						</array>
+						<reference key="parent" ref="709263140"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1168</int>
+						<reference key="object" ref="394916769"/>
+						<reference key="parent" ref="497132864"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1169</int>
+						<reference key="object" ref="933406318"/>
+						<reference key="parent" ref="497132864"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1170</int>
+						<reference key="object" ref="742780761"/>
+						<reference key="parent" ref="497132864"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -5179,6 +5403,15 @@ b0FnZW50WOKAnQ</string>
 				<string key="1148.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<integer value="3" key="1149.IBNSSegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="1149.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1157.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1157.userInterfaceItemIdentifier">AutoToggleProxySettingType1</string>
+				<string key="1158.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1160.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1161.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1167.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1168.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1170.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="130.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="131.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5257,12 +5490,14 @@ b0FnZW50WOKAnQ</string>
 				<string key="779.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="780.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="813.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="813.userInterfaceItemIdentifier">AutoToggleProxySettingType2</string>
 				<string key="814.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="823.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="824.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="827.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="828.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="830.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="830.userInterfaceItemIdentifier">AutoToggleProxySettingType3</string>
 				<string key="831.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="834.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="835.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5384,7 +5619,7 @@ b0FnZW50WOKAnQ</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1151</int>
+			<int key="maxID">1178</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5395,6 +5630,7 @@ b0FnZW50WOKAnQ</string>
 						<string key="clearStatusLog:">id</string>
 						<string key="exitApplication:">id</string>
 						<string key="selectedServiceChanged:">id</string>
+						<string key="setAutoToggleProxySettingType:">id</string>
 						<string key="showAbout:">id</string>
 						<string key="showHelp:">id</string>
 						<string key="showMainWindow:">id</string>
@@ -5413,6 +5649,10 @@ b0FnZW50WOKAnQ</string>
 						</object>
 						<object class="IBActionInfo" key="selectedServiceChanged:">
 							<string key="name">selectedServiceChanged:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="setAutoToggleProxySettingType:">
+							<string key="name">setAutoToggleProxySettingType:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showAbout:">
@@ -5564,6 +5804,7 @@ b0FnZW50WOKAnQ</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NSMenuCheckmark">{11, 11}</string>
 			<string key="NSMenuMixedState">{10, 3}</string>
+			<string key="NSRadioButton">{16, 15}</string>
 			<string key="NSSwitch">{15, 15}</string>
 			<string key="status_stopped">{16, 16}</string>
 		</dictionary>

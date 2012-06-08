@@ -82,14 +82,7 @@
 #pragma mark 运行状态
 
 - (void)refreshSystemProxySettings:(id)sender {
-    [proxyService toggleSystemProxy:YES];
-}
-
-
-- (void)togglePACSetting:(id)sender {
-    if ([proxyService isRunning]) {
-        [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
-    }
+    [proxyService toggleSystemProxy:![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]];
 }
 
 
@@ -250,6 +243,35 @@
                                        otherButton:nil
                          informativeTextWithFormat:content ?: @""];
     [alert runModal];
+}
+
+
+- (void)setAutoToggleProxySettingType:(id)sender {
+    NSMutableArray *types = [NSMutableArray new];
+    
+    if ([sender isKindOfClass:[NSButton class]]) {
+        for (NSButton *button in [(NSButton *)sender superview].subviews) {
+            if ([button isKindOfClass:[NSButton class]] && [button.identifier hasPrefix:@"AutoToggleProxySettingType"]) {
+                [types addObject:button];
+            }
+        }
+    } else if ([sender isKindOfClass:[NSMenuItem class]]) {
+        for (NSMenuItem *item in [(NSMenuItem *)sender menu].itemArray) {
+            if (item != sender) {
+                [types addObject:item];
+            }
+        }
+    }
+    
+    for (NSButton *button in types) {
+        [button setState:(button == sender ? NSOnState : NSOffState)];
+        NSString *key = [[[button infoForBinding:@"value"] objectForKey:NSObservedKeyPathKey] substringFromIndex:7];
+        [[NSUserDefaults standardUserDefaults] setInteger:[button state] forKey:key];
+    }
+    
+    if ([proxyService isRunning]) {
+        [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
+    }
 }
 
 

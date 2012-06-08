@@ -106,7 +106,7 @@ static NSMutableDictionary *sharedContainer = nil;
 
 - (void)notifyStatusChanged {
     // 如果有设置自动切换系统代理设置，切换系统代理设置
-    if ([self proxySetting] != nil && [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxySettings"]) {
+    if ([self proxySetting] != nil && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
         [self toggleSystemProxy:[self isRunning]];
     }
 
