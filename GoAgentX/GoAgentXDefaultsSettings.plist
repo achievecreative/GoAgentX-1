@@ -54,5 +54,7 @@
 	<string>8800</string>
 	<key>Stunnel:SSLVersion</key>
 	<integer>2</integer>
+	<key>GoAgent:DontAutoToggleSystemProxySettings</key>
+	<false/>
 </dict>
 </plist>
