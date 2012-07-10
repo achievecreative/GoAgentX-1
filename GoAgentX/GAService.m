@@ -94,6 +94,11 @@ static NSMutableDictionary *sharedContainer = nil;
 }
 
 
+- (BOOL)supportReconnectAfterDisconnected {
+    return NO;
+}
+
+
 - (int)proxyPort {
     return 0;
 }
@@ -112,6 +117,11 @@ static NSMutableDictionary *sharedContainer = nil;
 
     if (statusChangedHandler) {
         statusChangedHandler(self);
+    }
+    
+    // 自动重连
+    if (![self isRunning] && [self supportReconnectAfterDisconnected]) {
+        [self performSelector:@selector(start) withObject:nil afterDelay:5.0];
     }
 }
 
@@ -138,6 +148,9 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)start {
+    // 取消之前的可能的自动重连
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(start) object:nil];
+    
     if (![self hasConfigured]) {
         NSAlert *alert = [NSAlert alertWithMessageText:@"请进行服务配置"
                                          defaultButton:nil
