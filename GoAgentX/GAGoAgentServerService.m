@@ -53,7 +53,8 @@
     [super setupCommandRunner];
     
     commandRunner.commandPath = @"/usr/bin/env";
-    commandRunner.arguments = [NSArray arrayWithObjects:@"uploaddir=python", @"python", @"uploader.zip", nil];
+    NSString *serverType = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Server:LanguageType"] == 0 ? @"python" : @"golang";
+    commandRunner.arguments = [NSArray arrayWithObjects:[@"uploaddir=" stringByAppendingString:serverType], @"python", @"uploader.zip", nil];
     NSArray *input = [NSArray arrayWithObjects:
                       [self configValueForKey:@"appid"],
                       [self configValueForKey:@"username"],
