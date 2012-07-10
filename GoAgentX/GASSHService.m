@@ -20,12 +20,6 @@
 }
 
 
-- (BOOL)supportReconnectAfterDisconnected {
-    BOOL ret = [[NSUserDefaults standardUserDefaults] boolForKey:@"SSH:AutoReconnect"];
-    return ret;
-}
-
-
 - (NSString *)configPath {
     return nil;
 }
