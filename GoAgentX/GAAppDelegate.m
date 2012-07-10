@@ -275,4 +275,9 @@
 }
 
 
+- (void)importGoagentCA:(id)sender {
+    [[NSWorkspace sharedWorkspace] openFile:[[NSBundle mainBundle] pathForResource:@"CA" ofType:@"crt" inDirectory:@"goagent"]];
+}
+
+
 @end

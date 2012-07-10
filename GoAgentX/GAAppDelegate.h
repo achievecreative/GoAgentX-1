@@ -50,6 +50,8 @@
 - (IBAction)setAutoToggleProxySettingType:(id)sender;
 - (IBAction)showStunnelConfigurationExample:(id)sender;
 
+- (IBAction)importGoagentCA:(id)sender;
+
 
 @property (assign) IBOutlet NSWindow *window;
 
