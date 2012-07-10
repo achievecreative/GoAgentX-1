@@ -1,7 +1,6 @@
 ## GoAgentX v1.3.0
 
 * [NEW] 支持自定义 PAC 域名列表
-* [NEW] SSH 支持断线重连
 * [NEW] 支持部署 golang 版本 goagent 服务端
 * [NEW] 添加导入 goagent 根证书功能
 * [MOD] 更新 goagent 到 1.8.11
