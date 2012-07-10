@@ -12,7 +12,6 @@
                 <p>更新时请先停止 GoAgentX 服务。</p>
                 <ul>
                     <li>[NEW] 支持自定义 PAC 域名列表</li>
-                    <li>[NEW] SSH 支持断线重连</li>
                     <li>[NEW] 支持部署 golang 版本 goagent 服务端</li>
                     <li>[NEW] 添加导入 goagent 根证书功能</li>
                     <li>[MOD] 更新 goagent 到 1.8.11</li>
@@ -21,7 +20,7 @@
                 </ul>
             ]]></description>
             <pubDate>Mon, 10 Jul 2012 15:00:00 +0800</pubDate>
-            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.0.dmg" sparkle:shortVersionString="1.3.0" sparkle:version="13" length="2605430" type="application/octet-stream" sparkle:dsaSignature="MCwCFEUbZpAu8FThvR723vpJroiZSG6FAhRnF6bQEsxd1ifgnpjPWYYib072VA==" />
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.0.dmg" sparkle:shortVersionString="1.3.0" sparkle:version="13" length="2605106" type="application/octet-stream" sparkle:dsaSignature="MCwCFDXOn+CNsB+MXGnmoHG9T+9LPW8GAhQhfp3F7X9EaLUGg6wKXYE1X00+/w==" />
          </item>
          <item>
             <title>GoAgentX v1.2.0</title>
