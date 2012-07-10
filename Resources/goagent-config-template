@@ -15,7 +15,7 @@ mulconn = 1
 enable = 0
 password = {GoAgent:Local:ServicePassword}
 listen = 127.0.0.1:{GoAgent:Local:Port}
-fetchserver = http://pyfetchphustest.cloud.com/
+fetchserver = http://demophus.app.com/
 
 [proxy]
 enable = {GoAgent:Local:ProxyEnabled}
