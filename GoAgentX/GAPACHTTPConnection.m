@@ -12,6 +12,28 @@
 
 @implementation GAPACHTTPConnection
 
+- (NSString *)customPACDomainList {
+    NSData *domainListData = [[NSUserDefaults standardUserDefaults] dataForKey:@"GoAgentX:CustomPACDomainList"];
+    NSString *customDomainListString = domainListData ? [(NSAttributedString *)[NSUnarchiver unarchiveObjectWithData:domainListData] string] : @"";
+    customDomainListString = [customDomainListString stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
+    customDomainListString = [customDomainListString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+    NSArray *customDomainList = [customDomainListString componentsSeparatedByString:@"\n"];
+    
+    NSMutableArray *ret = [NSMutableArray new];
+    for (NSString *line in customDomainList) {
+        if ([line length] > 0) {
+            [ret addObject:line];
+        }
+    }
+    
+    if ([ret count] > 0) {
+        return [NSString stringWithFormat:@"|| \"%@\"", [ret componentsJoinedByString:@"\"\n\t|| \""]];
+    }
+    
+    return @"";
+}
+
+
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path {
 	NSString *filePath = [self filePathForURI:path];
 	
@@ -36,6 +58,8 @@
         query = [query stringByReplacingOccurrencesOfString:@"/" withString:@" "];
         
         NSString *pacContent = [pacTemplate stringByReplacingOccurrencesOfString:@"PROXY 127.0.0.1:65536" withString:query];
+        pacContent = [pacContent stringByReplacingOccurrencesOfString:@"${GoAgentX:CustomPACDomainList}"
+                                                           withString:[self customPACDomainList]];
         
         NSMutableDictionary *replacementDict = [NSMutableDictionary dictionaryWithObject:pacContent forKey:@"PAC_CONTENT"];
 		
