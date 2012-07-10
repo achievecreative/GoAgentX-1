@@ -27,6 +27,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 - (BOOL)hasConfigured;
 
+- (BOOL)supportReconnectAfterDisconnected;
+
 - (NSString *)configTemplate;
 
 - (NSString *)configPath;

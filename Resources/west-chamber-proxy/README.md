@@ -3,13 +3,24 @@
 * 不依赖代理服务器的本地翻墙代理工具。
 * [项目维护地址](https://github.com/liruqi/west-chamber-season-3/tree/master/west-chamber-proxy)
 * [Follow up](https://plus.google.com/b/108661470402896863593/)
-* [捐赠本项目](https://me.alipay.com/liruqi)
+
+代理设置
+--------
+
+* 浏览器代理设置
+    做了一个 [.pac 文件](https://raw.github.com/liruqi/west-chamber-season-3/master/west-chamber-proxy/SwitchyPac.pac)。下载这个pac 文件，然后在代理设置中导入即可。
+    具体使用方法，在[这里](http://wcproxy.sinaapp.com/) 更新。
+
+* 代理自身的代理配置
+
+    1. 默认配置是GoAgent，包含一个内置的appid ("goagent-hrd")，如果有自己的appid 建议更换，把 config.py 里面的"goagent-hrd" 替换即可。
+    2. 也可以设置socks5代理。如 `ssh -NfD 0.0.0.0:1234 user@hostname` 启动代理之后，把PROXY_TYPE的配置 "goagent" 改为 "socks5"，然后把 SOCKS_HOST/SOCKS_PORT 修改为自己的代理。
 
 使用方法
 --------
 * Windows
 
-    1. 下载[客户端](https://github.com/downloads/liruqi/west-chamber-season-3/westchamberproxy-20120325.zip) ，解压缩，双击 exe
+    1. 下载[客户端](http://code.google.com/p/west-chamber-season-3/downloads/list) ，解压缩，双击 exe
     2. 把浏览器HTTP/HTTPS 代理设置为 127.0.0.1:1998，或者使用pac 脚本设置自动代理。
     3. Windows 版本更新比较慢。如果希望使用最新代码，先下载 python 2.7，[32位](http://python.org/ftp/python/2.7.2/python-2.7.2.msi) / [64位](http://python.org/ftp/python/2.7.2/python-2.7.2.amd64.msi) ，然后下载[代码](https://github.com/liruqi/west-chamber-season-3/zipball/master)，解压缩，进入 west-chamber-proxy 文件夹，双击 westchamberproxy.py。
 
@@ -34,11 +45,6 @@
     1. 局域网内的其它设备(PC, Android 设备)上安装本代理，然后把 iOS 设备的 HTTP 代理设置到该设备上。（或者在国内有服务器的同学，自己搭建HTTP 代理）
     2. 类似GoAgent 那种iOS客户端的办法。需要越狱。单我本人没有iOS设备，所以，暂不研究了。
 
-* 代理设置
-
-    做了一个 [.pac 文件](https://raw.github.com/liruqi/west-chamber-season-3/master/west-chamber-proxy/flora_pac.pac)。下载这个pac 文件，然后在代理设置中导入即可。
-    具体使用方法，在[这里](http://wcproxy.sinaapp.com/) 更新。
-
 开发者
 ------
 * [XIAOXIA](http://xiaoxia.org), 原始版本作者
@@ -50,7 +56,7 @@
 
 1. 对抗关键词过滤: [rfc2616 - section 4.1](http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html)
 2. 对抗DNS污染: 修改PyDNS 库，实现丢弃GFW DNS 伪包。
-3. 对抗IP封锁: 通过 Google code 上[SmartHosts项目](http://code.google.com/p/smarthosts/) 自动获取的[配置文件](http://smarthosts.googlecode.com/svn/trunk/hosts), 来得到可用IP
+3. 对抗IP封锁: 收集被封锁的IP, 在DNS 解析过程中尝试找到可用IP。
 4. 如果没有可用IP，或者是HTTP注入导致异常，本代理会走[GoAgent](http://code.google.com/p/goagent/) 代理。
 
 问题反馈

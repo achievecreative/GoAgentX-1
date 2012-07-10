@@ -2,22 +2,22 @@
 #
 # Startup script for the westchamber proxy
 #
-# pidfile: /var/run/wcproxy.pid
+# pidfile: ./wcproxy.pid
 
 wcproxy=./westchamberproxy.py
 [ -f $wcproxy ] || exit 0
 
-pidfile=/var/run/wcproxy.pid
-if [ $(whoami) != "root" ]; then
+pidfile=./wcproxy.pid
+
+if [ -d "/tmp" ]; then
     pidfile=/tmp/wcproxy.pid
 fi
 
-processcheck="ps -c"
-if [ `uname` == "Darwin" ]; then
-    pidfile=/tmp/wcproxy.pid
-    processcheck="ps -C"
+if [ $(whoami) = "root" ]; then
+    if [ -d "/var/run" ]; then
+        pidfile=/var/run/wcproxy.pid
+    fi
 fi
-
 RETVAL=0
 
 # See how we were called.
@@ -28,6 +28,7 @@ case "$1" in
         ;;
   stop)
         if [ -f $pidfile ]; then
+        processcheck="ps -c"
         if $processcheck `cat $pidfile` > /dev/null; then
             echo "Shutting down wcproxy: "
             kill -9 `cat $pidfile`
