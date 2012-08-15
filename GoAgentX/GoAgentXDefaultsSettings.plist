@@ -50,6 +50,8 @@
 	<integer>7070</integer>
 	<key>SSH:UsePublicKeyForLogin</key>
 	<false/>
+	<key>SSH:IdentityFile</key>
+	<string></string>
 	<key>SSH:AutoReconnect</key>
 	<true/>
 	<key>Stunnel:LocalPort</key>

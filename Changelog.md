@@ -1,3 +1,9 @@
+## GoAgentX v1.3.1
+
+* [NEW] SSH 服务支持指定私钥
+
+*Not Released Yet*
+
 ## GoAgentX v1.3.0
 
 * [NEW] 支持自定义 PAC 域名列表
