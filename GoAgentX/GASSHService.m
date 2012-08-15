@@ -57,6 +57,11 @@
     [args addObject:[defaults stringForKey:@"SSH:RemotePort"]];
     [args addObject:@"-D"];
     [args addObject:[NSString stringWithFormat:@"127.0.0.1:%d", [self proxyPort]]];
+    NSString *identityFile = [defaults stringForKey:@"SSH:IdentityFile"];
+    if ([identityFile length] > 0) {
+      [args addObject:@"-i"];
+      [args addObject:identityFile];
+    }
     
     // Borrowed from iSSH
     NSMutableDictionary *env = [NSMutableDictionary dictionaryWithDictionary:[[NSProcessInfo processInfo] environment]];
