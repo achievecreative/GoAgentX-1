@@ -21,6 +21,9 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
     GACommandRunner         *commandRunner;
     GAAutoscrollTextView    *outputTextView;
     GAServiceStatusChangedHandler   statusChangedHandler;
+
+    AuthorizationRef auth;
+    AuthorizationFlags rootFlags;
 }
 
 + (id)sharedService;
