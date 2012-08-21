@@ -1,3 +1,15 @@
+## GoAgentX v1.3.2
+
+* [FIX] Issue #21 & #22: 在 Mountain Lion 下反复要求提权的问题
+
+*Not Released Yet*
+
+## GoAgentX v1.3.1
+
+* [NEW] SSH 服务支持指定私钥
+
+*Not Released Yet*
+
 ## GoAgentX v1.3.0
 
 * [NEW] 支持自定义 PAC 域名列表

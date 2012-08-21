@@ -68,6 +68,17 @@ static NSMutableDictionary *sharedContainer = nil;
 - (id)init {
     if (self = [super init]) {
         previousDeviceProxies = [NSMutableDictionary new];
+
+        OSStatus authErr = noErr;
+
+        rootFlags = kAuthorizationFlagDefaults
+            | kAuthorizationFlagExtendRights
+            | kAuthorizationFlagInteractionAllowed
+            | kAuthorizationFlagPreAuthorize;
+        authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, rootFlags, &auth);
+        if (authErr != noErr) {
+          auth = nil;
+        }
     }
     
     return self;
@@ -319,24 +330,16 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)toggleSystemProxy:(BOOL)useProxy {
+    if (auth == NULL) {
+      NSLog(@"No authorization has been granted to modify network configuration");
+      return;
+    }
+
     BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
     NSLog(@"Toggle system proxy %@ with PAC %@", useProxy ? @"YES" : @"NO", usePAC ? @"YES" : @"NO");
     
-    SCPreferencesRef prefRef;// = SCPreferencesCreate(kCFAllocatorSystemDefault, CFSTR("test"), NULL);
-    
-    AuthorizationRef auth = nil;
-	OSStatus authErr = noErr;
-	
-	AuthorizationFlags rootFlags = kAuthorizationFlagDefaults | kAuthorizationFlagExtendRights 
-    | kAuthorizationFlagInteractionAllowed | kAuthorizationFlagPreAuthorize;
-	authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, rootFlags, &auth);
-	if (authErr == noErr) {
-		prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, auth);
-	} else {
-        NSLog(@"Set system proxy failed");
-        return;
-    }
-    
+    SCPreferencesRef prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, auth);
+
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
     
     // 遍历系统中的网络设备列表，设置 AirPort 和 Ethernet 的代理
