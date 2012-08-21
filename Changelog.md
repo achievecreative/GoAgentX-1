@@ -1,14 +1,11 @@
 ## GoAgentX v1.3.2
 
-* [FIX] Issue #21 & #22: 在 Mountain Lion 下反复要求提权的问题
-
-*Not Released Yet*
-
-## GoAgentX v1.3.1
-
 * [NEW] SSH 服务支持指定私钥
+* [FIX] 修正在 Mountain Lion 下反复要求提权的问题
 
-*Not Released Yet*
+此版本由 [qqshfox](https://github.com/qqshfox) 贡献。
+
+*Released on 2012.08.21*
 
 ## GoAgentX v1.3.0
 

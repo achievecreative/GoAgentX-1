@@ -348,7 +348,10 @@ static NSMutableDictionary *sharedContainer = nil;
             NSMutableDictionary *dict = [sets objectForKey:key];
             NSString *hardware = [dict valueForKeyPath:@"Interface.Hardware"];
             if ([hardware isEqualToString:@"AirPort"] || [hardware isEqualToString:@"Ethernet"]) {
-                [previousDeviceProxies setObject:[[dict objectForKey:(NSString *)kSCEntNetProxies] mutableCopy] forKey:key];
+                NSDictionary *proxies = [dict objectForKey:(NSString *)kSCEntNetProxies];
+                if (proxies != nil) {
+                    [previousDeviceProxies setObject:[proxies mutableCopy] forKey:key];
+                }
             }
         }
     }
