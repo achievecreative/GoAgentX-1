@@ -6,6 +6,20 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.3.2</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.2 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                <p>此版本由 <a href="https://github.com/qqshfox">qqshfox</a> 贡献。</p>
+                <ul>
+                    <li>[NEW] SSH 服务支持指定私钥</li>
+                    <li>[FIX] 修正在 Mountain Lion 下反复要求提权的问题</li>
+                </ul>
+            ]]></description>
+            <pubDate>Tue, 21 Aug 2012 22:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.2.dmg" sparkle:shortVersionString="1.3.2" sparkle:version="15" length="2567627" type="application/octet-stream" sparkle:dsaSignature="MC0CFAid7tOC1vbt6PSwpYxs+M6XJTLfAhUAhD5tyXjO3uRDBHBBpT7x+nPqrvs=" />
+         </item>
+         <item>
             <title>GoAgentX v1.3.0</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.0 Changelog</h2>
