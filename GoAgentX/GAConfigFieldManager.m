@@ -44,7 +44,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAConfigFieldManager, Manager)
         ret = [(NSTextField *)control stringValue] ?: @"";
         
     } else if ([control isKindOfClass:[NSSegmentedControl class]]) {
-        ret = [NSString stringWithFormat:@"%d", [(NSSegmentedControl *)control selectedSegment]];
+        ret = [NSString stringWithFormat:@"%ld", [(NSSegmentedControl *)control selectedSegment]];
     }
     
     return ret ?: @"";
