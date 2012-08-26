@@ -60,5 +60,7 @@
 	<integer>2</integer>
 	<key>GoAgent:DontAutoToggleSystemProxySettings</key>
 	<false/>
+	<key>GoAgentX:UseCustomPACServerPort</key>
+	<false/>
 </dict>
 </plist>

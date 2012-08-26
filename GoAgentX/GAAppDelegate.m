@@ -204,6 +204,11 @@
     
     // 启动本机 PAC 服务
     pacServer = [GAPACHTTPServer sharedServer];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
+        // 自定义 PAC 端口
+        UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
+        [pacServer setPort:pacServerPort];
+    }
     [pacServer start:NULL];
     
     // 设置状态日志最大为10K
