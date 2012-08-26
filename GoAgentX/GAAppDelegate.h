@@ -47,6 +47,7 @@
 - (IBAction)toggleServiceStatus:(id)sender;
 - (IBAction)clearStatusLog:(id)sender;
 
+- (IBAction)applyCustomPACCustomDomainList:(id)sender;
 - (IBAction)setAutoToggleProxySettingType:(id)sender;
 - (IBAction)showStunnelConfigurationExample:(id)sender;
 

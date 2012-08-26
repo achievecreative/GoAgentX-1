@@ -32,7 +32,7 @@
 
 
 - (int)proxyPort {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"SSH:LocalPort"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SSH:LocalPort"];
 }
 
 

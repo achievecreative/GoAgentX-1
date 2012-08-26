@@ -15,6 +15,11 @@
 }
 
 
+- (BOOL)canShowInSwitchMenu {
+    return NO;
+}
+
+
 - (NSString *)serviceName {
     return @"goagent-server";
 }

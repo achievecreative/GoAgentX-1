@@ -116,7 +116,7 @@
 
 
 - (int)proxyPort {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:@"Stunnel:LocalPort"];
+    return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"Stunnel:LocalPort"];
 }
 
 

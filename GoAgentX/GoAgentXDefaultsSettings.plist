@@ -60,5 +60,9 @@
 	<integer>2</integer>
 	<key>GoAgent:DontAutoToggleSystemProxySettings</key>
 	<false/>
+	<key>GoAgentX:UseCustomPACServerPort</key>
+	<false/>
+	<key>GoAgent:UsePHPFetch</key>
+	<false/>
 </dict>
 </plist>

@@ -24,7 +24,7 @@
     
     NSString *statusText = @"正在运行";
     if ([proxyService proxyPort] > 0) {
-        statusText = [statusText stringByAppendingFormat:@"，端口 %ld", [proxyService proxyPort]];
+        statusText = [statusText stringByAppendingFormat:@"，端口 %d", [proxyService proxyPort]];
     }
     NSImage *statusImage = [NSImage imageNamed:@"status_running"];
     NSString *buttonTitle = @"停止";
@@ -171,7 +171,10 @@
             };
             
             [servicesListPopButton addItemWithTitle:[service serviceTitle]];
-            [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+            
+            if ([service canShowInSwitchMenu]) {
+                [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+            }
         }
     }
     
@@ -204,6 +207,11 @@
     
     // 启动本机 PAC 服务
     pacServer = [GAPACHTTPServer sharedServer];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
+        // 自定义 PAC 端口
+        UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
+        [pacServer setPort:pacServerPort];
+    }
     [pacServer start:NULL];
     
     // 设置状态日志最大为10K
@@ -241,7 +249,7 @@
                                      defaultButton:nil
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:content ?: @""];
+                         informativeTextWithFormat:@"%@", content ?: @""];
     [alert runModal];
 }
 
@@ -270,6 +278,14 @@
     }
     
     if ([proxyService isRunning]) {
+        [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
+    }
+}
+
+
+- (void)applyCustomPACCustomDomainList:(id)sender {
+    if ([proxyService isRunning]) {
+        [proxyService toggleSystemProxy:NO];
         [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
     }
 }
