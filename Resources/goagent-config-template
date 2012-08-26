@@ -15,7 +15,7 @@ mulconn = 1
 enable = 0
 password = {GoAgent:Local:ServicePassword}
 listen = 127.0.0.1:{GoAgent:Local:Port}
-fetchserver = http://demophus.app.com/
+fetchserver = https://phusdemo.app.com/
 
 [proxy]
 enable = {GoAgent:Local:ProxyEnabled}
@@ -26,7 +26,7 @@ password = {GoAgent:Local:ProxyPassword}
 
 [google_cn]
 mode = {GoAgent:Local:ConnectMode}
-hosts = 203.208.46.1|203.208.46.2|203.208.46.3|203.208.46.4|203.208.46.5|203.208.46.6|203.208.46.7|203.208.46.8
+hosts = 203.208.46.1|203.208.46.2|203.208.46.3|203.208.46.4|203.208.46.5|203.208.46.6|203.208.46.7|203.208.46.8|203.208.46.17|203.208.46.18|203.208.46.19|203.208.46.21|203.208.46.22|203.208.46.23|203.208.46.24|203.208.46.26|203.208.46.27|203.208.46.28|203.208.46.29|203.208.46.31|203.208.46.33|203.208.46.34|203.208.46.35|203.208.46.36|203.208.46.38|203.208.46.39|203.208.46.65|203.208.46.67|203.208.46.69|203.208.46.70|203.208.46.72|203.208.46.80|203.208.46.81|203.208.46.82|203.208.46.87|203.208.46.90|203.208.46.94|203.208.46.97|203.208.46.98|203.208.46.99|203.208.46.101|203.208.46.102|203.208.46.128|203.208.46.129|203.208.46.131|203.208.46.134|203.208.46.135|203.208.46.136|203.208.46.137|203.208.46.138|203.208.46.139|203.208.46.140|203.208.46.141|203.208.46.142|203.208.46.144|203.208.46.146|203.208.46.147|203.208.46.149|203.208.46.150|203.208.46.152|203.208.46.156|203.208.46.157|203.208.46.160|203.208.46.162|203.208.46.163|203.208.46.165|203.208.46.170|203.208.46.175|203.208.46.180|203.208.46.183|203.208.46.185|203.208.46.187|203.208.46.202|203.208.46.204|203.208.46.206|203.208.46.207|203.208.46.208|203.208.46.209|203.208.46.210|203.208.46.211|203.208.46.212|203.208.46.213|203.208.46.214|203.208.46.215|203.208.46.217|203.208.46.221|203.208.46.224|203.208.46.225|203.208.46.226|203.208.46.229|203.208.46.232|203.208.46.233|203.208.46.234|203.208.46.235|203.208.46.237|203.208.46.238|203.208.46.239|203.208.46.246|203.208.46.250|203.208.46.251|203.208.46.253sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
 forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
 withgae = plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com
@@ -35,43 +35,50 @@ withgae = plus.google.com|plusone.google.com|reader.googleusercontent.com|music.
 mode = {GoAgent:Local:ConnectMode}
 hosts = www.google.com|mail.google.com|www.google.com.hk|www.google.com.tw
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
-forcehttps = www.google.com|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
-withgae = www.google.com.hk
+forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
+withgae = www.google.com.hk|feedproxy.google.com
 
 [google_ipv6]
 mode = {GoAgent:Local:ConnectMode}
 hosts = 2404:6800:8005::2f|2a00:1450:8006::30|2404:6800:8005::84
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
-forcehttps = www.google.com|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
+forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
 withgae = 
 
-[fetchmax]
-local = 
-server = 
-
 [autorange]
+enable = 0
 hosts = .youtube.com|.atm.youku.com|.googlevideo.com|av.vimeo.com|smile-*.nicovideo.jp|video.*.fbcdn.net|s*.last.fm|x*.last.fm
 maxsize = 1048576
 waitsize = 524288
-bufsize = 8192
+
+[crlf]
+enable = 0
+dns = 8.8.8.8
+sites = .youtube.com|.ytimg.com
+
+[socks5]
+enable = 0
+password = 123456
+listen = 127.0.0.1:8089
+fetchserver = https://phus/
 
 [pac]
 enable = 0
 ip = 127.0.0.1
-port = 8089
+port = 8086
 file = goagent.pac
-update = 0
-remote = http://ftp.apnic.net/apnic/stats/apnic/delegated-apnic-latest
-timeout = 16
-direct = .253874.com|.cnn.com
 
 [useragent]
 enable = 0
 string = Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3
 
+[fetchmax]
+local = 
+server = 
+
 [love]
 enable = 1
-timestamp =
+timestamp = 1345829781
 tip = \u8bf7\u5173\u6ce8\u5317\u4eac\u5931\u5b66\u513f\u7ae5~~
 
 [hosts]
