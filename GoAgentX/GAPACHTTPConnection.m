@@ -27,7 +27,7 @@
     }
     
     if ([ret count] > 0) {
-        return [NSString stringWithFormat:@"|| shExpMatch(\"%@\")", [ret componentsJoinedByString:@"\")\n\t|| shExpMatch(\""]];
+        return [NSString stringWithFormat:@"|| shExpMatch(host, \"%@\")", [ret componentsJoinedByString:@"\")\n\t|| shExpMatch(host, \""]];
     }
     
     return @"";

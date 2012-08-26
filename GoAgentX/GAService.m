@@ -110,6 +110,11 @@ static NSMutableDictionary *sharedContainer = nil;
 }
 
 
+- (BOOL)canShowInSwitchMenu {
+    return YES;
+}
+
+
 - (int)proxyPort {
     return 0;
 }

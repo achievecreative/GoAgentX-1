@@ -171,7 +171,10 @@
             };
             
             [servicesListPopButton addItemWithTitle:[service serviceTitle]];
-            [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+            
+            if ([service canShowInSwitchMenu]) {
+                [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+            }
         }
     }
     
