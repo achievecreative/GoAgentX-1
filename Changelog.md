@@ -1,3 +1,16 @@
+## GoAgentX v1.3.3
+
+* [NEW] 更新 goagent 到 2.0.2，请注意一定需要重新部署服务端
+* [NEW] 增加 PHP Fetch 支持
+* [NEW] 增加自定义 PAC 域名列表立即应用按钮
+* [NEW] 增加指定自定义 GoAgentX PAC 服务端口功能，可以通过此功能避免 GoAgentX 随系统启动时要求输入密码的问题
+* [NEW] Retina Display 支持
+* [FIX] 修正自定义 PAC 域名列表导致任意网站都会使用代理的问题
+* [MOD] 在切换服务菜单中隐藏 goagent 服务端部署
+* [MOD] 移除 goagent golang 服务端部署
+
+*Released on 2012.08.26*
+
 ## GoAgentX v1.3.2
 
 * [NEW] SSH 服务支持指定私钥
