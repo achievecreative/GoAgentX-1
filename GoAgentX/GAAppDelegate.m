@@ -24,7 +24,7 @@
     
     NSString *statusText = @"正在运行";
     if ([proxyService proxyPort] > 0) {
-        statusText = [statusText stringByAppendingFormat:@"，端口 %ld", [proxyService proxyPort]];
+        statusText = [statusText stringByAppendingFormat:@"，端口 %d", [proxyService proxyPort]];
     }
     NSImage *statusImage = [NSImage imageNamed:@"status_running"];
     NSString *buttonTitle = @"停止";
@@ -241,7 +241,7 @@
                                      defaultButton:nil
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:content ?: @""];
+                         informativeTextWithFormat:@"%@", content ?: @""];
     [alert runModal];
 }
 
@@ -270,6 +270,14 @@
     }
     
     if ([proxyService isRunning]) {
+        [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
+    }
+}
+
+
+- (void)applyCustomPACCustomDomainList:(id)sender {
+    if ([proxyService isRunning]) {
+        [proxyService toggleSystemProxy:NO];
         [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
     }
 }
