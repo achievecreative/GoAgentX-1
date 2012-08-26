@@ -10,7 +10,6 @@
             <description><![CDATA[
                 <h2>GoAgentX v1.3.3 Changelog</h2>
                 <p>更新时请先停止 GoAgentX 服务。</p>
-                <p>此版本由 <a href="https://github.com/qqshfox">qqshfox</a> 贡献。</p>
                 <ul>
                     <li>[NEW] 更新 goagent 到 2.0.2，请注意一定需要重新部署服务端</li>
                     <li>[NEW] 增加 PHP Fetch 支持</li>
