@@ -62,5 +62,7 @@
 	<false/>
 	<key>GoAgentX:UseCustomPACServerPort</key>
 	<false/>
+	<key>GoAgent:UsePHPFetch</key>
+	<false/>
 </dict>
 </plist>

@@ -1,10 +1,10 @@
 [listen]
 ip = 127.0.0.1
 port = {GoAgent:Local:Port}
-visible = 1
+visible = 0
 
 [gae]
-enable = 1
+enable = {GoAgent:UseGAEFetch}
 appid = {GoAgent:Local:AppId}
 password = {GoAgent:Local:ServicePassword}
 path = /fetch.py
@@ -12,10 +12,10 @@ profile = {GoAgent:Local:GAEProfile}
 mulconn = 1
 
 [paas]
-enable = 0
+enable = {GoAgent:UsePHPFetch}
 password = {GoAgent:Local:ServicePassword}
-listen = 127.0.0.1:{GoAgent:Local:Port}
-fetchserver = https://phusdemo.app.com/
+listen = 127.0.0.1:{GoAgent:Local:PaaSPort}
+fetchserver = {GoAgent:Local:AppId}
 
 [proxy]
 enable = {GoAgent:Local:ProxyEnabled}
