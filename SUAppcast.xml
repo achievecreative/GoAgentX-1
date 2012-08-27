@@ -11,7 +11,7 @@
                 <h2>GoAgentX v1.3.3 Changelog</h2>
                 <p>更新时请先停止 GoAgentX 服务。</p>
                 <ul>
-                    <li>[NEW] 更新 goagent 到 2.0.2，请注意一定需要重新部署服务端</li>
+                    <li style="color:red">[NEW] 更新 goagent 到 2.0.2，请注意一定需要重新部署服务端</li>
                     <li>[NEW] 增加 PHP Fetch 支持</li>
                     <li>[NEW] 增加自定义 PAC 域名列表立即应用按钮</li>
                     <li>[NEW] 增加指定自定义 GoAgentX PAC 服务端口功能，可以通过此功能避免 GoAgentX 随系统启动时要求输入密码的问题</li>
