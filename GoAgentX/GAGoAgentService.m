@@ -63,6 +63,9 @@
     
     commandRunner.commandPath = @"/usr/bin/env";
     commandRunner.arguments = [NSArray arrayWithObjects:@"python", @"proxy.py", nil];
+    commandRunner.environment = [NSDictionary dictionaryWithObjectsAndKeys:
+                                 @"./:greenlet-0.4.0-py2.7-macosx-10.7-intel.egg:gevent-1.0b4-py2.7-macosx-10.7-intel.egg", @"PYTHONPATH",
+                                 nil];
     commandRunner.inputText = nil;
 }
 
