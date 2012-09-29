@@ -5,6 +5,6 @@ www:
     ports:
         www: http
     processes:
-        app: /home/dotcloud/env/bin/python /home/dotcloud/wsgi.py $PORT_WWW
+        app: /home/dotcloud/env/bin/python /home/dotcloud/wsgi.py -p $PORT_WWW -a paas
     systempackages:
         - libevent-dev
