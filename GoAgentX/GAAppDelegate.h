@@ -35,6 +35,8 @@
     
     IBOutlet NSPopUpButton          *stunnelSelectedServerPopupButton;
     IBOutlet NSTextView             *stunnelServerListTextView;
+    
+    IBOutlet NSTextField            *pacServerAddressField;
 }
 
 

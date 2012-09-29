@@ -119,6 +119,7 @@
         [self loadProxyService];
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
+        pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
     }
 }
 
@@ -192,6 +193,17 @@
 }
 
 
+- (void)setupPACServer {
+    pacServer = [GAPACHTTPServer sharedServer];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
+        // 自定义 PAC 端口
+        UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
+        [pacServer setPort:pacServerPort];
+    }
+    [pacServer start:NULL];
+}
+
+
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     [proxyService stop];
     
@@ -206,13 +218,7 @@
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
     
     // 启动本机 PAC 服务
-    pacServer = [GAPACHTTPServer sharedServer];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
-        // 自定义 PAC 端口
-        UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
-        [pacServer setPort:pacServerPort];
-    }
-    [pacServer start:NULL];
+    [self setupPACServer];
     
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;
