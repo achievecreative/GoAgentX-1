@@ -48,6 +48,11 @@
 }
 
 
+- (BOOL)supportReconnectAfterDisconnected {
+    return YES;
+}
+
+
 - (int)proxyPort {
     return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:Local:Port"];
 }

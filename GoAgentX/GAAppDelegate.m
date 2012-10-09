@@ -35,9 +35,10 @@
         buttonTitle = @"启动";
     }
     
+    statusText = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
     statusTextLabel.stringValue = statusText;
     statusImageView.image = statusImage;
-    statusMenuItem.title = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
+    statusMenuItem.title = statusText;
     statusMenuItem.image = statusImage;
     statusBarItem.toolTip = statusMenuItem.title;
     statusToggleButton.title = buttonTitle;
@@ -96,7 +97,7 @@
 }
 
 
-- (void)selectedServiceChanged:(id)sender {
+- (void)switchRunningService:(id)sender {
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         [servicesListPopButton selectItemWithTitle:[sender title]];
     }
@@ -108,6 +109,10 @@
         [self loadProxyService];
         [self setStatusToRunning:[NSNumber numberWithBool:NO]];
     }
+}
+
+
+- (void)selectedServiceChanged:(id)sender {
 }
 
 
@@ -174,7 +179,7 @@
             [servicesListPopButton addItemWithTitle:[service serviceTitle]];
             
             if ([service canShowInSwitchMenu]) {
-                [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+                [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(switchRunningService:) keyEquivalent:@""];
             }
         }
     }
