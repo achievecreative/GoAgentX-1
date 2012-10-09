@@ -1,3 +1,12 @@
+## GoAgnetX v1.3.5
+
+* [NEW] 更新 goagent 到 2.0.13，请注意一定需要重新部署服务端
+* [NEW] 在代理设置标签中显示当前内置 PAC 服务地址
+* [NEW] goagent 和 SSH 支持断线后自动重连
+* [FIX] 修正应用 PAC 域名列表时会修改代理设置的问题
+
+*Released on 2012.10.09*
+
 ## GoAgentX v1.3.3
 
 * [NEW] 更新 goagent 到 2.0.2，请注意一定需要重新部署服务端
