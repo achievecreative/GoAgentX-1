@@ -290,7 +290,7 @@
 
 
 - (void)applyCustomPACCustomDomainList:(id)sender {
-    if ([proxyService isRunning]) {
+    if ([proxyService isRunning] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
         [proxyService toggleSystemProxy:NO];
         [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
     }
