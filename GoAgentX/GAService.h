@@ -24,6 +24,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
     AuthorizationRef auth;
     AuthorizationFlags rootFlags;
+    
+    BOOL                    manualStopped;
 }
 
 + (id)sharedService;
@@ -68,5 +70,6 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 @property (nonatomic, strong)   GAAutoscrollTextView        *outputTextView;
 @property (nonatomic, copy)     GAServiceStatusChangedHandler   statusChangedHandler;
+@property (nonatomic, assign)  BOOL                    manualStopped;
 
 @end

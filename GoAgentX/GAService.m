@@ -24,6 +24,7 @@
 
 @synthesize statusChangedHandler;
 @synthesize outputTextView;
+@synthesize manualStopped;
 
 static NSMutableDictionary *sharedContainer = nil;
 
@@ -135,8 +136,13 @@ static NSMutableDictionary *sharedContainer = nil;
         statusChangedHandler(self);
     }
     
+    if (![self isRunning]) {
+        [self.outputTextView appendString:[NSString stringWithFormat:@"%@ 已停止\n\n", [self serviceTitle]]];
+    }
+    
     // 自动重连
-    if (![self isRunning] && [self supportReconnectAfterDisconnected]) {
+    if (![self isRunning] && [self supportReconnectAfterDisconnected] && !self.manualStopped) {
+        [self.outputTextView appendString:[NSString stringWithFormat:@"%@ 5 秒后将尝试重新连接...\n\n", [self serviceTitle]]];
         [self performSelector:@selector(start) withObject:nil afterDelay:5.0];
     }
 }
@@ -178,13 +184,15 @@ static NSMutableDictionary *sharedContainer = nil;
     }
     
     if (![commandRunner isTaskRunning]) {
-        [self.outputTextView appendString:@"正在启动...\n"];
+        [self.outputTextView appendString:[NSString stringWithFormat:@"%@ 正在启动...\n", [self serviceTitle]]];
         
         // 关闭可能的上次运行的进程
         NSInteger lastRunPID = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:LastRunPID"];
         if (lastRunPID > 0 && kill((int)lastRunPID, 0) == 0) {
             kill((int)lastRunPID, 9);
         }
+        
+        self.manualStopped = NO;
         
         [self setupWorkDirectory];
         [self setupCommandRunner];
@@ -200,9 +208,9 @@ static NSMutableDictionary *sharedContainer = nil;
 
 - (void)stop {
     if ([commandRunner isTaskRunning]) {
+        self.manualStopped = YES;
         [commandRunner terminateTask];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GoAgent:LastRunPID"];
-        [self notifyStatusChanged];
     }
 }
 

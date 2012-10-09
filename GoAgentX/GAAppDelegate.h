@@ -35,6 +35,8 @@
     
     IBOutlet NSPopUpButton          *stunnelSelectedServerPopupButton;
     IBOutlet NSTextView             *stunnelServerListTextView;
+    
+    IBOutlet NSTextField            *pacServerAddressField;
 }
 
 
@@ -43,6 +45,7 @@
 - (IBAction)showHelp:(id)sender;
 - (IBAction)showAbout:(id)sender;
 
+- (IBAction)switchRunningService:(id)sender;
 - (IBAction)selectedServiceChanged:(id)sender;
 - (IBAction)toggleServiceStatus:(id)sender;
 - (IBAction)clearStatusLog:(id)sender;

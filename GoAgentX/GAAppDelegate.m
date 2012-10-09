@@ -35,9 +35,10 @@
         buttonTitle = @"启动";
     }
     
+    statusText = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
     statusTextLabel.stringValue = statusText;
     statusImageView.image = statusImage;
-    statusMenuItem.title = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
+    statusMenuItem.title = statusText;
     statusMenuItem.image = statusImage;
     statusBarItem.toolTip = statusMenuItem.title;
     statusToggleButton.title = buttonTitle;
@@ -96,7 +97,7 @@
 }
 
 
-- (void)selectedServiceChanged:(id)sender {
+- (void)switchRunningService:(id)sender {
     if ([sender isKindOfClass:[NSMenuItem class]]) {
         [servicesListPopButton selectItemWithTitle:[sender title]];
     }
@@ -111,6 +112,10 @@
 }
 
 
+- (void)selectedServiceChanged:(id)sender {
+}
+
+
 - (void)toggleServiceStatus:(id)sender {
     if ([proxyService isRunning]) {
         [proxyService stop];
@@ -119,6 +124,7 @@
         [self loadProxyService];
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
+        pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
     }
 }
 
@@ -173,7 +179,7 @@
             [servicesListPopButton addItemWithTitle:[service serviceTitle]];
             
             if ([service canShowInSwitchMenu]) {
-                [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(selectedServiceChanged:) keyEquivalent:@""];
+                [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(switchRunningService:) keyEquivalent:@""];
             }
         }
     }
@@ -192,6 +198,17 @@
 }
 
 
+- (void)setupPACServer {
+    pacServer = [GAPACHTTPServer sharedServer];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
+        // 自定义 PAC 端口
+        UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
+        [pacServer setPort:pacServerPort];
+    }
+    [pacServer start:NULL];
+}
+
+
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     [proxyService stop];
     
@@ -206,13 +223,7 @@
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
     
     // 启动本机 PAC 服务
-    pacServer = [GAPACHTTPServer sharedServer];
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
-        // 自定义 PAC 端口
-        UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
-        [pacServer setPort:pacServerPort];
-    }
-    [pacServer start:NULL];
+    [self setupPACServer];
     
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;
@@ -284,7 +295,7 @@
 
 
 - (void)applyCustomPACCustomDomainList:(id)sender {
-    if ([proxyService isRunning]) {
+    if ([proxyService isRunning] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
         [proxyService toggleSystemProxy:NO];
         [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
     }

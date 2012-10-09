@@ -511,7 +511,7 @@
 		89B72C5014E8DF9D0027DC19 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = xujiwei.com;
 			};
 			buildConfigurationList = 89B72C5314E8DF9D0027DC19 /* Build configuration list for PBXProject "GoAgentX" */;

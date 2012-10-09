@@ -25,6 +25,11 @@
 }
 
 
+- (BOOL)supportReconnectAfterDisconnected {
+    return YES;
+}
+
+
 - (BOOL)hasConfigured {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [defaults stringForKey:@"SSH:RemoteServer"].length > 0;
