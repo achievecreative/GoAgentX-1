@@ -30,14 +30,14 @@ mode = {GoAgent:Local:ConnectMode}
 hosts = 203.208.46.1|203.208.46.2|203.208.46.3|203.208.46.4|203.208.46.5|203.208.46.6|203.208.46.7|203.208.46.8
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
 forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
-withgae = plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com
+withgae = plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|books.google.com
 
 [google_hk]
 mode = {GoAgent:Local:ConnectMode}
-hosts = www.google.com|mail.google.com|www.google.com.hk
+hosts = www.google.com|mail.google.com|www.l.google.com|maps.google.com|map.google.com
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
 forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
-withgae = plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com
+withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com
 
 [google_ipv6]
 mode = {GoAgent:Local:ConnectMode}
@@ -49,7 +49,7 @@ withgae =
 [autorange]
 hosts = .youtube.com|.atm.youku.com|.googlevideo.com|av.vimeo.com|smile-*.nicovideo.jp|video.*.fbcdn.net|s*.last.fm|x*.last.fm
 threads = 2
-maxsize = 4194304
+maxsize = 1048576
 waitsize = 524288
 bufsize = 8192
 
@@ -68,7 +68,8 @@ fetchserver = http://.me:23/
 enable = 0
 ip = 127.0.0.1
 port = 8086
-file = goagent.pac
+file = proxy.pac
+gfwlist = http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt
 
 [useragent]
 enable = 0
