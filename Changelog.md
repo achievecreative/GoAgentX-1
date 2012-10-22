@@ -1,3 +1,9 @@
+## GoAgnetX v1.3.6
+
+* [MOD] 更新 goagent 到 2.0.4，修正 CN 服务器无法连接的问题
+
+*Released on 2012.10.22*
+
 ## GoAgnetX v1.3.5
 
 * [NEW] 更新 goagent 到 2.0.13，请注意一定需要重新部署服务端
