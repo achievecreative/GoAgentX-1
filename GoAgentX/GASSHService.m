@@ -40,6 +40,10 @@
     return (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"SSH:LocalPort"];
 }
 
+- (bool)listenOnRemote {
+    return (bool)[[NSUserDefaults standardUserDefaults] boolForKey:@"SSH:ListenOnRemote"];
+}
+
 
 - (NSString *)proxySetting {
     return [NSString stringWithFormat:@"SOCKS 127.0.0.1:%d", [self proxyPort]];
@@ -61,7 +65,7 @@
     [args addObject:@"-p"];
     [args addObject:[defaults stringForKey:@"SSH:RemotePort"]];
     [args addObject:@"-D"];
-    [args addObject:[NSString stringWithFormat:@"127.0.0.1:%d", [self proxyPort]]];
+    [args addObject:[NSString stringWithFormat:@"%s:%d", [self listenOnRemote] ? "*" : "localhost", [self proxyPort]]];
     NSString *identityFile = [defaults stringForKey:@"SSH:IdentityFile"];
     if ([identityFile length] > 0) {
       [args addObject:@"-i"];

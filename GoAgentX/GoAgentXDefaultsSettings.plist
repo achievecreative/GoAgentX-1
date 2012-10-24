@@ -48,6 +48,8 @@
 	<string>22</string>
 	<key>SSH:LocalPort</key>
 	<integer>7070</integer>
+	<key>SSH:ListenOnRemote</key>
+	<false/>
 	<key>SSH:UsePublicKeyForLogin</key>
 	<false/>
 	<key>SSH:IdentityFile</key>
