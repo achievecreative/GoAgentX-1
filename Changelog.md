@@ -1,3 +1,9 @@
+## GoAgnetX v1.3.7
+
+* [NEW] SSH 服务允许非本机使用
+
+*Not Released Yet*
+
 ## GoAgnetX v1.3.6
 
 * [MOD] 更新 goagent 到 2.0.4，修正 CN 服务器无法连接的问题

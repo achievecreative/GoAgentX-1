@@ -120,6 +120,9 @@ static NSMutableDictionary *sharedContainer = nil;
     return 0;
 }
 
+- (bool)listenOnRemote {
+    return NO;
+}
 
 - (NSString *)proxySetting {
     return nil;
