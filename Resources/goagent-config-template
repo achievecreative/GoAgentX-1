@@ -8,14 +8,23 @@ debuginfo = 0
 enable = {GoAgent:UseGAEFetch}
 appid = {GoAgent:Local:AppId}
 password = {GoAgent:Local:ServicePassword}
-path = /fetch.py
+path = /2
 profile = {GoAgent:Local:GAEProfile}
+crlf = 1
 mulconn = 1
+
+[pac]
+enable = 1
+ip = 127.0.0.1
+port = 8086
+file = proxy.pac
+gfwlist = http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt
 
 [paas]
 enable = {GoAgent:UsePHPFetch}
 password = {GoAgent:Local:ServicePassword}
 listen = 127.0.0.1:{GoAgent:Local:PaaSPort}
+isphp = 1
 fetchserver = {GoAgent:Local:AppId}
 
 [proxy]
@@ -29,15 +38,15 @@ password = {GoAgent:Local:ProxyPassword}
 mode = {GoAgent:Local:ConnectMode}
 hosts = 203.208.47.1|203.208.47.2|203.208.47.3|203.208.47.4|203.208.47.5|203.208.47.6|203.208.47.7|203.208.47.8
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
-forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
-withgae = plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|books.google.com
+forcehttps = www.google.com|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
+withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com
 
 [google_hk]
 mode = {GoAgent:Local:ConnectMode}
-hosts = www.google.com|mail.google.com|www.l.google.com|maps.google.com|map.google.com
+hosts = www.google.com|www.l.google.com|mail.l.google.com|mail.google.com|maps.l.google.com
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
-forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
-withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com
+forcehttps = www.google.com|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
+withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com
 
 [google_ipv6]
 mode = {GoAgent:Local:ConnectMode}
@@ -58,18 +67,18 @@ enable = 0
 dns = 8.8.8.8
 sites = .youtube.com|.ytimg.com
 
+[dns]
+enable = 0
+listen = 127.0.0.1:53
+remote = 8.8.8.8
+cachesize = 5000
+timeout = 3
+
 [socks5]
 enable = 0
 password = 123456
 listen = 127.0.0.1:8089
 fetchserver = http://.me:23/
-
-[pac]
-enable = 0
-ip = 127.0.0.1
-port = 8086
-file = proxy.pac
-gfwlist = http://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt
 
 [useragent]
 enable = 0
@@ -81,7 +90,7 @@ server =
 
 [love]
 enable = 1
-timestamp = 1345829781
+timestamp = 1350927900
 tip = \u8bf7\u5173\u6ce8\u5317\u4eac\u5931\u5b66\u513f\u7ae5~~
 
 [hosts]
