@@ -3,7 +3,7 @@
 * [NEW] SSH 服务允许非本机使用
 * [NEW] 更新 goagent 到 2.1.3
 
-*Released on 2012.10.25*
+*Released on 2012.10.27*
 
 ## GoAgnetX v1.3.6
 
