@@ -38,14 +38,14 @@ password = {GoAgent:Local:ProxyPassword}
 mode = {GoAgent:Local:ConnectMode}
 hosts = 203.208.47.1|203.208.47.2|203.208.47.3|203.208.47.4|203.208.47.5|203.208.47.6|203.208.47.7|203.208.47.8
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
-forcehttps = www.google.com|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
+forcehttps = www.google.com/url|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
 withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com
 
 [google_hk]
 mode = {GoAgent:Local:ConnectMode}
-hosts = www.google.com|www.l.google.com|mail.l.google.com|mail.google.com|maps.l.google.com
+hosts = www.google.com|mail.google.com|www.l.google.com|mail.l.google.com
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
-forcehttps = www.google.com|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
+forcehttps = www.google.com/url|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
 withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com
 
 [google_ipv6]
@@ -54,6 +54,7 @@ hosts = 2404:6800:8005::2f|2a00:1450:8006::30|2404:6800:8005::84
 sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
 forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
 withgae = 
+withdns = 
 
 [autorange]
 hosts = .youtube.com|.atm.youku.com|.googlevideo.com|av.vimeo.com|smile-*.nicovideo.jp|video.*.fbcdn.net|s*.last.fm|x*.last.fm

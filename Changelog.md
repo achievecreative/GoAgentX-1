@@ -1,3 +1,11 @@
+## GoAgentX v1.3.8
+
+* [NEW] 更新 goagent 到 2.1.5
+* [NEW] 其他设置中添加“GoAgentX 窗口总是置顶”选项
+
+*Released on 2012.11.2*
+
+
 ## GoAgnetX v1.3.7
 
 * [NEW] SSH 服务允许非本机使用

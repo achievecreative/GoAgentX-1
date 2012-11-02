@@ -246,6 +246,8 @@
     if (![proxyService hasConfigured]) {
         [self showMainWindow:nil];
     }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userDefaultsChanged:) name:NSUserDefaultsDidChangeNotification object:nil];
 }
 
 
@@ -304,6 +306,12 @@
 
 - (void)importGoagentCA:(id)sender {
     [[NSWorkspace sharedWorkspace] openFile:[[NSBundle mainBundle] pathForResource:@"CA" ofType:@"crt" inDirectory:@"goagent"]];
+}
+
+
+- (void)userDefaultsChanged:(NSNotification *)note {
+    BOOL mainWindowAlwaysOnTop = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:MainWindowAlwaysOnTop"];
+    [self.window setLevel:mainWindowAlwaysOnTop ? NSFloatingWindowLevel : NSNormalWindowLevel];
 }
 
 
