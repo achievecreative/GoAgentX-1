@@ -40,6 +40,42 @@ FetchMaxSize = 1024*1024*4
 DeflateMaxSize = 1024*1024*4
 Deadline = 60
 
+def error_html(errno, error, description=''):
+    ERROR_TEMPLATE = '''
+<html><head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>{{errno}} {{error}}</title>
+<style><!--
+body {font-family: arial,sans-serif}
+div.nav {margin-top: 1ex}
+div.nav A {font-size: 10pt; font-family: arial,sans-serif}
+span.nav {font-size: 10pt; font-family: arial,sans-serif; font-weight: bold}
+div.nav A,span.big {font-size: 12pt; color: #0000cc}
+div.nav A {font-size: 10pt; color: black}
+A.l:link {color: #6f6f6f}
+A.u:link {color: green}
+//--></style>
+
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<table border=0 cellpadding=2 cellspacing=0 width=100%>
+<tr><td bgcolor=#3366cc><font face=arial,sans-serif color=#ffffff><b>Error</b></td></tr>
+<tr><td>&nbsp;</td></tr></table>
+<blockquote>
+<H1>{{error}}</H1>
+{{description}}
+
+<p>
+</blockquote>
+<table width=100% cellpadding=0 cellspacing=0><tr><td bgcolor=#3366cc><img alt="" width=1 height=4></td></tr></table>
+</body></html>
+'''
+    kwargs = dict(errno=errno, error=error, description=description)
+    template = ERROR_TEMPLATE
+    for keyword, value in kwargs.items():
+        template = template.replace('{{%s}}' % keyword, value)
+    return template
+
 def socket_forward(local, remote, timeout=60, tick=2, bufsize=8192, maxping=None, maxpong=None, idlecall=None, trans=''):
     timecount = timeout
     try:
@@ -176,11 +212,18 @@ def paas_application(environ, start_response):
             del headers['Content-Encoding']
 
     if __password__ and __password__ != kwargs.get('password'):
-        url = 'https://goa%d%s' % (int(time.time()*100), environ['HTTP_HOST'])
-        response = httplib_request('GET', url, timeout=5)
+        random_host = 'g%d%s' % (int(time.time()*100), environ['HTTP_HOST'])
+        conn = httplib.HTTPConnection(random_host, timeout=3)
+        conn.request('GET', '/')
+        response = conn.getresponse(True)
         status_line = '%s %s' % (response.status, httplib.responses.get(response.status, 'OK'))
         start_response(status_line, response.getheaders())
         yield response.read()
+        raise StopIteration
+
+    if __hostsdeny__ and urlparse.urlparse(url).netloc.endswith(__hostsdeny__):
+        start_response('403 Forbidden', [('Content-Type', 'text/html')])
+        yield error_html('403', 'Hosts Deny', description='url=%r' % url)
         raise StopIteration
 
     timeout = Deadline
@@ -198,62 +241,45 @@ def paas_application(environ, start_response):
             conn = HTTPConnection(netloc, timeout=timeout)
             conn.request(method, path, body=payload, headers=headers)
             response = conn.getresponse()
-            response_headers = dict((k.title(), v) for k, v in response.getheaders())
 
-            data = 'G-Code:%s\n%s' % (response.status, '\n'.join('%s:%s'%(k,v) for k, v in response_headers.iteritems()))
-            data = base64.b64encode(zlib.compress(data)[2:-4]).rstrip()
+            need_deflate = True
+            if response.getheader('Content-Encoding') or response.getheader('Content-Type', '').startswith(('video/', 'audio/', 'image/')) or 'deflate' not in headers.get('Accept-Encoding', ''):
+                need_deflate = False
 
-            start_response_headers = [('Status', data), ('Content-Type', 'image/gif')]
-            if 'Content-Length' in response_headers:
-                start_response_headers.append(('Content-Length', response_headers['Content-Length']))
-            if 'Connection' in response_headers:
-                start_response_headers.append(('Connection', response_headers['Connection']))
+            if need_deflate:
+                response.msg['Content-Encoding'] = 'deflate'
+                if 'Content-Length' in response.msg:
+                    del response.msg['Content-Length']
+            response_headers = '\n'.join('%s:%s'%(k.title(),v) for k, v in response.getheaders())
+            response_headers = zlib.compress(response_headers)[2:-4]
 
-            start_response('200 OK', start_response_headers)
+            start_response('200 OK', [('Content-Type', 'image/gif')])
+            yield struct.pack('!hh', int(response.status), len(response_headers)) + response_headers
 
             bufsize = 8192
-            while 1:
-                data = response.read(bufsize)
-                if not data:
-                    response.close()
-                    break
-                yield data
+            if need_deflate:
+                compressobj = zlib.compressobj()
+                is_leadbyte = True
+                while 1:
+                    data = response.read(bufsize)
+                    if not data:
+                        break
+                    zdata = compressobj.compress(data)
+                    if zdata:
+                        if is_leadbyte:
+                            zdata = zdata[2:]
+                            is_leadbyte = False
+                        yield zdata
+                yield compressobj.flush()[:-4]
+            else:
+                while 1:
+                    data = response.read(bufsize)
+                    if not data:
+                        response.close()
+                        break
+                    yield data
         except httplib.HTTPException as e:
             raise
-
-def gae_error_html(**kwargs):
-    GAE_ERROR_TEMPLATE = '''
-<html><head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>{{errno}} {{error}}</title>
-<style><!--
-body {font-family: arial,sans-serif}
-div.nav {margin-top: 1ex}
-div.nav A {font-size: 10pt; font-family: arial,sans-serif}
-span.nav {font-size: 10pt; font-family: arial,sans-serif; font-weight: bold}
-div.nav A,span.big {font-size: 12pt; color: #0000cc}
-div.nav A {font-size: 10pt; color: black}
-A.l:link {color: #6f6f6f}
-A.u:link {color: green}
-//--></style>
-
-</head>
-<body text=#000000 bgcolor=#ffffff>
-<table border=0 cellpadding=2 cellspacing=0 width=100%>
-<tr><td bgcolor=#3366cc><font face=arial,sans-serif color=#ffffff><b>Error</b></td></tr>
-<tr><td>&nbsp;</td></tr></table>
-<blockquote>
-<H1>{{error}}</H1>
-{{description}}
-
-<p>
-</blockquote>
-<table width=100% cellpadding=0 cellspacing=0><tr><td bgcolor=#3366cc><img alt="" width=1 height=4></td></tr></table>
-</body></html>
-'''
-    for keyword, value in kwargs.items():
-        GAE_ERROR_TEMPLATE = GAE_ERROR_TEMPLATE.replace('{{%s}}' % keyword, value)
-    return GAE_ERROR_TEMPLATE
 
 def gae_application(environ, start_response):
     if environ['REQUEST_METHOD'] == 'GET':
@@ -287,18 +313,18 @@ def gae_application(environ, start_response):
 
     if __password__ and __password__ != kwargs.get('password', ''):
         start_response('403 Forbidden', [('Content-Type', 'text/html')])
-        yield gae_error_html(errno='403', error='Wrong password.', description='GoAgent proxy.ini password is wrong!')
+        yield error_html('403', 'Wrong password', description='GoAgent proxy.ini password is wrong!')
         raise StopIteration
 
     if __hostsdeny__ and urlparse.urlparse(url).netloc.endswith(__hostsdeny__):
         start_response('403 Forbidden', [('Content-Type', 'text/html')])
-        yield gae_error_html(errno='403', error='Hosts Deny', description='url=%r' % url)
+        yield error_html('403', 'Hosts Deny', description='url=%r' % url)
         raise StopIteration
 
     fetchmethod = getattr(urlfetch, method, '')
     if not fetchmethod:
         start_response('501 Unsupported', [('Content-Type', 'text/html')])
-        yield gae_error_html(errno='501', error=('Invalid Method: '+str(method)), description='Unsupported Method')
+        yield error_html('501', 'Invalid Method: %r'% method, description='Unsupported Method')
         raise StopIteration
 
     deadline = Deadline
@@ -348,7 +374,7 @@ def gae_application(environ, start_response):
                 deadline = Deadline * 2
     else:
         start_response('500 Internal Server Error', [('Content-Type', 'text/html')])
-        yield gae_error_html(errno='502', error=('Python Urlfetch Error: ' + str(method)), description='<br />\n'.join(errors) or 'UNKOWN')
+        yield error_html('502', 'Python Urlfetch Error: %r' % method, description='<br />\n'.join(errors) or 'UNKOWN')
         raise StopIteration
 
     #logging.debug('url=%r response.status_code=%r response.headers=%r response.content[:1024]=%r', url, response.status_code, dict(response.headers), response.content[:1024])
