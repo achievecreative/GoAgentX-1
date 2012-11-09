@@ -41,6 +41,7 @@
     statusMenuItem.title = statusText;
     statusMenuItem.image = statusImage;
     statusBarItem.toolTip = statusMenuItem.title;
+    statusBarItem.image = [NSImage imageNamed:[@"status_item_icon" stringByAppendingString:(running ? @"" : @"_stopped")]];
     statusToggleButton.title = buttonTitle;
 }
 

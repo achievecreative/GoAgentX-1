@@ -6,6 +6,21 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.3.9</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.9 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                <p style='color:red'><strong>注意：goagent 更新到 2.1.7，如果连接后无法使用，请重新部署服务端。</strong></p>
+                <p>goagent 更新到 2.1.7，依赖 gevent，GoAgentX 目前在 OS X 10.7 Lion 下测试可以正常运行，其他版本 OS X 可能会有问题。</p>
+                <ul>
+                    <li>[NEW] 更新 goagent 到 2.1.7</li>
+                    <li>[NEW] 菜单栏图标增加服务停止时的指示图标</li>
+                </ul>
+            ]]></description>
+            <pubDate>Fri, 09 Nov 2012 12:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.9.dmg" sparkle:shortVersionString="1.3.9" sparkle:version="22" length="3264223" type="application/octet-stream" sparkle:dsaSignature="MC0CFB5s8KnNP0eLw+ekzWYMHrGxlYnfAhUAgEvEKGR2xvX7ioSMuT+khyLKV+U=" />
+         </item>
+         <item>
             <title>GoAgentX v1.3.8</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.8 Changelog</h2>

@@ -16,6 +16,8 @@
 		890CAE8315EA0E9C00DBF744 /* status_item_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 890CAE8215EA0E9C00DBF744 /* status_item_icon@2x.png */; };
 		890CAE8515EA0F9400DBF744 /* status_item_icon_alt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */; };
 		890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 890DBFC61549002D009FF77F /* GAGoAgentServerService.m */; };
+		891EA917164CA50A00445A25 /* status_item_icon_stopped.png in Resources */ = {isa = PBXBuildFile; fileRef = 891EA915164CA50A00445A25 /* status_item_icon_stopped.png */; };
+		891EA918164CA50A00445A25 /* status_item_icon_stopped@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 891EA916164CA50A00445A25 /* status_item_icon_stopped@2x.png */; };
 		894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894107FA1549179D0045DA38 /* GoAgentXServices.plist */; };
 		8941781B15495FFB00E1819C /* GAConfigFieldManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8941781A15495FFB00E1819C /* GAConfigFieldManager.m */; };
 		8941782D1549A02900E1819C /* GAPACHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8941782C1549A02900E1819C /* GAPACHTTPConnection.m */; };
@@ -103,6 +105,8 @@
 		890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_item_icon_alt@2x.png"; sourceTree = "<group>"; };
 		890DBFC51549002D009FF77F /* GAGoAgentServerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAGoAgentServerService.h; sourceTree = "<group>"; };
 		890DBFC61549002D009FF77F /* GAGoAgentServerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAGoAgentServerService.m; sourceTree = "<group>"; };
+		891EA915164CA50A00445A25 /* status_item_icon_stopped.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_item_icon_stopped.png; sourceTree = "<group>"; };
+		891EA916164CA50A00445A25 /* status_item_icon_stopped@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_item_icon_stopped@2x.png"; sourceTree = "<group>"; };
 		894107FA1549179D0045DA38 /* GoAgentXServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentXServices.plist; sourceTree = "<group>"; };
 		8941781915495FFB00E1819C /* GAConfigFieldManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAConfigFieldManager.h; sourceTree = "<group>"; };
 		8941781A15495FFB00E1819C /* GAConfigFieldManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAConfigFieldManager.m; sourceTree = "<group>"; };
@@ -472,6 +476,8 @@
 				89B72CEB14E926730027DC19 /* status_stopped.png */,
 				89B72CDA14E90CC60027DC19 /* status_item_icon.png */,
 				890CAE8215EA0E9C00DBF744 /* status_item_icon@2x.png */,
+				891EA915164CA50A00445A25 /* status_item_icon_stopped.png */,
+				891EA916164CA50A00445A25 /* status_item_icon_stopped@2x.png */,
 				89B72CDE14E9113A0027DC19 /* status_item_icon_alt.png */,
 				890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */,
 				89B72CD714E9097E0027DC19 /* Icon.icns */,
@@ -563,6 +569,8 @@
 				8905D9E71556DCA800E0E13A /* stunnel-config-example in Resources */,
 				890CAE8315EA0E9C00DBF744 /* status_item_icon@2x.png in Resources */,
 				890CAE8515EA0F9400DBF744 /* status_item_icon_alt@2x.png in Resources */,
+				891EA917164CA50A00445A25 /* status_item_icon_stopped.png in Resources */,
+				891EA918164CA50A00445A25 /* status_item_icon_stopped@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -73,7 +73,7 @@ enable = 0
 listen = 127.0.0.1:53
 remote = 8.8.8.8
 cachesize = 5000
-timeout = 3
+timeout = 2
 
 [socks5]
 enable = 0
