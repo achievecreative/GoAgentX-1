@@ -1,3 +1,10 @@
+## GoAgentX v1.3.9
+
+* [NEW] 更新 goagent 到 2.1.7
+* [NEW] 菜单栏图标增加服务停止时的指示图标
+
+*Released on 2012.11.09*
+
 ## GoAgentX v1.3.8
 
 * [NEW] 更新 goagent 到 2.1.5
