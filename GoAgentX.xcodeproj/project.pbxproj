@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3354315D1654DA6E00AB2A73 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3354315C1654DA6E00AB2A73 /* QuartzCore.framework */; };
+		335431641654DBBA00AB2A73 /* banner2lines.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3354315F1654DBBA00AB2A73 /* banner2lines.tiff */; };
+		335431651654DBBA00AB2A73 /* McAnimationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 335431611654DBBA00AB2A73 /* McAnimationUtility.m */; };
+		335431661654DBBA00AB2A73 /* THUserNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 335431631654DBBA00AB2A73 /* THUserNotification.m */; };
 		8905D9CB15551DF200E0E13A /* GASSHService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905D9CA15551DF200E0E13A /* GASSHService.m */; };
 		8905D9D515552D4000E0E13A /* ssh in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9D415552D4000E0E13A /* ssh */; };
 		8905D9D715557CEC00E0E13A /* stunnel-config-template in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9D615557CEC00E0E13A /* stunnel-config-template */; };
@@ -93,6 +97,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3354315C1654DA6E00AB2A73 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3354315F1654DBBA00AB2A73 /* banner2lines.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = banner2lines.tiff; sourceTree = "<group>"; };
+		335431601654DBBA00AB2A73 /* McAnimationUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = McAnimationUtility.h; sourceTree = "<group>"; };
+		335431611654DBBA00AB2A73 /* McAnimationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = McAnimationUtility.m; sourceTree = "<group>"; };
+		335431621654DBBA00AB2A73 /* THUserNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THUserNotification.h; sourceTree = "<group>"; };
+		335431631654DBBA00AB2A73 /* THUserNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THUserNotification.m; sourceTree = "<group>"; };
 		8905D9C915551DF200E0E13A /* GASSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GASSHService.h; sourceTree = "<group>"; };
 		8905D9CA15551DF200E0E13A /* GASSHService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GASSHService.m; sourceTree = "<group>"; };
 		8905D9D415552D4000E0E13A /* ssh */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ssh; sourceTree = "<group>"; };
@@ -215,6 +225,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3354315D1654DA6E00AB2A73 /* QuartzCore.framework in Frameworks */,
 				894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */,
 				89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */,
 				89CC4742152DC9F700A12119 /* SystemConfiguration.framework in Frameworks */,
@@ -225,6 +236,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3354315E1654DBBA00AB2A73 /* THUserNotification */ = {
+			isa = PBXGroup;
+			children = (
+				3354315F1654DBBA00AB2A73 /* banner2lines.tiff */,
+				335431601654DBBA00AB2A73 /* McAnimationUtility.h */,
+				335431611654DBBA00AB2A73 /* McAnimationUtility.m */,
+				335431621654DBBA00AB2A73 /* THUserNotification.h */,
+				335431631654DBBA00AB2A73 /* THUserNotification.m */,
+			);
+			path = THUserNotification;
+			sourceTree = "<group>";
+		};
 		8941782A15499E9200E1819C /* PACServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -248,6 +271,7 @@
 		8963E33B14ED4A01008587B7 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				3354315E1654DBBA00AB2A73 /* THUserNotification */,
 				8996159015479CA8002DE998 /* SynthesizeSingleton.h */,
 				8941782E1549A25700E1819C /* NSData_Base64 */,
 				899615551545B050002DE998 /* CocoaAsyncSocket */,
@@ -414,6 +438,7 @@
 		89B72C5C14E8DF9D0027DC19 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3354315C1654DA6E00AB2A73 /* QuartzCore.framework */,
 				894E09CC154163BC00343BC6 /* Sparkle.framework */,
 				89CC4744152DCF5B00A12119 /* Security.framework */,
 				89CC4741152DC9F700A12119 /* SystemConfiguration.framework */,
@@ -571,6 +596,7 @@
 				890CAE8515EA0F9400DBF744 /* status_item_icon_alt@2x.png in Resources */,
 				891EA917164CA50A00445A25 /* status_item_icon_stopped.png in Resources */,
 				891EA918164CA50A00445A25 /* status_item_icon_stopped@2x.png in Resources */,
+				335431641654DBBA00AB2A73 /* banner2lines.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +643,8 @@
 				894178341549A2C200E1819C /* GAPACHTTPServer.m in Sources */,
 				8905D9CB15551DF200E0E13A /* GASSHService.m in Sources */,
 				8905D9E015562F0A00E0E13A /* GAStunnelService.m in Sources */,
+				335431651654DBBA00AB2A73 /* McAnimationUtility.m in Sources */,
+				335431661654DBBA00AB2A73 /* THUserNotification.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
