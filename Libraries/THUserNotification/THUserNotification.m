@@ -711,7 +711,8 @@
             [self sortVisibleNotifications];
         }
     }
-    if ([delegate respondsToSelector:@selector(userNotificationCenter:didActivateNotification:)])
+    if (type != THUserNotificationActivationTypeNone &&
+        [delegate respondsToSelector:@selector(userNotificationCenter:didActivateNotification:)])
     {
         [delegate userNotificationCenter:self didActivateNotification:notification];
     }
