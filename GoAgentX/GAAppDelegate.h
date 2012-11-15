@@ -11,8 +11,9 @@
 #import "GAAutoscrollTextView.h"
 #import "GAService.h"
 #import "GAPACHTTPServer.h"
+#import "THUserNotification.h"
 
-@interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextViewDelegate> {
+@interface GAAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTextViewDelegate, THUserNotificationCenterDelegate> {
     NSStatusItem        *statusBarItem;
     
     NSMutableArray      *servicesList;
