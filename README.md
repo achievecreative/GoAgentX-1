@@ -1,6 +1,6 @@
 # GoAgentX
 
-GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件，方便一般用户在 Mac OS X 上配置和使用 goagent、west-chamber-season-3、SSH 以及 stunnel。
+GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件，方便一般用户在 Mac OS X 上配置和使用 goagent、west-chamber-season-3、SSH、stunnel 及 shadowsocks。
 
 ## 下载
 
@@ -8,7 +8,7 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 
 ## 功能
 
-* 支持 goagent，west-chamber-season-3，SSH，stunnel
+* 支持 goagent，west-chamber-season-3，SSH，stunnel，shadowsocks
 * 支持部署 goagent 服务端到 App Engine
 * 自动设置系统 HTTP 代理或者 PAC 设置
 * 集成 goagent 与 west-chamber-season-3
@@ -54,6 +54,11 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 
 服务端配置请参考 <https://www.google.com/search?q=stunnel+代理>。
 
+### shadowsocks
+
+关于 shadowsocks 请参见 <https://github.com/clowwindy/shadowsocks>。
+
+
 ## 程序截图
 
 ![程序截图](https://github.com/ohdarling/GoAgentX/raw/master/Screenshot.png)
@@ -63,6 +68,8 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 获取代码：
 
     git clone https://github.com/ohdarling/GoAgentX
+    git submodule init
+    git submodule update
 
 然后打开 Xcode 项目 GoAgentX.xcodeproj 进行编译即可。
 
@@ -79,6 +86,7 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 * [west-chamber-season-3](https://github.com/liruqi/west-chamber-season-3)
 * [CocoaHTTPServer](https://github.com/robbiehanson/CocoaHTTPServer)
 * [stunnel](http://www.stunnel.org/)
+* [shadowsocks](https://github.com/clowwindy/shadowsocks)
 
 ## 关于
 
