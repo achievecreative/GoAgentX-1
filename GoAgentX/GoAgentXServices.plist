@@ -7,5 +7,6 @@
 	<string>GAWestChamberService</string>
 	<string>GASSHService</string>
 	<string>GAStunnelService</string>
+	<string>GAShadowSocksService</string>
 </array>
 </plist>
