@@ -34,7 +34,6 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 1. 进入 GoAgentX 服务设置标签，选择“goagent”，填写之前申请的 App Engine appid 以及服务密码，并根据实际情况选择连接方式和服务器
 1. 进入 GoAgentX 状态标签，选择服务为 goagent，点击启动，如果显示启动成功则可以开始使用
 
-
 其他相关情况请参见 [goagent 简易教程](http://code.google.com/p/goagent/#简易教程)
 
 ### 西厢第3季
