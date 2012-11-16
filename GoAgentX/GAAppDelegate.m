@@ -46,8 +46,8 @@
     statusBarItem.image = [NSImage imageNamed:[@"status_item_icon" stringByAppendingString:(running ? @"" : @"_stopped")]];
     statusToggleButton.title = buttonTitle;
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:PostNotificationWhenStatusChanged"]) {
-        // notification center for os x 10.8+
+    // notification center for os x 10.6+
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:ServiceStateChangedNotification"]) {
         THUserNotification *notification = [THUserNotification notification];
         notification.title = @"GoAgentX";
         notification.informativeText = statusText;
