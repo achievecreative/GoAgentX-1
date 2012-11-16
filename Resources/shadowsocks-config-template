@@ -1,0 +1,7 @@
+{
+    "server":"{ShadowSocks:Server}",
+    "server_port":{ShadowSocks:ListenOnRemote},
+    "local_port":{ShadowSocks:LocalPort},
+    "password":"{ShadowSocks:Password}",
+    "timeout":{ShadowSocks:Timeout}
+}
