@@ -67,11 +67,11 @@
 	<key>GoAgent:UsePHPFetch</key>
 	<false/>
 	<key>GoAgentX:ServiceStateChangedNotification</key>
-	<true/>
+	<false/>
 	<key>ShadowSocks:LocalPort</key>
-	<string>1080</string>
+	<string>8387</string>
 	<key>ShadowSocks:ListenOnRemote</key>
-	<string>8499</string>
+	<string>8388</string>
 	<key>ShadowSocks:Timeout</key>
 	<integer>60</integer>
 </dict>

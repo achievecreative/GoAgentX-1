@@ -1,0 +1,3 @@
+[submodule "Libraries/TBSDK"]
+	path = Resources/shadowsocks
+	url = https://github.com/clowwindy/shadowsocks

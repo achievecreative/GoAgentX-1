@@ -50,13 +50,16 @@
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:ServiceStateChangedNotification"]) {
         THUserNotification *notification = [THUserNotification notification];
         notification.title = @"GoAgentX";
-        notification.subtitle = [NSString stringWithFormat:@"%@ 服务状态", [proxyService serviceTitle]];
         notification.informativeText = statusText;
+        //设置通知提交的时间
         notification.deliveryDate = [NSDate dateWithTimeIntervalSinceNow:1];
-        [[THUserNotificationCenter notificationCenter] deliverNotification:notification];
-        [[THUserNotificationCenter notificationCenter] setDelegate:self];
+        THUserNotificationCenter *center = [THUserNotificationCenter notificationCenter];
         //删除已经显示过的通知(已经存在用户的通知列表中的)
-        //[[THUserNotificationCenter notificationCenter] removeAllDeliveredNotifications];
+        [center removeAllDeliveredNotifications];
+        //递交通知
+        [center deliverNotification:notification];
+        //设置通知的代理
+        [center setDelegate:self];
     }
 }
 
@@ -330,13 +333,18 @@
     [self.window setLevel:mainWindowAlwaysOnTop ? NSFloatingWindowLevel : NSNormalWindowLevel];
 }
 
+
+#pragma mark - THUserNotificationCenter delegate
+
 - (void)userNotificationCenter:(THUserNotificationCenter *)center didActivateNotification:(THUserNotification *)notification {
     [self showMainWindow:nil];
 }
 
+
 - (void)userNotificationCenter:(THUserNotificationCenter *)center didDeliverNotification:(THUserNotification *)notification {
     // do nothing
 }
+
 
 - (BOOL)userNotificationCenter:(THUserNotificationCenter *)center shouldPresentNotification:(THUserNotification *)notification {
     return NO;

@@ -19,11 +19,11 @@
                                                     encoding:NSUTF8StringEncoding
                                                        error:NULL];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *server = [defaults stringForKey:@"ShadowSocks:Server"];
-    NSString *remotePort = [defaults stringForKey:@"ShadowSocks:ListenOnRemote"];
-    NSString *localPort = [defaults stringForKey:@"ShadowSocks:LocalPort"];
-    NSString *pass = [defaults stringForKey:@"ShadowSocks:Password"];
-    NSString *timeout = [defaults stringForKey:@"ShadowSocks:Timeout"];
+    NSString *server = [defaults stringForKey:@"ShadowSocks:Server"] ?: @"";
+    NSString *remotePort = [defaults stringForKey:@"ShadowSocks:ListenOnRemote"] ?: @"";
+    NSString *localPort = [defaults stringForKey:@"ShadowSocks:LocalPort"] ?: @"";
+    NSString *pass = [defaults stringForKey:@"ShadowSocks:Password"] ?: @"";
+    NSString *timeout = [defaults stringForKey:@"ShadowSocks:Timeout"] ?: @"";
     tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:Server}" withString:server];
     tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:ListenOnRemote}" withString:remotePort];
     tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:LocalPort}" withString:localPort];
@@ -60,7 +60,7 @@
 }
 
 - (NSString *)proxySetting {
-    return [NSString stringWithFormat:@"PROXY 127.0.0.1:%d", [self proxyPort]];
+    return [NSString stringWithFormat:@"SOCKS 127.0.0.1:%d; SOCKS5 127.0.0.1:%d", [self proxyPort], [self proxyPort]];
 }
 
 - (void)setupCommandRunner {

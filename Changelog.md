@@ -1,3 +1,12 @@
+## GoAgentX v1.3.10
+
+* [NEW] 更新 goagent 到 2.1.9-11
+* [NEW] 新增 shaodowsocks 支持
+* [NEW] 在“其他设置”中新增“服务状态改变通知”设置
+
+*Released on 2012.11.16*
+
+
 ## GoAgentX v1.3.9
 
 * [NEW] 更新 goagent 到 2.1.7

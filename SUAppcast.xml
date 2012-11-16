@@ -6,6 +6,20 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.3.10</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.10 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                <ul>
+                    <li>[NEW] 更新 goagent 到 2.1.9-11</li>
+                    <li>[NEW] 新增 shaodowsocks 支持</li>
+                    <li>[NEW] 在“其他设置”中新增“服务状态改变通知”设置</li>
+                </ul>
+            ]]></description>
+            <pubDate>Fri, 16 Nov 2012 23:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.10.dmg" sparkle:shortVersionString="1.3.10" sparkle:version="23" length="3315409" type="application/octet-stream" sparkle:dsaSignature="MCwCFCiy1quhEzAAMwAYgTd6vvCgNg3ZAhQ2js5P/I1A6y8VxLu7dFi0Mls4HA==" />
+         </item>
+         <item>
             <title>GoAgentX v1.3.9</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.9 Changelog</h2>
