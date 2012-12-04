@@ -231,6 +231,7 @@
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     [proxyService stop];
+    [proxyService toggleSystemProxy:NO];
     
     return NSTerminateNow;
 }
