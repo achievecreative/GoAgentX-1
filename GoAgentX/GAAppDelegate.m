@@ -54,6 +54,7 @@
         //设置通知提交的时间
         notification.deliveryDate = [NSDate dateWithTimeIntervalSinceNow:1];
         THUserNotificationCenter *center = [THUserNotificationCenter notificationCenter];
+        center.centerType = THUserNotificationCenterTypeBanner;
         //删除已经显示过的通知(已经存在用户的通知列表中的)
         [center removeAllDeliveredNotifications];
         //递交通知
@@ -337,7 +338,7 @@
 #pragma mark - THUserNotificationCenter delegate
 
 - (void)userNotificationCenter:(THUserNotificationCenter *)center didActivateNotification:(THUserNotification *)notification {
-    [self showMainWindow:nil];
+//    [self showMainWindow:nil];
 }
 
 

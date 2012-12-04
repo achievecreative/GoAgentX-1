@@ -299,6 +299,9 @@
     [viewAnimation setAnimationBlockingMode:NSAnimationNonblockingThreaded];
     [viewAnimation setDelegate:self];
     [viewAnimation startAnimation];
+    
+    // 5 秒后自动隐藏
+    [self performSelector:@selector(moveOutAnimation) withObject:nil afterDelay:6];
 }
 
 - (void)moveAnimation:(NSPoint)point
@@ -331,6 +334,9 @@
 
 - (void)moveOutAnimation
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeOutAnimation) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(moveOutAnimation) object:nil];
+    
     if (animating)
     {
         return;
@@ -354,10 +360,14 @@
     [viewAnimation setAnimationBlockingMode:NSAnimationNonblockingThreaded];
     [viewAnimation setDelegate:self];
     [viewAnimation startAnimation];
+    
 }
 
 - (void)fadeOutAnimation
 {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fadeOutAnimation) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(moveOutAnimation) object:nil];
+    
     if (animating)
     {
         return;
