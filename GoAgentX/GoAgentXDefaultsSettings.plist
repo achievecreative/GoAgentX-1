@@ -41,7 +41,7 @@
 	<key>WestChamber:LocalPort</key>
 	<integer>1989</integer>
 	<key>GoAgentX:SelectedService</key>
-	<string>GAGoAgentService</string>
+	<string>goagent</string>
 	<key>WestChamber:GoAgentProxyPassword</key>
 	<string></string>
 	<key>SSH:RemotePort</key>
