@@ -239,9 +239,11 @@
         // 自定义 PAC 端口
         UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
         [pacServer setPort:pacServerPort];
+    } else {
+        [pacServer setPort:0];
     }
     [pacServer start:NULL];
-    pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
+    pacServerAddressField.stringValue = [pacServer pacAddressForProxy:[proxyService proxySetting]];
 }
 
 
