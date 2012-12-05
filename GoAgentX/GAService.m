@@ -29,12 +29,24 @@
 static NSMutableDictionary *sharedContainer = nil;
 static Reachability *internetReachability = nil;
 
+static AuthorizationRef authRef;
+static AuthorizationFlags authFlags;
+
 + (void)initialize {
     if (self == [GAService class]) {
         sharedContainer = [NSMutableDictionary new];
         
         internetReachability = [Reachability reachabilityForInternetConnection];
         [internetReachability startNotifier];
+                
+        authFlags = kAuthorizationFlagDefaults
+                    | kAuthorizationFlagExtendRights
+                    | kAuthorizationFlagInteractionAllowed
+                    | kAuthorizationFlagPreAuthorize;
+        OSStatus authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, authFlags, &authRef);
+        if (authErr != noErr) {
+            authRef = nil;
+        }
     }
 }
 
@@ -75,17 +87,6 @@ static Reachability *internetReachability = nil;
         previousDeviceProxies = [NSMutableDictionary new];
         
         stoppedForNetworkProblem = NO;
-
-        OSStatus authErr = noErr;
-
-        rootFlags = kAuthorizationFlagDefaults
-            | kAuthorizationFlagExtendRights
-            | kAuthorizationFlagInteractionAllowed
-            | kAuthorizationFlagPreAuthorize;
-        authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, rootFlags, &auth);
-        if (authErr != noErr) {
-          auth = nil;
-        }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStateChanged:) name:kReachabilityChangedNotification object:nil];
     }
@@ -361,7 +362,7 @@ static Reachability *internetReachability = nil;
 
 
 - (void)toggleSystemProxy:(BOOL)useProxy {
-    if (auth == NULL) {
+    if (authRef == NULL) {
       NSLog(@"No authorization has been granted to modify network configuration");
       return;
     }
@@ -369,7 +370,7 @@ static Reachability *internetReachability = nil;
     BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
     NSLog(@"Toggle system proxy %@ with PAC %@", useProxy ? @"YES" : @"NO", usePAC ? @"YES" : @"NO");
     
-    SCPreferencesRef prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, auth);
+    SCPreferencesRef prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, authRef);
 
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
     

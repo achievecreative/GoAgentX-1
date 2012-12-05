@@ -22,9 +22,6 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
     GACommandRunner                 *commandRunner;
     GAAutoscrollTextView            *outputTextView;
     GAServiceStatusChangedHandler   statusChangedHandler;
-
-    AuthorizationRef auth;
-    AuthorizationFlags rootFlags;
     
     BOOL                    manualStopped;
     BOOL                    stoppedForNetworkProblem;
