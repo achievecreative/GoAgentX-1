@@ -240,8 +240,10 @@
 
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-    [proxyService stop];
-    [proxyService toggleSystemProxy:NO];
+    if ([proxyService isRunning]) {
+        [proxyService stop];
+        [proxyService toggleSystemProxy:NO];
+    }
     
     return NSTerminateNow;
 }
