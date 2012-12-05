@@ -154,7 +154,7 @@
         [self loadProxyService];
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
-        [self setupPACServer];
+        pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
         [[NSUserDefaults standardUserDefaults] setObject:[proxyService serviceTitle] forKey:@"GoAgentX:SelectedService"];
     }
 }
@@ -230,20 +230,25 @@
 
 
 - (void)setupPACServer {
-    if (pacServer) {
-        [pacServer stop];
-    }
-    
-    pacServer = [GAPACHTTPServer sharedServer];
+    int newPort = 0;
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
         // 自定义 PAC 端口
         UInt16 pacServerPort = (UInt16)[[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgentX:CustomPACServerPort"];
-        [pacServer setPort:pacServerPort];
-    } else {
-        [pacServer setPort:0];
+        newPort = pacServerPort;
     }
-    [pacServer start:NULL];
-    pacServerAddressField.stringValue = [pacServer pacAddressForProxy:[proxyService proxySetting]];
+    
+    pacServer = [GAPACHTTPServer sharedServer];
+    if (newPort != [pacServer port]) {
+        [pacServer setPort:newPort];
+        
+        if ([pacServer isRunning]) {
+            [pacServer stop];
+        }
+    }
+    
+    if (![pacServer isRunning]) {
+        [pacServer start:NULL];
+    }
 }
 
 
@@ -262,6 +267,9 @@
     [self loadServicesList];
     
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
+    
+    // 启动本机 PAC 服务
+    [self setupPACServer];
     
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;
@@ -335,8 +343,6 @@
 
 
 - (void)applyCustomPACCustomDomainList:(id)sender {
-    [self setupPACServer];
-    
     if ([proxyService isRunning] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
         [proxyService toggleSystemProxy:NO];
         [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];
