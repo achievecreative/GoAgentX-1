@@ -54,14 +54,23 @@
         //设置通知提交的时间
         notification.deliveryDate = [NSDate dateWithTimeIntervalSinceNow:1];
         THUserNotificationCenter *center = [THUserNotificationCenter notificationCenter];
-        center.centerType = THUserNotificationCenterTypeBanner;
+        if ([center isKindOfClass:[THUserNotificationCenter class]]) {
+            center.centerType = THUserNotificationCenterTypeBanner;
+        }
         //删除已经显示过的通知(已经存在用户的通知列表中的)
         [center removeAllDeliveredNotifications];
         //递交通知
         [center deliverNotification:notification];
         //设置通知的代理
         [center setDelegate:self];
+        
+        [self performSelector:@selector(removeUserNotification:) withObject:notification afterDelay:5.0];
     }
+}
+
+
+- (void)removeUserNotification:(NSUserNotification *)notification {
+    [[THUserNotificationCenter notificationCenter] removeDeliveredNotification:notification];
 }
 
 
