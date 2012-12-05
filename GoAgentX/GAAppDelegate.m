@@ -53,6 +53,7 @@
         notification.informativeText = statusText;
         //设置通知提交的时间
         notification.deliveryDate = [NSDate dateWithTimeIntervalSinceNow:1];
+        
         THUserNotificationCenter *center = [THUserNotificationCenter notificationCenter];
         if ([center isKindOfClass:[THUserNotificationCenter class]]) {
             center.centerType = THUserNotificationCenterTypeBanner;
@@ -153,7 +154,7 @@
         [self loadProxyService];
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
-        pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
+        [self setupPACServer];
         [[NSUserDefaults standardUserDefaults] setObject:[proxyService serviceTitle] forKey:@"GoAgentX:SelectedService"];
     }
 }
@@ -229,6 +230,10 @@
 
 
 - (void)setupPACServer {
+    if (pacServer) {
+        [pacServer stop];
+    }
+    
     pacServer = [GAPACHTTPServer sharedServer];
     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:UseCustomPACServerPort"]) {
         // 自定义 PAC 端口
@@ -236,6 +241,7 @@
         [pacServer setPort:pacServerPort];
     }
     [pacServer start:NULL];
+    pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
 }
 
 
@@ -254,9 +260,6 @@
     [self loadServicesList];
     
     [[GAConfigFieldManager sharedManager] setupWithTabView:servicesConfigTabView];
-    
-    // 启动本机 PAC 服务
-    [self setupPACServer];
     
     // 设置状态日志最大为10K
     statusLogTextView.maxLength = 10000;
@@ -330,6 +333,8 @@
 
 
 - (void)applyCustomPACCustomDomainList:(id)sender {
+    [self setupPACServer];
+    
     if ([proxyService isRunning] && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
         [proxyService toggleSystemProxy:NO];
         [self performSelector:@selector(refreshSystemProxySettings:) withObject:nil afterDelay:0.1];

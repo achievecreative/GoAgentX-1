@@ -34,6 +34,8 @@
 	<false/>
 	<key>GoAgent:CustomPACAddress</key>
 	<string></string>
+	<key>GoAgent:Local:AllowRemoteClient</key>
+	<false/>
 	<key>WestChamber:GoAgentProxyServer</key>
 	<string>goagent-hrd.appspot.com</string>
 	<key>WestChamber:RemoteDNS</key>
