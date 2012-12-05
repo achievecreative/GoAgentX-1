@@ -20,6 +20,7 @@
 		8905D9D915557CF900E0E13A /* stunnel in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9D815557CF900E0E13A /* stunnel */; };
 		8905D9E015562F0A00E0E13A /* GAStunnelService.m in Sources */ = {isa = PBXBuildFile; fileRef = 8905D9DF15562F0A00E0E13A /* GAStunnelService.m */; };
 		8905D9E71556DCA800E0E13A /* stunnel-config-example in Resources */ = {isa = PBXBuildFile; fileRef = 8905D9E61556DCA700E0E13A /* stunnel-config-example */; };
+		89075ECF166EE50C001A318D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 89075ECE166EE50C001A318D /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		890CAE8315EA0E9C00DBF744 /* status_item_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 890CAE8215EA0E9C00DBF744 /* status_item_icon@2x.png */; };
 		890CAE8515EA0F9400DBF744 /* status_item_icon_alt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */; };
 		890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 890DBFC61549002D009FF77F /* GAGoAgentServerService.m */; };
@@ -118,6 +119,8 @@
 		8905D9DE15562F0A00E0E13A /* GAStunnelService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAStunnelService.h; sourceTree = "<group>"; };
 		8905D9DF15562F0A00E0E13A /* GAStunnelService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAStunnelService.m; sourceTree = "<group>"; };
 		8905D9E61556DCA700E0E13A /* stunnel-config-example */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "stunnel-config-example"; sourceTree = "<group>"; };
+		89075ECD166EE50C001A318D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		89075ECE166EE50C001A318D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		890CAE8215EA0E9C00DBF744 /* status_item_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_item_icon@2x.png"; sourceTree = "<group>"; };
 		890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_item_icon_alt@2x.png"; sourceTree = "<group>"; };
 		890DBFC51549002D009FF77F /* GAGoAgentServerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAGoAgentServerService.h; sourceTree = "<group>"; };
@@ -255,6 +258,15 @@
 			path = THUserNotification;
 			sourceTree = "<group>";
 		};
+		89075ECC166EE50C001A318D /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				89075ECD166EE50C001A318D /* Reachability.h */,
+				89075ECE166EE50C001A318D /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		8941782A15499E9200E1819C /* PACServer */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,6 +290,7 @@
 		8963E33B14ED4A01008587B7 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				89075ECC166EE50C001A318D /* Reachability */,
 				3354315E1654DBBA00AB2A73 /* THUserNotification */,
 				8996159015479CA8002DE998 /* SynthesizeSingleton.h */,
 				8941782E1549A25700E1819C /* NSData_Base64 */,
@@ -536,6 +549,7 @@
 				89B72C5514E8DF9D0027DC19 /* Sources */,
 				89B72C5614E8DF9D0027DC19 /* Frameworks */,
 				894E09CF154163E500343BC6 /* CopyFiles */,
+				89075EDB166EFDA9001A318D /* Update Build Number */,
 				89B72C5714E8DF9D0027DC19 /* Resources */,
 			);
 			buildRules = (
@@ -615,6 +629,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		89075EDB166EFDA9001A318D /* Update Build Number */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Build Number";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n# 自动生成Build Number\n\nexport PATH=$PATH:/opt/local/bin\nGIT_COMMIT_COUNT=`git rev-list HEAD | wc -l | sed -e 's/ *//g' | xargs -n1 printf %d`\nINFO_PLIST=$BUILT_PRODUCTS_DIR/$WRAPPER_NAME/Contents/Info.plist\n\n# 更新Build Number\n/usr/libexec/PlistBuddy \"$INFO_PLIST\" -c \"Set CFBundleVersion $GIT_COMMIT_COUNT\"\n\n# convert back to binary format\nplutil -convert binary1 \"$INFO_PLIST\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		89B72C5514E8DF9D0027DC19 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -659,6 +690,7 @@
 				335431651654DBBA00AB2A73 /* McAnimationUtility.m in Sources */,
 				335431661654DBBA00AB2A73 /* THUserNotification.m in Sources */,
 				33A0997816563D1500A0EAD3 /* GAShadowSocksService.m in Sources */,
+				89075ECF166EE50C001A318D /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "GACommandRunner.h"
+#import "Reachability.h"
 
 @class GAService;
 
@@ -16,16 +17,14 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 
 @interface GAService : NSObject {
-    NSMutableDictionary     *previousDeviceProxies;
+    NSMutableDictionary             *previousDeviceProxies;
     
-    GACommandRunner         *commandRunner;
-    GAAutoscrollTextView    *outputTextView;
+    GACommandRunner                 *commandRunner;
+    GAAutoscrollTextView            *outputTextView;
     GAServiceStatusChangedHandler   statusChangedHandler;
-
-    AuthorizationRef auth;
-    AuthorizationFlags rootFlags;
     
     BOOL                    manualStopped;
+    BOOL                    stoppedForNetworkProblem;
 }
 
 + (id)sharedService;
@@ -33,6 +32,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 - (BOOL)hasConfigured;
 
 - (BOOL)supportReconnectAfterDisconnected;
+
+- (BOOL)autoDisconnectWhenNetworkIsUnreachable;
 
 - (BOOL)canShowInSwitchMenu;
 

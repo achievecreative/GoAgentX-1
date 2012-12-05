@@ -6,6 +6,26 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.3.11</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.11 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                <ul>
+					<li>[NEW] 使用 Reachability 监测网络状态来修正 SSH 服务的稳定性</li>
+					<li>[NEW] 内置 PAC 服务修改端口不再需要重启</li>
+					<li>[MOD] 服务状态改变通知在 5 秒后自动隐藏</li>
+					<li>[FIX] 修正第一次运行时选中的服务不正确的问题</li>
+					<li>[FIX] 修正第一次运行时代理设置选项错误的问题</li>
+					<li>[FIX] 修正使用菜单切换服务不会保存最后一次使用服务的问题</li>
+					<li>[FIX] 修正 goagent 在 Mac OS X 10.8 下会出现 SSLError 的问题</li>
+					<li>[FIX] 修正 stunnel 在 Mac OS X 10.8 下无法运行的问题</li>
+					<li>[FIX] 修正 Mac OS X 10.8 下切换服务时会重新要求权限验证的问题</li>
+                </ul>
+            ]]></description>
+            <pubDate>Wed, 05 Dec 2012 13:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.11.dmg" sparkle:shortVersionString="1.3.10" sparkle:version="213" length="3900660" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCegY7I2CnueVp1/YLd1HQL27Yv3gIUfy3daVEatSsBPFuK3R9BU6OoxSQ=" />
+         </item>
+         <item>
             <title>GoAgentX v1.3.10</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.10 Changelog</h2>

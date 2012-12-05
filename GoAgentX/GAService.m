@@ -27,10 +27,26 @@
 @synthesize manualStopped;
 
 static NSMutableDictionary *sharedContainer = nil;
+static Reachability *internetReachability = nil;
+
+static AuthorizationRef authRef;
+static AuthorizationFlags authFlags;
 
 + (void)initialize {
     if (self == [GAService class]) {
         sharedContainer = [NSMutableDictionary new];
+        
+        internetReachability = [Reachability reachabilityForInternetConnection];
+        [internetReachability startNotifier];
+                
+        authFlags = kAuthorizationFlagDefaults
+                    | kAuthorizationFlagExtendRights
+                    | kAuthorizationFlagInteractionAllowed
+                    | kAuthorizationFlagPreAuthorize;
+        OSStatus authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, authFlags, &authRef);
+        if (authErr != noErr) {
+            authRef = nil;
+        }
     }
 }
 
@@ -69,17 +85,10 @@ static NSMutableDictionary *sharedContainer = nil;
 - (id)init {
     if (self = [super init]) {
         previousDeviceProxies = [NSMutableDictionary new];
-
-        OSStatus authErr = noErr;
-
-        rootFlags = kAuthorizationFlagDefaults
-            | kAuthorizationFlagExtendRights
-            | kAuthorizationFlagInteractionAllowed
-            | kAuthorizationFlagPreAuthorize;
-        authErr = AuthorizationCreate(nil, kAuthorizationEmptyEnvironment, rootFlags, &auth);
-        if (authErr != noErr) {
-          auth = nil;
-        }
+        
+        stoppedForNetworkProblem = NO;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStateChanged:) name:kReachabilityChangedNotification object:nil];
     }
     
     return self;
@@ -107,6 +116,11 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (BOOL)supportReconnectAfterDisconnected {
+    return NO;
+}
+
+
+- (BOOL)autoDisconnectWhenNetworkIsUnreachable {
     return NO;
 }
 
@@ -173,6 +187,8 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)start {
+    stoppedForNetworkProblem = NO;
+    
     // 取消之前的可能的自动重连
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(start) object:nil];
     
@@ -346,7 +362,7 @@ static NSMutableDictionary *sharedContainer = nil;
 
 
 - (void)toggleSystemProxy:(BOOL)useProxy {
-    if (auth == NULL) {
+    if (authRef == NULL) {
       NSLog(@"No authorization has been granted to modify network configuration");
       return;
     }
@@ -354,7 +370,7 @@ static NSMutableDictionary *sharedContainer = nil;
     BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
     NSLog(@"Toggle system proxy %@ with PAC %@", useProxy ? @"YES" : @"NO", usePAC ? @"YES" : @"NO");
     
-    SCPreferencesRef prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, auth);
+    SCPreferencesRef prefRef = SCPreferencesCreateWithAuthorization(nil, CFSTR("GoAgentX"), nil, authRef);
 
     NSDictionary *sets = (__bridge NSDictionary *)SCPreferencesGetValue(prefRef, kSCPrefNetworkServices);
     
@@ -394,6 +410,26 @@ static NSMutableDictionary *sharedContainer = nil;
     SCPreferencesCommitChanges(prefRef);
     SCPreferencesApplyChanges(prefRef);
     SCPreferencesSynchronize(prefRef);
+}
+
+
+#pragma mark - 网络状态变化
+
+- (void)networkStateChanged:(NSNotification *)note {
+    if ([self autoDisconnectWhenNetworkIsUnreachable]) {
+        if ([internetReachability currentReachabilityStatus] == NotReachable) {
+            if ([self isRunning]) {
+                stoppedForNetworkProblem = YES;
+                [self stop];
+            }
+            
+        } else {
+            if (stoppedForNetworkProblem) {
+                [self start];
+                stoppedForNetworkProblem = NO;
+            }
+        }
+    }
 }
 
 

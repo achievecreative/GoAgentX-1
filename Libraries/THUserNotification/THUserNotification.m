@@ -188,6 +188,11 @@
     return self;
 }
 
+- (void)dealloc {
+    viewAnimation.delegate = nil;
+    self.delegate = nil;
+}
+
 - (void)presentedNotification
 {
     presented = YES;
@@ -354,6 +359,7 @@
     [viewAnimation setAnimationBlockingMode:NSAnimationNonblockingThreaded];
     [viewAnimation setDelegate:self];
     [viewAnimation startAnimation];
+    
 }
 
 - (void)fadeOutAnimation
@@ -675,6 +681,7 @@
 
 - (void)removeDeliveredNotification:(THUserNotification *)notification
 {
+    [notification moveOutAnimation];
     [(NSMutableArray *)deliveredNotifications removeObject:notification];
 }
 

@@ -23,7 +23,7 @@
 	<key>GoAgent:Local:ProxyPassword</key>
 	<string></string>
 	<key>GoAgent:AutoToggleSystemProxySettings</key>
-	<true/>
+	<false/>
 	<key>GoAgent:Local:PACEnabled</key>
 	<false/>
 	<key>GoAgent:Local:CrlfEnabled</key>
@@ -34,6 +34,8 @@
 	<false/>
 	<key>GoAgent:CustomPACAddress</key>
 	<string></string>
+	<key>GoAgent:Local:AllowRemoteClient</key>
+	<false/>
 	<key>WestChamber:GoAgentProxyServer</key>
 	<string>goagent-hrd.appspot.com</string>
 	<key>WestChamber:RemoteDNS</key>
@@ -41,7 +43,7 @@
 	<key>WestChamber:LocalPort</key>
 	<integer>1989</integer>
 	<key>GoAgentX:SelectedService</key>
-	<string>GAGoAgentService</string>
+	<string>goagent</string>
 	<key>WestChamber:GoAgentProxyPassword</key>
 	<string></string>
 	<key>SSH:RemotePort</key>
@@ -67,11 +69,13 @@
 	<key>GoAgent:UsePHPFetch</key>
 	<false/>
 	<key>GoAgentX:ServiceStateChangedNotification</key>
-	<false/>
+	<true/>
 	<key>ShadowSocks:LocalPort</key>
 	<string>8387</string>
 	<key>ShadowSocks:ListenOnRemote</key>
 	<string>8388</string>
+	<key>GoAgent:Server:LanguageType</key>
+	<integer>0</integer>
 	<key>ShadowSocks:Timeout</key>
 	<integer>60</integer>
 </dict>
