@@ -154,6 +154,7 @@
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);
         [proxyService start];
         pacServerAddressField.stringValue = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[proxyService proxySetting]];
+        [[NSUserDefaults standardUserDefaults] setObject:[proxyService serviceTitle] forKey:@"GoAgentX:SelectedService"];
     }
 }
 
