@@ -1,3 +1,17 @@
+## GoAgentX v1.3.11
+
+* [NEW] 使用 Reachability 监测网络状态来修正 SSH 服务的稳定性
+* [NEW] 内置 PAC 服务修改端口不再需要重启
+* [MOD] 服务状态改变通知在 5 秒后自动隐藏
+* [FIX] 修正第一次运行时选中的服务不正确的问题
+* [FIX] 修正第一次运行时代理设置选项错误的问题
+* [FIX] 修正使用菜单切换服务不会保存最后一次使用服务的问题
+* [FIX] 修正 goagent 在 Mac OS X 10.8 下会出现 SSLError 的问题
+* [FIX] 修正 stunnel 在 Mac OS X 10.8 下无法运行的问题
+* [FIX] 修正 Mac OS X 10.8 下切换服务时会重新要求权限验证的问题
+
+*Released on 2012.12.05*
+
 ## GoAgentX v1.3.10
 
 * [NEW] 更新 goagent 到 2.1.9-11
