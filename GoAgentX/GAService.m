@@ -335,7 +335,7 @@ static AuthorizationFlags authFlags;
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
-        NSString *pacFile = useCustomePAC ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
+        NSString *pacFile = (useCustomePAC && ![customPAC hasPrefix:@"file://"]) ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
         
         if (usePAC) {
             // 使用 PAC

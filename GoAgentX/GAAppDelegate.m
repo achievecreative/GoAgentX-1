@@ -255,7 +255,7 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     if ([proxyService isRunning]) {
         [proxyService stop];
-        [proxyService toggleSystemProxy:NO];
+        [proxyService notifyStatusChanged];
     }
     
     return NSTerminateNow;
@@ -358,6 +358,21 @@
 - (void)userDefaultsChanged:(NSNotification *)note {
     BOOL mainWindowAlwaysOnTop = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgentX:MainWindowAlwaysOnTop"];
     [self.window setLevel:mainWindowAlwaysOnTop ? NSFloatingWindowLevel : NSNormalWindowLevel];
+}
+
+
+- (void)selectLocalPacFileButtonClicked:(id)sender {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.canChooseDirectories = NO;
+    panel.canChooseFiles = YES;
+    panel.allowsMultipleSelection = NO;
+    panel.allowedFileTypes = @[@"pac"];
+    [panel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+            NSString *path = panel.URL.absoluteString;
+            [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"GoAgent:CustomPACAddress"];
+        }
+    }];
 }
 
 

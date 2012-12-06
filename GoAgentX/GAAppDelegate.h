@@ -54,6 +54,7 @@
 - (IBAction)applyCustomPACCustomDomainList:(id)sender;
 - (IBAction)setAutoToggleProxySettingType:(id)sender;
 - (IBAction)showStunnelConfigurationExample:(id)sender;
+- (IBAction)selectLocalPacFileButtonClicked:(id)sender;
 
 - (IBAction)importGoagentCA:(id)sender;
 

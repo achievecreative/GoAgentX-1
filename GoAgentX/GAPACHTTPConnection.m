@@ -9,6 +9,8 @@
 #import "GAPACHTTPConnection.h"
 
 #import "HTTPDynamicFileResponse.h"
+#import "NSData+Base64.h"
+#import "HTTPFileResponse.h"
 
 @implementation GAPACHTTPConnection
 
@@ -35,6 +37,15 @@
 
 
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path {
+    BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
+    BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
+    NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
+    
+    if (usePAC && useCustomePAC && customPAC.length > 0) {
+        NSString *filePath = [[NSURL URLWithString:customPAC] path];
+        return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
+    }
+    
 	NSString *filePath = [self filePathForURI:path];
 	
 	// Convert to relative path

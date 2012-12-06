@@ -1,3 +1,10 @@
+## GoAgentX v1.3.12
+
+* [FIX] 修正退出程序时会修改代理设置的问题
+* [NEW] 修正系统对本地 PAC 文件支持不好的问题，现在可以直接在代理设置标签页选择本地 PAC 文件（需要选中使用自定义 PAC 地址）
+
+*Released on 2012.12.06*
+
 ## GoAgentX v1.3.11
 
 * [NEW] 使用 Reachability 监测网络状态来修正 SSH 服务的稳定性
