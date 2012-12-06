@@ -255,7 +255,7 @@
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     if ([proxyService isRunning]) {
         [proxyService stop];
-        [proxyService toggleSystemProxy:NO];
+        [proxyService notifyStatusChanged];
     }
     
     return NSTerminateNow;
