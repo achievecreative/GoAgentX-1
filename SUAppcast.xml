@@ -6,6 +6,19 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.3.12</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.12 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                <ul>
+					<li>[FIX] 修正退出程序时会修改代理设置的问题</li>
+					<li>[NEW] 修正系统对本地 PAC 文件支持不好的问题，现在可以直接在代理设置标签页选择本地 PAC 文件（需要选中使用自定义 PAC 地址）</li>
+                </ul>
+            ]]></description>
+            <pubDate>Thu, 06 Dec 2012 13:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/downloads/ohdarling/GoAgentX/GoAgentX-v1.3.12.dmg" sparkle:shortVersionString="1.3.12" sparkle:version="228" length="3900641" type="application/octet-stream" sparkle:dsaSignature="MCwCFCAb9gLKisKcEcp0WR73a1pbpX3gAhRbeWCfHFj10kiXRGgxyxVZClaDFw==" />
+         </item>
+         <item>
             <title>GoAgentX v1.3.11</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.11 Changelog</h2>
