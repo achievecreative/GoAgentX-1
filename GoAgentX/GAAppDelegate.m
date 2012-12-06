@@ -361,6 +361,21 @@
 }
 
 
+- (void)selectLocalPacFileButtonClicked:(id)sender {
+    NSOpenPanel *panel = [NSOpenPanel openPanel];
+    panel.canChooseDirectories = NO;
+    panel.canChooseFiles = YES;
+    panel.allowsMultipleSelection = NO;
+    panel.allowedFileTypes = @[@"pac"];
+    [panel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+        if (result == NSFileHandlingPanelOKButton) {
+            NSString *path = panel.URL.absoluteString;
+            [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"GoAgent:CustomPACAddress"];
+        }
+    }];
+}
+
+
 #pragma mark - THUserNotificationCenter delegate
 
 - (void)userNotificationCenter:(THUserNotificationCenter *)center didActivateNotification:(THUserNotification *)notification {

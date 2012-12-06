@@ -361,6 +361,7 @@
 							<string key="NSFrame">{{13, 10}, {574, 484}}</string>
 							<reference key="NSSuperview" ref="439893737"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="287234436"/>
 							<string key="NSReuseIdentifierKey">_NS:608</string>
 							<array class="NSMutableArray" key="NSTabViewItems">
 								<object class="NSTabViewItem" id="827758957">
@@ -2682,7 +2683,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 																				<string key="NSFrameSize">{454, 43}</string>
 																				<reference key="NSSuperview" ref="639731121"/>
 																				<reference key="NSWindow"/>
-																				<reference key="NSNextKeyView" ref="920824487"/>
+																				<reference key="NSNextKeyView" ref="5662605"/>
 																				<string key="NSReuseIdentifierKey">_NS:13</string>
 																				<object class="NSTextContainer" key="NSTextContainer" id="262817616">
 																					<object class="NSLayoutManager" key="NSLayoutManager">
@@ -2783,7 +2784,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 																<string key="NSFrame">{{18, 22}, {456, 119}}</string>
 																<reference key="NSSuperview" ref="904095325"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="639731121"/>
+																<reference key="NSNextKeyView" ref="920824487"/>
 																<string key="NSReuseIdentifierKey">_NS:9</string>
 																<int key="NSsFlags">133138</int>
 																<reference key="NSVScroller" ref="5662605"/>
@@ -2821,6 +2822,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 																<string key="NSFrame">{{482, 21}, {40, 121}}</string>
 																<reference key="NSSuperview" ref="904095325"/>
 																<reference key="NSWindow"/>
+																<reference key="NSNextKeyView"/>
 																<string key="NSReuseIdentifierKey">_NS:22</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSButtonCell" key="NSCell" id="358521775">
@@ -3068,10 +3070,10 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 															<object class="NSTextField" id="673428256">
 																<reference key="NSNextResponder" ref="66015712"/>
 																<int key="NSvFlags">266</int>
-																<string key="NSFrame">{{184, 14}, {338, 22}}</string>
+																<string key="NSFrame">{{184, 14}, {308, 22}}</string>
 																<reference key="NSSuperview" ref="66015712"/>
 																<reference key="NSWindow"/>
-																<reference key="NSNextKeyView" ref="973919454"/>
+																<reference key="NSNextKeyView" ref="384271594"/>
 																<string key="NSReuseIdentifierKey">_NS:903</string>
 																<bool key="NSEnabled">YES</bool>
 																<object class="NSTextFieldCell" key="NSCell" id="901746080">
@@ -3079,7 +3081,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 																	<int key="NSCellFlags2">272630784</int>
 																	<string key="NSContents"/>
 																	<reference key="NSSupport" ref="988758687"/>
-																	<string key="NSPlaceholderString">例如 http://localhost/proxy.pac</string>
+																	<string key="NSPlaceholderString">例如 http://example.com/proxy.pac</string>
 																	<string key="NSCellIdentifier">_NS:903</string>
 																	<reference key="NSControlView" ref="673428256"/>
 																	<bool key="NSDrawsBackground">YES</bool>
@@ -3174,6 +3176,34 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 																	<bool key="NSDrawsBackground">YES</bool>
 																	<reference key="NSBackgroundColor" ref="179273300"/>
 																	<reference key="NSTextColor" ref="1011316922"/>
+																</object>
+															</object>
+															<object class="NSButton" id="384271594">
+																<reference key="NSNextResponder" ref="66015712"/>
+																<int key="NSvFlags">265</int>
+																<string key="NSFrame">{{500, 13}, {22, 24}}</string>
+																<reference key="NSSuperview" ref="66015712"/>
+																<reference key="NSWindow"/>
+																<reference key="NSNextKeyView" ref="973919454"/>
+																<string key="NSReuseIdentifierKey">_NS:9</string>
+																<bool key="NSEnabled">YES</bool>
+																<object class="NSButtonCell" key="NSCell" id="738043096">
+																	<int key="NSCellFlags">67108864</int>
+																	<int key="NSCellFlags2">134217728</int>
+																	<string key="NSContents"/>
+																	<reference key="NSSupport" ref="988758687"/>
+																	<string key="NSCellIdentifier">_NS:9</string>
+																	<reference key="NSControlView" ref="384271594"/>
+																	<int key="NSButtonFlags">-2033958912</int>
+																	<int key="NSButtonFlags2">162</int>
+																	<object class="NSCustomResource" key="NSNormalImage">
+																		<string key="NSClassName">NSImage</string>
+																		<string key="NSResourceName">NSPathTemplate</string>
+																	</object>
+																	<string key="NSAlternateContents"/>
+																	<string key="NSKeyEquivalent"/>
+																	<int key="NSPeriodicDelay">200</int>
+																	<int key="NSPeriodicInterval">25</int>
 																</object>
 															</object>
 														</array>
@@ -4002,6 +4032,14 @@ hY7kvb/nlKjjgII</string>
 						<reference key="destination" ref="881330529"/>
 					</object>
 					<int key="connectionID">1264</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">selectLocalPacFileButtonClicked:</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="384271594"/>
+					</object>
+					<int key="connectionID">1360</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -6634,6 +6672,7 @@ hY7kvb/nlKjjgII</string>
 							<reference ref="554191646"/>
 							<reference ref="872667740"/>
 							<reference ref="119083398"/>
+							<reference ref="384271594"/>
 						</array>
 						<reference key="parent" ref="287234436"/>
 					</object>
@@ -7140,6 +7179,19 @@ hY7kvb/nlKjjgII</string>
 						<reference key="object" ref="143663691"/>
 						<reference key="parent" ref="119083398"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1358</int>
+						<reference key="object" ref="384271594"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="738043096"/>
+						</array>
+						<reference key="parent" ref="34023506"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1359</int>
+						<reference key="object" ref="738043096"/>
+						<reference key="parent" ref="384271594"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -7295,6 +7347,16 @@ hY7kvb/nlKjjgII</string>
 				<string key="134.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1356.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1357.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<object class="NSMutableDictionary" key="1358.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">ToolTip</string>
+					<object class="IBToolTipAttribute" key="NS.object.0">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="384271594"/>
+						<string key="toolTip">选择本地 PAC 文件</string>
+					</object>
+				</object>
+				<string key="1358.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1359.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="136.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="144.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -7495,7 +7557,7 @@ hY7kvb/nlKjjgII</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1357</int>
+			<int key="maxID">1360</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -7507,6 +7569,7 @@ hY7kvb/nlKjjgII</string>
 						<string key="clearStatusLog:">id</string>
 						<string key="exitApplication:">id</string>
 						<string key="importGoagentCA:">id</string>
+						<string key="selectLocalPacFileButtonClicked:">id</string>
 						<string key="selectedServiceChanged:">id</string>
 						<string key="setAutoToggleProxySettingType:">id</string>
 						<string key="showAbout:">id</string>
@@ -7531,6 +7594,10 @@ hY7kvb/nlKjjgII</string>
 						</object>
 						<object class="IBActionInfo" key="importGoagentCA:">
 							<string key="name">importGoagentCA:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="selectLocalPacFileButtonClicked:">
+							<string key="name">selectLocalPacFileButtonClicked:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="selectedServiceChanged:">
@@ -7695,6 +7762,7 @@ hY7kvb/nlKjjgII</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="NSMenuCheckmark">{11, 11}</string>
 			<string key="NSMenuMixedState">{10, 3}</string>
+			<string key="NSPathTemplate">{13, 10}</string>
 			<string key="NSRadioButton">{16, 15}</string>
 			<string key="NSSwitch">{15, 15}</string>
 			<string key="status_stopped">{16, 16}</string>
