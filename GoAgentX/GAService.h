@@ -65,6 +65,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 - (BOOL)isRunning;
 
+- (BOOL)willAutoReconnect;
+
 - (void)toggleSystemProxy:(BOOL)useProxy;
 
 - (void)start;

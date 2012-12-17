@@ -34,7 +34,7 @@
     if (!running) {
         statusText = @"已停止";
         statusImage = [NSImage imageNamed:@"status_stopped"];
-        buttonTitle = @"启动";
+        buttonTitle = [proxyService willAutoReconnect] ? @"停止重连" : @"启动";
     }
     
     statusText = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
@@ -150,6 +150,11 @@
     if ([proxyService isRunning]) {
         [proxyService stop];
         
+    } else if ([proxyService willAutoReconnect]) {
+        [proxyService stop];
+        statusToggleButton.title = @"启动";
+        [statusLogTextView appendString:@"\n已停止"];
+    
     } else {
         [self loadProxyService];
         NSLog(@"Starting %@ ...", [proxyService serviceTitle]);

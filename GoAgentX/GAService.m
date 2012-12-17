@@ -191,6 +191,13 @@ static AuthorizationFlags authFlags;
 }
 
 
+- (BOOL)willAutoReconnect {
+    BOOL autoReconnect = (![self isRunning] && [self supportReconnectAfterDisconnected] && !self.manualStopped);
+    BOOL networkProblem = stoppedForNetworkProblem;
+    return autoReconnect || networkProblem;
+}
+
+
 - (void)start {
     stoppedForNetworkProblem = NO;
     
