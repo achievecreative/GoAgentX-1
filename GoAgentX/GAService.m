@@ -231,8 +231,10 @@ static AuthorizationFlags authFlags;
 
 
 - (void)stop {
+    self.manualStopped = YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    
     if ([commandRunner isTaskRunning]) {
-        self.manualStopped = YES;
         [commandRunner terminateTask];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GoAgent:LastRunPID"];
     }
