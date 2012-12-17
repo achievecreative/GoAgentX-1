@@ -286,7 +286,9 @@
     [self setupStatusItem];
     
     // 尝试启动服务
-    [self toggleServiceStatus:nil];
+    if ([proxyService couldAutoStart]) {
+        [self toggleServiceStatus:nil];
+    }
     
     // 如果没有配置，则显示主窗口
     if (![proxyService hasConfigured]) {

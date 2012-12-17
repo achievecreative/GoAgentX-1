@@ -10,6 +10,11 @@
 
 @implementation GAGoAgentServerService
 
+- (BOOL)couldAutoStart {
+    return NO;
+}
+
+
 - (BOOL)hasConfigured {
     return [self configValueForKey:@"appid"].length > 0 && [self configValueForKey:@"username"].length > 0 && [self configValueForKey:@"password"].length > 0;
 }

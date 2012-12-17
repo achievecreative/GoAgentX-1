@@ -95,6 +95,11 @@ static AuthorizationFlags authFlags;
 }
 
 
+- (BOOL)couldAutoStart {
+    return YES;
+}
+
+
 - (BOOL)hasConfigured {
     NOT_IMPL
 }

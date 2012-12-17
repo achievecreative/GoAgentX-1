@@ -31,6 +31,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 - (BOOL)hasConfigured;
 
+- (BOOL)couldAutoStart;
+
 - (BOOL)supportReconnectAfterDisconnected;
 
 - (BOOL)autoDisconnectWhenNetworkIsUnreachable;
