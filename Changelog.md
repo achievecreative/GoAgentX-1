@@ -1,3 +1,10 @@
+## GoAgentX v1.3.13
+
+* [NEW] 更新 goagent 到 1.3.13
+* [NEW] 更新 shadowsocks 到 0.9.4
+
+*Released on 2013.03.06*
+
 ## GoAgentX v1.3.12
 
 * [FIX] 修正退出程序时会修改代理设置的问题
