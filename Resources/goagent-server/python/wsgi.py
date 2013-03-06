@@ -3,7 +3,7 @@
 # Contributor:
 #      Phus Lu        <phus.lu@gmail.com>
 
-__version__ = '2.1.3'
+__version__ = '2.1.13'
 __password__ = ''
 __hostsdeny__ = ()  # __hostsdeny__ = ('.youtube.com', '.youku.com')
 
@@ -41,11 +41,11 @@ FetchMaxSize = 1024*1024*4
 DeflateMaxSize = 1024*1024*4
 Deadline = 60
 
-def error_html(errno, error, description=''):
+def message_html(title, banner, detail=''):
     ERROR_TEMPLATE = '''
 <html><head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>{{errno}} {{error}}</title>
+<title>{{title}}</title>
 <style><!--
 body {font-family: arial,sans-serif}
 div.nav {margin-top: 1ex}
@@ -60,18 +60,18 @@ A.u:link {color: green}
 </head>
 <body text=#000000 bgcolor=#ffffff>
 <table border=0 cellpadding=2 cellspacing=0 width=100%>
-<tr><td bgcolor=#3366cc><font face=arial,sans-serif color=#ffffff><b>Error</b></td></tr>
+<tr><td bgcolor=#3366cc><font face=arial,sans-serif color=#ffffff><b>Message</b></td></tr>
 <tr><td>&nbsp;</td></tr></table>
 <blockquote>
-<H1>{{error}}</H1>
-{{description}}
+<H1>{{banner}}</H1>
+{{detail}}
 
 <p>
 </blockquote>
 <table width=100% cellpadding=0 cellspacing=0><tr><td bgcolor=#3366cc><img alt="" width=1 height=4></td></tr></table>
 </body></html>
 '''
-    kwargs = dict(errno=errno, error=error, description=description)
+    kwargs = dict(title=title, banner=banner, detail=detail)
     template = ERROR_TEMPLATE
     for keyword, value in kwargs.items():
         template = template.replace('{{%s}}' % keyword, value)
@@ -237,10 +237,11 @@ def paas_application(environ, start_response):
 
     if __hostsdeny__ and urlparse.urlparse(url).netloc.endswith(__hostsdeny__):
         start_response('403 Forbidden', [('Content-Type', 'text/html')])
-        yield error_html('403', 'Hosts Deny', description='url=%r' % url)
+        yield message_html('403 Forbidden Host', 'Hosts Deny(%s)' % url, detail='url=%r' % url)
         raise StopIteration
 
     timeout = Deadline
+    xorchar = ord(kwargs.get('xorchar') or '\x00')
 
     logging.info('%s "%s %s %s" - -', environ['REMOTE_ADDR'], method, url, 'HTTP/1.1')
 
@@ -256,41 +257,19 @@ def paas_application(environ, start_response):
             conn.request(method, path, body=payload, headers=headers)
             response = conn.getresponse()
 
-            need_deflate = True
-            if response.getheader('Content-Encoding') or response.getheader('Content-Type', '').startswith(('video/', 'audio/', 'image/')) or 'deflate' not in headers.get('Accept-Encoding', ''):
-                need_deflate = False
-
-            if need_deflate:
-                response.msg['Content-Encoding'] = 'deflate'
-                if 'Content-Length' in response.msg:
-                    del response.msg['Content-Length']
-            response_headers = '\n'.join('%s:%s'%(k.title(),v) for k, v in response.getheaders())
-            response_headers = zlib.compress(response_headers)[2:-4]
-
-            start_response('200 OK', [('Content-Type', 'image/gif')])
-            yield struct.pack('!hh', int(response.status), len(response_headers)) + response_headers
+            headers = [('X-Status', str(response.status))]
+            headers += [(k, v) for k, v in response.msg.items() if k != 'transfer-encoding']
+            start_response('200 OK', headers)
 
             bufsize = 8192
-            if need_deflate:
-                compressobj = zlib.compressobj()
-                is_leadbyte = True
-                while 1:
-                    data = response.read(bufsize)
-                    if not data:
-                        break
-                    zdata = compressobj.compress(data)
-                    if zdata:
-                        if is_leadbyte:
-                            zdata = zdata[2:]
-                            is_leadbyte = False
-                        yield zdata
-                yield compressobj.flush()[:-4]
-            else:
-                while 1:
-                    data = response.read(bufsize)
-                    if not data:
-                        response.close()
-                        break
+            while 1:
+                data = response.read(bufsize)
+                if not data:
+                    response.close()
+                    break
+                if xorchar:
+                    yield ''.join(chr(ord(x)^xorchar) for x in data)
+                else:
                     yield data
         except httplib.HTTPException as e:
             raise
@@ -327,21 +306,30 @@ def gae_application(environ, start_response):
 
     if __password__ and __password__ != kwargs.get('password', ''):
         start_response('403 Forbidden', [('Content-Type', 'text/html')])
-        yield error_html('403', 'Wrong password', description='GoAgent proxy.ini password is wrong!')
+        yield message_html('403 Wrong password', 'Wrong password(%r)'%kwargs.get('password', ''), 'GoAgent proxy.ini password is wrong!')
         raise StopIteration
 
-    if __hostsdeny__ and urlparse.urlparse(url).netloc.endswith(__hostsdeny__):
+    netloc = urlparse.urlparse(url).netloc
+
+    if __hostsdeny__ and netloc.endswith(__hostsdeny__):
         start_response('403 Forbidden', [('Content-Type', 'text/html')])
-        yield error_html('403', 'Hosts Deny', description='url=%r' % url)
+        yield message_html('403 Hosts Deny', 'Hosts Deny(%r)'%netloc, detail='url=%r'%url)
+        raise StopIteration
+
+    if netloc.startswith(('127.0.0.','::1','localhost')):
+        start_response('400 Bad Request', [('Content-Type', 'text/html')])
+        html = ''.join('<a href="https://%s/">%s</a><br/>' % (x,x) for x in ('google.com', 'mail.google.com'))
+        yield message_html('GoAgent %s is Running'%__version__, 'Now you can visit some websites', html)
         raise StopIteration
 
     fetchmethod = getattr(urlfetch, method, '')
     if not fetchmethod:
         start_response('501 Unsupported', [('Content-Type', 'text/html')])
-        yield error_html('501', 'Invalid Method: %r'% method, description='Unsupported Method')
+        yield message_html('501 Invalid Method', 'Invalid Method: %r'%method, detail='Unsupported Method URL=%r'%url)
         raise StopIteration
 
     deadline = Deadline
+    validate_certificate = bool(int(kwargs.get('validate', 0)))
     headers = dict(headers)
     headers['Connection'] = 'close'
     payload = environ['wsgi.input'].read() if 'Content-Length' in headers else None
@@ -356,7 +344,7 @@ def gae_application(environ, start_response):
     errors = []
     for i in xrange(int(kwargs.get('fetchmax', FetchMax))):
         try:
-            response = urlfetch.fetch(url, payload, fetchmethod, headers, allow_truncated=False, follow_redirects=False, deadline=deadline, validate_certificate=False)
+            response = urlfetch.fetch(url, payload, fetchmethod, headers, allow_truncated=False, follow_redirects=False, deadline=deadline, validate_certificate=validate_certificate)
             break
         except apiproxy_errors.OverQuotaError as e:
             time.sleep(5)
@@ -382,13 +370,16 @@ def gae_application(environ, start_response):
                 start = int(m.group(1))
                 headers['Range'] = 'bytes=%s-%d' % (start, start+int(kwargs.get('fetchmaxsize', FetchMaxSize)))
             deadline = Deadline * 2
+        except urlfetch.SSLCertificateError as e:
+            errors.append('%r, should validate=0 ?' % e)
+            logging.error('%r, deadline=%s', e, deadline)
         except Exception as e:
             errors.append(str(e))
             if i==0 and method=='GET':
                 deadline = Deadline * 2
     else:
         start_response('500 Internal Server Error', [('Content-Type', 'text/html')])
-        yield error_html('502', 'Python Urlfetch Error: %r' % method, description='<br />\n'.join(errors) or 'UNKOWN')
+        yield message_html('502 Urlfetch Error', 'Python Urlfetch Error: %r' % method, '<br />\n'.join(errors) or 'Internal Server Error')
         raise StopIteration
 
     #logging.debug('url=%r response.status_code=%r response.headers=%r response.content[:1024]=%r', url, response.status_code, dict(response.headers), response.content[:1024])

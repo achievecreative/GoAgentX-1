@@ -95,6 +95,11 @@ static AuthorizationFlags authFlags;
 }
 
 
+- (BOOL)couldAutoStart {
+    return YES;
+}
+
+
 - (BOOL)hasConfigured {
     NOT_IMPL
 }
@@ -186,6 +191,13 @@ static AuthorizationFlags authFlags;
 }
 
 
+- (BOOL)willAutoReconnect {
+    BOOL autoReconnect = (![self isRunning] && [self supportReconnectAfterDisconnected] && !self.manualStopped);
+    BOOL networkProblem = stoppedForNetworkProblem;
+    return autoReconnect || networkProblem;
+}
+
+
 - (void)start {
     stoppedForNetworkProblem = NO;
     
@@ -226,8 +238,10 @@ static AuthorizationFlags authFlags;
 
 
 - (void)stop {
+    self.manualStopped = YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    
     if ([commandRunner isTaskRunning]) {
-        self.manualStopped = YES;
         [commandRunner terminateTask];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"GoAgent:LastRunPID"];
     }

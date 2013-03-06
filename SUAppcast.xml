@@ -6,6 +6,20 @@
       <description></description>
       <language>zh</language>
          <item>
+            <title>GoAgentX v1.3.13</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.13 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                <ul>
+                    <li>[NEW] 更新 goagent 到 2.1.13</li>
+                    <li>[NEW] 更新 shadowsocks 到 0.9.4</li>
+                </ul>
+            ]]></description>
+            <pubDate>Wed, 06 Mar 2013 12:00:00 +0800</pubDate>
+            <enclosure url="https://github.com/ohdarling/GoAgentX/wiki/files/GoAgentX-v1.3.13.dmg" sparkle:shortVersionString="1.3.13" sparkle:version="237" length="5100830" type="application/octet-stream" sparkle:dsaSignature="MCwCFEmR2tnh0j3rxOCRvKHWFQncvzOMAhQyvzj1W6FBRSCdJF1Z+O3usKR7tA==" />
+         </item>
+
+         <item>
             <title>GoAgentX v1.3.12</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.12 Changelog</h2>
