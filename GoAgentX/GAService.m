@@ -85,7 +85,7 @@ static AuthorizationFlags authFlags;
 - (id)init {
     if (self = [super init]) {
         previousDeviceProxies = [NSMutableDictionary new];
-        
+        manualStopped = YES;
         stoppedForNetworkProblem = NO;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkStateChanged:) name:kReachabilityChangedNotification object:nil];

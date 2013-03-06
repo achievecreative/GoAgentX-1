@@ -199,6 +199,8 @@
     
     NSArray *classList = [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"GoAgentXServices" ofType:@"plist"]];
     
+    NSString *selectedService = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgentX:SelectedService"];
+    
     [servicesListPopButton removeAllItems];
     for (NSString *clsName in classList) {
         Class cls = NSClassFromString(clsName);
@@ -216,6 +218,10 @@
             
             if ([service canShowInSwitchMenu]) {
                 [servicesListMenu addItemWithTitle:[service serviceTitle] action:@selector(switchRunningService:) keyEquivalent:@""];
+            }
+            
+            if ([[service serviceTitle] isEqualToString:selectedService]) {
+                proxyService = service;
             }
         }
     }
