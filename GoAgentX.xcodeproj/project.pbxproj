@@ -24,6 +24,10 @@
 		890CAE8315EA0E9C00DBF744 /* status_item_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 890CAE8215EA0E9C00DBF744 /* status_item_icon@2x.png */; };
 		890CAE8515EA0F9400DBF744 /* status_item_icon_alt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */; };
 		890DBFC71549002D009FF77F /* GAGoAgentServerService.m in Sources */ = {isa = PBXBuildFile; fileRef = 890DBFC61549002D009FF77F /* GAGoAgentServerService.m */; };
+		891E40EF16E8E151000F5CC3 /* GoAgentX.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 891E40EE16E8E151000F5CC3 /* GoAgentX.sdef */; };
+		891E40F316E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 891E40F216E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.m */; };
+		891E40F616E8E45E000F5CC3 /* GASetProxySettingCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 891E40F516E8E45E000F5CC3 /* GASetProxySettingCommand.m */; };
+		891E40F916E8E484000F5CC3 /* GAToggleServiceCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 891E40F816E8E484000F5CC3 /* GAToggleServiceCommand.m */; };
 		891EA917164CA50A00445A25 /* status_item_icon_stopped.png in Resources */ = {isa = PBXBuildFile; fileRef = 891EA915164CA50A00445A25 /* status_item_icon_stopped.png */; };
 		891EA918164CA50A00445A25 /* status_item_icon_stopped@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 891EA916164CA50A00445A25 /* status_item_icon_stopped@2x.png */; };
 		894107FB1549179D0045DA38 /* GoAgentXServices.plist in Resources */ = {isa = PBXBuildFile; fileRef = 894107FA1549179D0045DA38 /* GoAgentXServices.plist */; };
@@ -125,6 +129,13 @@
 		890CAE8415EA0F9400DBF744 /* status_item_icon_alt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_item_icon_alt@2x.png"; sourceTree = "<group>"; };
 		890DBFC51549002D009FF77F /* GAGoAgentServerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAGoAgentServerService.h; sourceTree = "<group>"; };
 		890DBFC61549002D009FF77F /* GAGoAgentServerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAGoAgentServerService.m; sourceTree = "<group>"; };
+		891E40EE16E8E151000F5CC3 /* GoAgentX.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GoAgentX.sdef; sourceTree = "<group>"; };
+		891E40F116E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAToggleServiceStatusCommand.h; sourceTree = "<group>"; };
+		891E40F216E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAToggleServiceStatusCommand.m; sourceTree = "<group>"; };
+		891E40F416E8E45E000F5CC3 /* GASetProxySettingCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GASetProxySettingCommand.h; sourceTree = "<group>"; };
+		891E40F516E8E45E000F5CC3 /* GASetProxySettingCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GASetProxySettingCommand.m; sourceTree = "<group>"; };
+		891E40F716E8E483000F5CC3 /* GAToggleServiceCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAToggleServiceCommand.h; sourceTree = "<group>"; };
+		891E40F816E8E484000F5CC3 /* GAToggleServiceCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAToggleServiceCommand.m; sourceTree = "<group>"; };
 		891EA915164CA50A00445A25 /* status_item_icon_stopped.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_item_icon_stopped.png; sourceTree = "<group>"; };
 		891EA916164CA50A00445A25 /* status_item_icon_stopped@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "status_item_icon_stopped@2x.png"; sourceTree = "<group>"; };
 		894107FA1549179D0045DA38 /* GoAgentXServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GoAgentXServices.plist; sourceTree = "<group>"; };
@@ -265,6 +276,19 @@
 				89075ECE166EE50C001A318D /* Reachability.m */,
 			);
 			path = Reachability;
+			sourceTree = "<group>";
+		};
+		891E40F016E8E191000F5CC3 /* Scriptable */ = {
+			isa = PBXGroup;
+			children = (
+				891E40F116E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.h */,
+				891E40F216E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.m */,
+				891E40F416E8E45E000F5CC3 /* GASetProxySettingCommand.h */,
+				891E40F516E8E45E000F5CC3 /* GASetProxySettingCommand.m */,
+				891E40F716E8E483000F5CC3 /* GAToggleServiceCommand.h */,
+				891E40F816E8E484000F5CC3 /* GAToggleServiceCommand.m */,
+			);
+			name = Scriptable;
 			sourceTree = "<group>";
 		};
 		8941782A15499E9200E1819C /* PACServer */ = {
@@ -483,6 +507,7 @@
 		89B72C6314E8DF9D0027DC19 /* GoAgentX */ = {
 			isa = PBXGroup;
 			children = (
+				891E40F016E8E191000F5CC3 /* Scriptable */,
 				8941782A15499E9200E1819C /* PACServer */,
 				89B72C6414E8DF9D0027DC19 /* Supporting Files */,
 				8996157E154689BA002DE998 /* Components */,
@@ -535,6 +560,7 @@
 				894178351549A3DA00E1819C /* pactemplate.pac */,
 				8905D9E61556DCA700E0E13A /* stunnel-config-example */,
 				33A099791656457900A0EAD3 /* shadowsocks-config-template */,
+				891E40EE16E8E151000F5CC3 /* GoAgentX.sdef */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -624,6 +650,7 @@
 				335431641654DBBA00AB2A73 /* banner2lines.tiff in Resources */,
 				33A0997A1656457900A0EAD3 /* shadowsocks-config-template in Resources */,
 				33A0997C165649B000A0EAD3 /* shadowsocks in Resources */,
+				891E40EF16E8E151000F5CC3 /* GoAgentX.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +718,9 @@
 				335431661654DBBA00AB2A73 /* THUserNotification.m in Sources */,
 				33A0997816563D1500A0EAD3 /* GAShadowSocksService.m in Sources */,
 				89075ECF166EE50C001A318D /* Reachability.m in Sources */,
+				891E40F316E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.m in Sources */,
+				891E40F616E8E45E000F5CC3 /* GASetProxySettingCommand.m in Sources */,
+				891E40F916E8E484000F5CC3 /* GAToggleServiceCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

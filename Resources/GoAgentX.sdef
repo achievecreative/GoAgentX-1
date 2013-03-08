@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+
+<dictionary title="GoAgentX Terminology">
+    
+	<suite name="Standard Suite" code="????" description="Common classes and commands for all applications.">
+        
+        <enumeration name="status options" code="stso">
+            <enumerator name="running" code="runn" description="Toggle current service to running" />
+            <enumerator name="stopped" code="stop" description="Toggle current service to stopped" />
+        </enumeration>
+        
+        <command name="toggle status of current service" code="togcusrv" description="Toggle current service status">
+            <cocoa class="GAToggleServiceStatusCommand" />
+            <parameter name="to" code="stto" type="status options" optional="yes" description="Toggle service status to specified stauts">
+                <cocoa key="Status" />
+            </parameter>
+        </command>
+        
+        <enumeration name="proxy options" code="pxyo">
+            <enumerator name="use pac" code="upac" description="Set system proxy perference to use PAC" />
+            <enumerator name="global proxy" code="glob" description="Set system proxy preference to use GoAgentX as global proxy" />
+            <enumerator name="not change" code="nchg" description="Don't change system proxy preference" />
+        </enumeration>
+        
+        <command name="toggle proxy setting" code="stpxstto">
+            <cocoa class="GASetProxySettingCommand" />
+            <parameter name="to" code="pxto" type="proxy options" description="Toggle service status to specified stauts">
+                <cocoa key="ProxySetting" />
+            </parameter>
+        </command>
+        
+        <command name="toggle active service" code="togactsv">
+            <cocoa class="GAToggleServiceCommand" />
+            <parameter name="to" code="asto" type="text" description="Toggle active service">
+                <cocoa key="ServiceTitle" />
+            </parameter>
+        </command>
+	</suite>
+    
+</dictionary>
