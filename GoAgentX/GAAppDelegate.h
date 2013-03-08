@@ -21,6 +21,8 @@
     
     GAPACHTTPServer     *pacServer;
     
+    IBOutlet NSTabView              *_mainTabView;
+    
     IBOutlet NSMenu                 *statusBarItemMenu;
     IBOutlet NSMenuItem             *statusMenuItem;
     
@@ -60,6 +62,7 @@
 
 
 @property (assign) IBOutlet NSWindow *window;
+@property (nonatomic, readonly) NSTabView   *mainTabView;
 @property (nonatomic, readonly) GAService   *currentService;
 
 @end

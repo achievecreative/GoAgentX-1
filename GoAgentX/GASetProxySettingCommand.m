@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, GAProxySetting) {
         [[NSUserDefaults standardUserDefaults] setBool:NO forKey:key];
     }
     
-    GAProxySetting selectedSetting = [[[self evaluatedArguments] objectForKey:@"ProxySetting"] intValue];
+    GAProxySetting selectedSetting = [[[self evaluatedArguments] objectForKey:@"ProxySetting"] unsignedIntegerValue];
     for (int i = 0; i < 3; ++i) {
         if (indexes[i] == selectedSetting) {
             NSString *key = [keys objectAtIndex:i];

@@ -46,6 +46,20 @@
                 <cocoa key="RemoveDomain" />
             </parameter>
         </command>
+        
+        <enumeration name="main window tab options" code="mwto">
+            <enumerator name="status tab" code="stus" description="Status tab" />
+            <enumerator name="services tab" code="srvs" description="Services tab" />
+            <enumerator name="proxy settings tab" code="pxst" description="Proxy settings tab" />
+            <enumerator name="other settings tab" code="otst" description="Other settings tab" />
+        </enumeration>
+        
+        <command name="show main window" code="showmawd">
+            <cocoa class="GAShowMainWindowCommand" />
+            <parameter name="with" code="with" type="main window tab options" optional="yes" description="Active specified tab">
+                <cocoa key="ActiveTab" />
+            </parameter>
+        </command>
 	</suite>
     
 </dictionary>
