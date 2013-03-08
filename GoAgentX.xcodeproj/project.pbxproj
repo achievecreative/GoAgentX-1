@@ -89,6 +89,7 @@
 		89B72D4A14E960BE0027DC19 /* goagent-config-template in Resources */ = {isa = PBXBuildFile; fileRef = 89B72D4914E960BE0027DC19 /* goagent-config-template */; };
 		89CC4742152DC9F700A12119 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4741152DC9F700A12119 /* SystemConfiguration.framework */; };
 		89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4744152DCF5B00A12119 /* Security.framework */; };
+		89E4244216E9DF7F005F46AC /* GAModifyPACListCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E4244116E9DF7F005F46AC /* GAModifyPACListCommand.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -239,6 +240,8 @@
 		89B72D4914E960BE0027DC19 /* goagent-config-template */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "goagent-config-template"; sourceTree = "<group>"; };
 		89CC4741152DC9F700A12119 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		89CC4744152DCF5B00A12119 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		89E4244016E9DF7F005F46AC /* GAModifyPACListCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAModifyPACListCommand.h; sourceTree = "<group>"; };
+		89E4244116E9DF7F005F46AC /* GAModifyPACListCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAModifyPACListCommand.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -287,6 +290,8 @@
 				891E40F516E8E45E000F5CC3 /* GASetProxySettingCommand.m */,
 				891E40F716E8E483000F5CC3 /* GAToggleServiceCommand.h */,
 				891E40F816E8E484000F5CC3 /* GAToggleServiceCommand.m */,
+				89E4244016E9DF7F005F46AC /* GAModifyPACListCommand.h */,
+				89E4244116E9DF7F005F46AC /* GAModifyPACListCommand.m */,
 			);
 			name = Scriptable;
 			sourceTree = "<group>";
@@ -721,6 +726,7 @@
 				891E40F316E8E1D3000F5CC3 /* GAToggleServiceStatusCommand.m in Sources */,
 				891E40F616E8E45E000F5CC3 /* GASetProxySettingCommand.m in Sources */,
 				891E40F916E8E484000F5CC3 /* GAToggleServiceCommand.m in Sources */,
+				89E4244216E9DF7F005F46AC /* GAModifyPACListCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

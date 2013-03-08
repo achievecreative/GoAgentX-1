@@ -36,6 +36,16 @@
                 <cocoa key="ServiceTitle" />
             </parameter>
         </command>
+        
+        <command name="modify pac list" code="modpacls">
+            <cocoa class="GAModifyPACListCommand" />
+            <parameter name="add" code="addm" type="text" optional="yes" description="Add domain to pac list">
+                <cocoa key="AddDomain" />
+            </parameter>
+            <parameter name="remove" code="rmdm" type="text" optional="yes" description="Remove domain from pac list">
+                <cocoa key="RemoveDomain" />
+            </parameter>
+        </command>
 	</suite>
     
 </dictionary>
