@@ -22,13 +22,17 @@
     NSMutableArray *pacList = [[pacStr.string componentsSeparatedByString:@"\n"] mutableCopy];
     
     NSString *addDomain = [[self evaluatedArguments] objectForKey:@"AddDomain"];
-    if (addDomain != nil && [pacList indexOfObject:addDomain] == NSNotFound) {
-        [pacList addObject:addDomain];
+    for (NSString *domain in [addDomain componentsSeparatedByString:@"\n"]) {
+        if (domain.length > 0 && [pacList indexOfObject:domain] == NSNotFound) {
+            [pacList addObject:domain];
+        }
     }
     
     NSString *removeDomain = [[self evaluatedArguments] objectForKey:@"RemoveDomain"];
-    if (removeDomain != nil && [pacList indexOfObject:removeDomain] != NSNotFound) {
-        [pacList removeObject:removeDomain];
+    for (NSString *domain in [removeDomain componentsSeparatedByString:@"\n"]) {
+        if (domain.length > 0 && [pacList indexOfObject:domain] != NSNotFound) {
+            [pacList removeObject:domain];
+        }
     }
     
     [pacStr.mutableString setString:[pacList componentsJoinedByString:@"\n"]];
