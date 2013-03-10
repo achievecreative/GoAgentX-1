@@ -1,3 +1,9 @@
+## GoAgnetX v1.3.14
+
+* [NEW] 添加 Apple Script 操作支持
+
+*Released on 2013.03.10*
+
 ## GoAgentX v1.3.13
 
 * [NEW] 更新 goagent 到 1.3.13
