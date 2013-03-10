@@ -119,4 +119,5 @@ GoAgentX 代码使用 BSD-2 许可证，此外不允许将软件以完整二进�
     OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-goagent 使用 [GNU GPL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html) 协议。
+* goagent 协议：[GNU GPL v2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
+* stunnel 协议：[GPL](https://www.stunnel.org/sdf_copying.html)
