@@ -17,6 +17,7 @@
 @implementation GAAppDelegate
 
 @synthesize window = _window;
+@synthesize currentService = proxyService;
 
 #pragma mark -
 #pragma mark Helper
@@ -129,15 +130,20 @@
 
 - (void)switchRunningService:(id)sender {
     if ([sender isKindOfClass:[NSMenuItem class]]) {
-        [servicesListPopButton selectItemWithTitle:[sender title]];
-    }
-    
-    if ([proxyService isRunning]) {
-        [proxyService stop];
-        [self performSelector:@selector(toggleServiceStatus:) withObject:nil afterDelay:1.0];
-    } else {
-        [self loadProxyService];
-        [self setStatusToRunning:[NSNumber numberWithBool:NO]];
+        NSString *serviceTitle = [sender title];
+        if ([servicesListPopButton.itemTitles indexOfObject:serviceTitle] != NSNotFound &&
+            ![serviceTitle isEqualToString:servicesListPopButton.selectedItem.title]) {
+            
+            [servicesListPopButton selectItemWithTitle:[sender title]];
+            
+            if ([proxyService isRunning]) {
+                [proxyService stop];
+                [self performSelector:@selector(toggleServiceStatus:) withObject:nil afterDelay:1.0];
+            } else {
+                [self loadProxyService];
+                [self setStatusToRunning:[NSNumber numberWithBool:NO]];
+            }
+        }
     }
 }
 
