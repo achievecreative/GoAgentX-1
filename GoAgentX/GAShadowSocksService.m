@@ -69,10 +69,11 @@
     commandRunner.commandPath = @"/usr/bin/env";
     NSString *server = [NSUserDefaults.standardUserDefaults stringForKey:@"ShadowSocks:Server"] ?: @"";
     
-    if ([server rangeOfString:@":"].location != NSNotFound )
+    if ([server rangeOfString:@":"].location != NSNotFound ) {
         commandRunner.arguments = @[@"python", @"local.py", @"-6"];
-    else
+    } else {
         commandRunner.arguments = [NSArray arrayWithObjects:@"python", @"local.py", nil];
+    }
 
     commandRunner.inputText = nil;
 }
