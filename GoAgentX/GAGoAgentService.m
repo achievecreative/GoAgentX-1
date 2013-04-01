@@ -16,6 +16,10 @@
 
 
 - (NSString *)configTemplate {
+    BOOL shareToLocal = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:Local:ShareToLan"];
+    NSString *listeningIP = shareToLocal ? @"0.0.0.0" : @"127.0.0.1";
+    [[NSUserDefaults standardUserDefaults] setObject:listeningIP forKey:@"GoAgent:Local:IP"];
+    
     NSString *content = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"goagent-config-template" ofType:@""]
                                            encoding:NSUTF8StringEncoding
                                               error:NULL];
