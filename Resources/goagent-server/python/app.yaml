@@ -6,7 +6,7 @@ threadsafe: true
 
 handlers:
 - url: /fetch\.py
-  script: wsgi_old.app
+  script: wsgi.LegacyHandler.application
   secure: optional
 
 - url: /2

@@ -1,1 +1,1 @@
-web: python wsgi.py -p $PORT -a paas
+web: gunicorn -b 0.0.0.0:$PORT -w 2 -k gevent wsgi:application
