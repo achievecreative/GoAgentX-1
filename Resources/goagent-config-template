@@ -1,5 +1,5 @@
 [listen]
-ip = 127.0.0.1
+ip = {GoAgent:Local:IP}
 port = {GoAgent:Local:Port}
 visible = 0
 debuginfo = 0
