@@ -3,7 +3,9 @@ GOAGENT_URL="https://goo.gl/sxgfB"
 if [ "$APP_BUNDLE_PATH" == "" ]; then
 	APP_BUNDLE_PATH="/Applications/GoAgentX.app"
 fi
-GOAGENT_FOLDER="$APP_BUNDLE_PATH/Contents/Resources"
+if [ "$GOAGENT_FOLDER" == "" ]; then
+	GOAGENT_FOLDER="$APP_BUNDLE_PATH/Contents/Resources"
+fi
 
 clean() {
 	rm -rf $1/server/php/
