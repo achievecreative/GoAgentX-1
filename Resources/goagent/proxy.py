@@ -1111,6 +1111,8 @@ def gae_urlfetch(method, url, headers, payload, fetchserver, **kwargs):
                 payload = zpayload
                 headers['Content-Encoding'] = 'deflate'
         headers['Content-Length'] = str(len(payload))
+    # GAE donot allow set `Host` header
+    headers.pop('Host', None)
     metadata = 'G-Method:%s\nG-Url:%s\n%s' % (method, url, ''.join('G-%s:%s\n' % (k, v) for k, v in kwargs.iteritems() if v))
     skip_headers = http.skip_headers
     abbv_headers = http.abbv_headers
