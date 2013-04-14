@@ -1,10 +1,12 @@
 #!/bin/sh
 GOAGENT_URL="https://goo.gl/sxgfB"
+SHADOWSOCKS_URL="https://github.com/clowwindy/shadowsocks/archive/master.zip"
+
 if [ "$APP_BUNDLE_PATH" == "" ]; then
 	APP_BUNDLE_PATH="/Applications/GoAgentX.app"
 fi
-if [ "$GOAGENT_FOLDER" == "" ]; then
-	GOAGENT_FOLDER="$APP_BUNDLE_PATH/Contents/Resources"
+if [ "$SERVICES_FOLDER" == "" ]; then
+	SERVICES_FOLDER="$APP_BUNDLE_PATH/Contents/Resources"
 fi
 
 clean() {
@@ -26,6 +28,7 @@ clean() {
 	rm $1/local/uvent.bat
 }
 
+echo 开始更新 goagent ...
 echo 正在下载 goagent ...
 curl -L -o goagent.zip $GOAGENT_URL
 
@@ -33,16 +36,32 @@ echo 解压 goagent.zip ...
 unzip goagent.zip
 rm goagent.zip
 
-echo 更新 goagent ...
-folder=`ls | grep -m 1 goagent-`
-clean $folder
-cp -r $folder/local/* "$GOAGENT_FOLDER/goagent"
-cp -r $folder/server/* "$GOAGENT_FOLDER/goagent-server"
+goagent_folder=`ls | grep -m 1 goagent-`
+clean $goagent_folder
+cp -r $goagent_folder/local/* "$SERVICES_FOLDER/goagent"
+cp -r $goagent_folder/server/* "$SERVICES_FOLDER/goagent-server"
 
-echo 更新完成.
+
+# 更新 shadowsocks
+echo 
+echo 开始更新 shadowsocks ...
+curl -L -o shadowsocks.zip $SHADOWSOCKS_URL
+unzip shadowsocks.zip
+rm shadowsocks.zip
+ss_folder=`ls | grep -m 1 shadowsocks-`
+cp -r $ss_folder/* "$SERVICES_FOLDER/shadowsocks"
+
+# 输出结果
+echo 
+echo goagent 更新完成.
 echo goagent 客户端代码版本：
-grep -m 1 __version__ $folder/local/proxy.py
+grep -m 1 __version__ $goagent_folder/local/proxy.py
 echo goagent 服务端代码版本：
-grep -m 1 __version__ $folder/server/python/wsgi.py
+grep -m 1 __version__ $goagent_folder/server/python/wsgi.py
 
-rm -r $folder
+rm -r $goagent_folder
+
+echo 
+echo shadowsocks 更新完成，版本：
+grep -m 1 "Current version:" "$ss_folder/README.md"
+rm -r $ss_folder
