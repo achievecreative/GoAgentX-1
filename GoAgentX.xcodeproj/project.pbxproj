@@ -89,6 +89,8 @@
 		89B72D4A14E960BE0027DC19 /* goagent-config-template in Resources */ = {isa = PBXBuildFile; fileRef = 89B72D4914E960BE0027DC19 /* goagent-config-template */; };
 		89CC4742152DC9F700A12119 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4741152DC9F700A12119 /* SystemConfiguration.framework */; };
 		89CC4745152DCF5B00A12119 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89CC4744152DCF5B00A12119 /* Security.framework */; };
+		89D2453F1719550E003FEDD1 /* GAGoAgentUpdateService.m in Sources */ = {isa = PBXBuildFile; fileRef = 89D2453E1719550E003FEDD1 /* GAGoAgentUpdateService.m */; };
+		89D2471E171ABBD1003FEDD1 /* goagent-update in Resources */ = {isa = PBXBuildFile; fileRef = 89D2471D171ABBD0003FEDD1 /* goagent-update */; };
 		89E4244216E9DF7F005F46AC /* GAModifyPACListCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E4244116E9DF7F005F46AC /* GAModifyPACListCommand.m */; };
 		89E4249116E9EFC2005F46AC /* GAShowMainWindowCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 89E4249016E9EFC2005F46AC /* GAShowMainWindowCommand.m */; };
 /* End PBXBuildFile section */
@@ -241,6 +243,9 @@
 		89B72D4914E960BE0027DC19 /* goagent-config-template */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "goagent-config-template"; sourceTree = "<group>"; };
 		89CC4741152DC9F700A12119 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		89CC4744152DCF5B00A12119 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		89D2453D1719550E003FEDD1 /* GAGoAgentUpdateService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAGoAgentUpdateService.h; sourceTree = "<group>"; };
+		89D2453E1719550E003FEDD1 /* GAGoAgentUpdateService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAGoAgentUpdateService.m; sourceTree = "<group>"; };
+		89D2471D171ABBD0003FEDD1 /* goagent-update */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "goagent-update"; sourceTree = "<group>"; };
 		89E4244016E9DF7F005F46AC /* GAModifyPACListCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAModifyPACListCommand.h; sourceTree = "<group>"; };
 		89E4244116E9DF7F005F46AC /* GAModifyPACListCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GAModifyPACListCommand.m; sourceTree = "<group>"; };
 		89E4248F16E9EFC2005F46AC /* GAShowMainWindowCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAShowMainWindowCommand.h; sourceTree = "<group>"; };
@@ -455,6 +460,8 @@
 				8905D9DF15562F0A00E0E13A /* GAStunnelService.m */,
 				33A0997616563D1500A0EAD3 /* GAShadowSocksService.h */,
 				33A0997716563D1500A0EAD3 /* GAShadowSocksService.m */,
+				89D2453D1719550E003FEDD1 /* GAGoAgentUpdateService.h */,
+				89D2453E1719550E003FEDD1 /* GAGoAgentUpdateService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -551,6 +558,7 @@
 				899615891546EC97002DE998 /* www */,
 				899615961547A7CB002DE998 /* goagent */,
 				899615971547A7CB002DE998 /* goagent-server */,
+				89D2471D171ABBD0003FEDD1 /* goagent-update */,
 				899615271545AD04002DE998 /* west-chamber-proxy */,
 				8905D9D415552D4000E0E13A /* ssh */,
 				8905D9D815557CF900E0E13A /* stunnel */,
@@ -661,6 +669,7 @@
 				33A0997A1656457900A0EAD3 /* shadowsocks-config-template in Resources */,
 				33A0997C165649B000A0EAD3 /* shadowsocks in Resources */,
 				891E40EF16E8E151000F5CC3 /* GoAgentX.sdef in Resources */,
+				89D2471E171ABBD1003FEDD1 /* goagent-update in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,6 +742,7 @@
 				891E40F916E8E484000F5CC3 /* GAToggleServiceCommand.m in Sources */,
 				89E4244216E9DF7F005F46AC /* GAModifyPACListCommand.m in Sources */,
 				89E4249116E9EFC2005F46AC /* GAShowMainWindowCommand.m in Sources */,
+				89D2453F1719550E003FEDD1 /* GAGoAgentUpdateService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
