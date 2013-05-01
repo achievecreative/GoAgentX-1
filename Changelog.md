@@ -1,3 +1,25 @@
+## GoAgentX v1.3.19
+
+* [NEW] 更新 goagent 到 2.1.17
+* [NEW] 添加 goagent 混淆选项设置
+* [FIX] 修正 .python-egg-cache 可能导致 goagent 无法启动的问题
+* [FIX] 修正由于 PAC 地址解决导致 GoAgentX 崩溃的问题
+* [FIX] 回滚 goagent-server 部署脚本，修正可能部署失败的问题
+* [FIX] 修正 goagent-server 密码设置可能无效的问题
+* [MOD] 修改默认连接方式为 HK 和 HTTPS
+
+*Released on 2013.05.01*
+
+## GoAgentX v1.3.18
+
+* [NEW] 更新 goagent 到 2.1.15
+* [NEW] 更新 shadowsocks 到 1.0
+* [NEW] 添加 goagent 和 shadowsocks 更新服务
+* [NEW] goagent 添加“分享到局域网”选项，选中后同一局域网用户可以设置代理为本机局域网 IP 和 goagent 的端口
+* [FIX] 修正 shadowsocks 对 IPv6 服务端地址的支持
+
+*Released on 2013.04.14*
+
 ## GoAgnetX v1.3.14
 
 * [NEW] 添加 Apple Script 操作支持
