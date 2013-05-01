@@ -12,6 +12,7 @@ fi
 clean() {
 	rm -rf $1/server/php/
 	rm $1/server/uploader.bat
+    rm $1/server/uploader.zip
 
 	rm $1/local/certs/*
 	rm $1/local/Microsoft.VC90.CRT.manifest

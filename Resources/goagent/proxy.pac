@@ -12,6 +12,7 @@ function FindProxyForURL(url, host) {
             dnsDomainIs(host, '.wikipedia.org') ||
             dnsDomainIs(host, '.twimg.com') ||
             dnsDomainIs(host, '.ytimg.com') ||
+            dnsDomainIs(host, '.fbcdn.net') ||
             shExpMatch(host, '*.google.com.*') ||
             host == 't.co' ||
             host == 'bit.ly' ||

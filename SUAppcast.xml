@@ -7,6 +7,26 @@
       <language>zh</language>
 
          <item>
+            <title>GoAgentX v1.3.19</title>
+            <description><![CDATA[
+                <h2>GoAgentX v1.3.19 Changelog</h2>
+                <p>更新时请先停止 GoAgentX 服务。</p>
+                 <ul>
+                    <li>[NEW] 更新 goagent 到 2.1.17</li>
+                    <li>[NEW] 添加 goagent 混淆选项设置</li>
+                    <li>[FIX] 修正 .python-egg-cache 可能导致 goagent 无法启动的问题</li>
+                    <li>[FIX] 修正由于 PAC 地址解决导致 GoAgentX 崩溃的问题</li>
+                    <li>[FIX] 回滚 goagent-server 部署脚本，修正可能部署失败的问题</li>
+                    <li>[FIX] 修正 goagent-server 密码设置可能无效的问题</li>
+                    <li>[MOD] 修改默认连接方式为 HK 和 HTTPS</li>
+                </ul>
+                <p>更多内容请访问 <a href="http://goagentx.com">GoAgentX.com</a></p>
+            ]]></description>
+            <pubDate>Wed, 01 May 2013 12:00:00 +0800</pubDate>
+            <enclosure url="https://goagentx.googlecode.com/files/GoAgentX-v1.3.19.dmg" sparkle:shortVersionString="1.3.19" sparkle:version="283" length="5007612" type="application/octet-stream" sparkle:dsaSignature="MC4CFQCNkB4M+FUe+FVMkXnkHyD1xiryWQIVAKRnOWlmuguzD2y5ZSX+Y9jrUJ3O" />
+         </item>
+
+         <item>
             <title>GoAgentX v1.3.18</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.18 Changelog</h2>
@@ -23,7 +43,6 @@
             <pubDate>Sun, 14 Apr 2013 20:00:00 +0800</pubDate>
             <enclosure url="https://goagentx.googlecode.com/files/GoAgentX-v1.3.18.dmg" sparkle:shortVersionString="1.3.18" sparkle:version="270" length="5580082" type="application/octet-stream" sparkle:dsaSignature="MCwCFEKFFOu4Pk7hmiQlvcDFSNuhCYgoAhRvDWrBDbDDdCBx03GXXhWP2RucEQ==" />
          </item>
-
 
          <item>
             <title>GoAgentX v1.3.14</title>

@@ -12,6 +12,7 @@ path = /2
 profile = {GoAgent:Local:GAEProfile}
 crlf = 1
 mulconn = 8
+obfuscate = {GoAgent:Local:EnableObfuscate}
 validate = 0
 
 [pac]
@@ -41,23 +42,23 @@ password = {GoAgent:Local:ProxyPassword}
 mode = {GoAgent:Local:ConnectMode}
 window = 2
 hosts = 203.208.46.131|203.208.46.132|203.208.46.133|203.208.46.134|203.208.46.135|203.208.46.136|203.208.46.137|203.208.46.138
-sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com
-forcehttps = www.google.com/url|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
-withgae = translate.googleapis.com|plus.url.google.com|plus.google.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com|www.google.com
+sites = .google.cn|.google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.appspot.com|.android.com|.googlegroups.com|.googlesource.com
+forcehttps = www.google.com.hk/url|.appspot.com|www.google.com/url|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
+withgae = plus.google.com|translate.googleapis.com|play.googleapis.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com|c.docs.google.com|translate.google.com
 
 [google_hk]
 mode = {GoAgent:Local:ConnectMode}
 window = 5
-hosts = www.google.com|www.l.google.com|mail.google.com|mail.l.google.com|mail-china.l.google.com
-sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
-forcehttps = www.google.com/url|groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
-withgae = www.google.com/imgres|translate.googleapis.com|play.googleapis.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com|www.google.com
+hosts = www.google.com|mail.google.com
+sites = .google.cn|.google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com|.googlesource.com
+forcehttps = www.google.com.hk/url|www.google.com/url|groups.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com|www.google.com.hk|webcache.googleusercontent.com
+withgae = www.google.com.hk/imgres|www.google.com/imgres|code.google.com|translate.googleapis.com|play.googleapis.com|plusone.google.com|reader.googleusercontent.com|music.google.com|apis.google.com|feedproxy.google.com|books.google.com|autoproxy-gfwlist.googlecode.com|c.docs.google.com|translate.google.com
 
 [google_ipv6]
 mode = {GoAgent:Local:ConnectMode}
 hosts = 2404:6800:4005:c00::65|2404:6800:4005:c00::8a|2404:6800:4005:c00::67|2404:6800:4005:c00::2f|2404:6800:4005:c00::30|2404:6800:4005:c00::84
-sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com
-forcehttps = groups.google.com|code.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
+sites = .google.com|.googleusercontent.com|.googleapis.com|.google-analytics.com|.googlecode.com|.google.com.hk|.googlegroups.com|.googlesource.com
+forcehttps = groups.google.com|mail.google.com|docs.google.com|profiles.google.com|developer.android.com
 withgae = 
 withdns = 
 
