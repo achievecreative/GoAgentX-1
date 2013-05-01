@@ -47,8 +47,9 @@
     NSString *servicePassword = [self configValueForKey:@"service_password"];
     
     if (servicePassword.length > 0) {
-        NSString *fetchpyPath = [[self serviceWorkDirectory] stringByAppendingPathComponent:@"wsgi.py"];
-        NSString *content = [[NSString alloc] initWithContentsOfFile:fetchpyPath encoding:NSUTF8StringEncoding error:NULL];
+        NSString *fetchpyPath = [[[self serviceWorkDirectory] stringByAppendingPathComponent:@"python"] stringByAppendingPathComponent:@"wsgi.py"];
+        NSError *error = nil;
+        NSString *content = [[NSString alloc] initWithContentsOfFile:fetchpyPath encoding:NSUTF8StringEncoding error:&error];
         content = [content stringByReplacingOccurrencesOfString:@"__password__ = ''"
                                                      withString:[NSString stringWithFormat:@"__password__ = '%@'", servicePassword]
                                                         options:NSLiteralSearch

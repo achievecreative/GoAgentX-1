@@ -13,9 +13,9 @@
 	<key>GoAgent:Local:ServicePassword</key>
 	<string></string>
 	<key>GoAgent:Local:GAEProfile</key>
-	<real>0</real>
+	<integer>1</integer>
 	<key>GoAgent:Local:ConnectMode</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>GoAgent:Local:ProxyEnabled</key>
 	<false/>
 	<key>GoAgent:Local:ProxyHost</key>
@@ -82,5 +82,7 @@
 	<integer>0</integer>
 	<key>ShadowSocks:Timeout</key>
 	<integer>60</integer>
+	<key>GoAgent:Local:EnableObfuscate</key>
+	<false/>
 </dict>
 </plist>
