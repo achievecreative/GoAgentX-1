@@ -60,7 +60,7 @@
 }
 
 - (NSString *)proxySetting {
-    return [NSString stringWithFormat:@"SOCKS 127.0.0.1:%d; SOCKS5 127.0.0.1:%d", [self proxyPort], [self proxyPort]];
+    return [NSString stringWithFormat:@"SOCKS5 127.0.0.1:%d; SOCKS 127.0.0.1:%d", [self proxyPort], [self proxyPort]];
 }
 
 - (void)setupCommandRunner {

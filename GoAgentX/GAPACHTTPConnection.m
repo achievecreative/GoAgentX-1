@@ -66,17 +66,11 @@
         NSString *pacTemplate = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"pactemplate" ofType:@"pac"] encoding:NSUTF8StringEncoding error:NULL];
         pacTemplate = [[NSString alloc] initWithData:[NSData dataFromBase64String:pacTemplate] encoding:NSUTF8StringEncoding];
 
-        NSUInteger index = [@"/proxy.pac?" length];
-        NSString *query;
-        if ([path length] > index) {
-            query = [path substringFromIndex:index];
-            query = [query stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            query = [query stringByReplacingOccurrencesOfString:@"/" withString:@" "];
-        } else {
-            GAAppDelegate* delegate = [NSApp delegate];
-            query = [[GAPACHTTPServer sharedServer] pacAddressForProxy:[[delegate currentService] proxySetting]];
-        }
-        NSString *pacContent = [pacTemplate stringByReplacingOccurrencesOfString:@"PROXY 127.0.0.1:65536" withString:query];
+        GAAppDelegate* delegate = [NSApp delegate];
+        NSString *proxySetting = [[delegate currentService] proxySetting];
+        
+        NSString *pacContent = [pacTemplate stringByReplacingOccurrencesOfString:@"PROXY 127.0.0.1:65536"
+                                                                      withString:proxySetting];
         pacContent = [pacContent stringByReplacingOccurrencesOfString:@"${GoAgentX:CustomPACDomainList}"
                                                            withString:[self customPACDomainList]];
         
