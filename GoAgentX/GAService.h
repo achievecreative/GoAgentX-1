@@ -53,6 +53,8 @@ typedef void (^GAServiceStatusChangedHandler)(GAService *service);
 
 - (NSString *)serviceWorkDirectory;
 
+- (NSString *)pathInApplicationSupportFolder:(NSString *)path;
+
 - (int)proxyPort;
 
 - (NSString *)proxySetting;

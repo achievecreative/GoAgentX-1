@@ -70,10 +70,15 @@
 - (void)setupCommandRunner {
     [super setupCommandRunner];
     
+    NSString *localFolder = [self pathInApplicationSupportFolder:[self serviceName]];
+    NSString *pythonEggCache = [localFolder stringByAppendingPathComponent:@".python-egg-cache"];
+    [[NSFileManager defaultManager] createDirectoryAtPath:pythonEggCache withIntermediateDirectories:YES attributes:nil error:NULL];
+    
     commandRunner.commandPath = @"/usr/bin/env";
     commandRunner.arguments = [NSArray arrayWithObjects:@"python", @"proxy.py", nil];
     commandRunner.environment = [NSDictionary dictionaryWithObjectsAndKeys:
                                  @"./:greenlet-0.4.0-py2.7-macosx-10.7-intel.egg:gevent-1.0b4-py2.7-macosx-10.7-intel.egg:greenlet-0.4.0-py2.7-macosx-10.8-intel.egg:gevent-1.0b4-py2.7-macosx-10.8-intel.egg", @"PYTHONPATH",
+                                 pythonEggCache,    @"PYTHON_EGG_CACHE",
                                  nil];
     commandRunner.inputText = nil;
 }
