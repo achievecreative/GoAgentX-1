@@ -1,3 +1,10 @@
+## GoAgentX v1.3.20
+
+* [NEW] 更新 stunnel 到 4.56
+* [NEW] 更新对分享 PAC 到局域网的支持（请参考[《分享服务给局域网其他设备》](https://github.com/ohdarling/GoAgentX/wiki/Share-Services-to-Local-Network)）
+
+*Released on 2013.05.04*
+
 ## GoAgentX v1.3.19
 
 * [NEW] 更新 goagent 到 2.1.17
