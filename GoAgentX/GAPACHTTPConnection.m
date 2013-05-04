@@ -13,6 +13,7 @@
 #import "HTTPDynamicFileResponse.h"
 #import "NSData+Base64.h"
 #import "HTTPFileResponse.h"
+#import "HTTPMessage.h"
 
 @implementation GAPACHTTPConnection
 
@@ -68,6 +69,16 @@
 
         GAAppDelegate* delegate = [NSApp delegate];
         NSString *proxySetting = [[delegate currentService] proxySetting];
+        
+        NSString *host = [request headerField:@"Host"];
+        if ([host rangeOfString:@":"].location != NSNotFound) {
+            host = [host substringToIndex:[host rangeOfString:@":"].location];
+        }
+        host = [host stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if (host.length > 0) {
+            proxySetting = [proxySetting stringByReplacingOccurrencesOfString:@"127.0.0.1"
+                                                                   withString:host];
+        }
         
         NSString *pacContent = [pacTemplate stringByReplacingOccurrencesOfString:@"PROXY 127.0.0.1:65536"
                                                                       withString:proxySetting];
