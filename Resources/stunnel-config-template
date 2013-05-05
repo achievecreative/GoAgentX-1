@@ -5,6 +5,7 @@ foreground=yes
 sslVersion=SSLv3
 verify=0
 syslog=no
+fips=no
 
 [proxy]
 accept = 127.0.0.1:{Stunnel:LocalPort}
