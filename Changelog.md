@@ -1,3 +1,9 @@
+## GoAgentX v1.3.21
+
+* [FIX] 修正 stunnel 在 10.8 下运行的问题
+
+*Released on 2013.05.06*
+
 ## GoAgentX v1.3.20
 
 * [NEW] 更新 stunnel 到 4.56
