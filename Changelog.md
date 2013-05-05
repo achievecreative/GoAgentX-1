@@ -1,4 +1,4 @@
-## GoAgentX v1.3.21
+## GoAgentX v1.3.22
 
 * [FIX] 修正 stunnel 在 10.8 下运行的问题
 
