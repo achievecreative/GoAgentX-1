@@ -3,5 +3,6 @@
     "server_port":{ShadowSocks:ListenOnRemote},
     "local_port":{ShadowSocks:LocalPort},
     "password":"{ShadowSocks:Password}",
-    "timeout":{ShadowSocks:Timeout}
+    "timeout":{ShadowSocks:Timeout},
+    "method": "{ShadowSocks:Method}"
 }

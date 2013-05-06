@@ -74,10 +74,16 @@
 	<false/>
 	<key>GoAgentX:ServiceStateChangedNotification</key>
 	<true/>
+	<key>ShadowSocks:Server</key>
+	<string></string>
+	<key>ShadowSocks:Password</key>
+	<string></string>
 	<key>ShadowSocks:LocalPort</key>
 	<string>8387</string>
 	<key>ShadowSocks:ListenOnRemote</key>
 	<string>8388</string>
+	<key>ShadowSocks:Method</key>
+	<real>0</real>
 	<key>GoAgent:Server:LanguageType</key>
 	<integer>0</integer>
 	<key>ShadowSocks:Timeout</key>

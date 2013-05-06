@@ -44,13 +44,13 @@ cp -r $goagent_folder/server/* "$SERVICES_FOLDER/goagent-server"
 
 
 # 更新 shadowsocks
-echo 
-echo 开始更新 shadowsocks ...
-curl -L -o shadowsocks.zip $SHADOWSOCKS_URL
-unzip shadowsocks.zip
-rm shadowsocks.zip
-ss_folder=`ls | grep -m 1 shadowsocks-`
-cp -r $ss_folder/* "$SERVICES_FOLDER/shadowsocks"
+#echo
+#echo 开始更新 shadowsocks ...
+#curl -L -o shadowsocks.zip $SHADOWSOCKS_URL
+#unzip shadowsocks.zip
+#rm shadowsocks.zip
+#ss_folder=`ls | grep -m 1 shadowsocks-`
+#cp -r $ss_folder/* "$SERVICES_FOLDER/shadowsocks"
 
 # 输出结果
 echo 
@@ -62,7 +62,7 @@ grep -m 1 __version__ $goagent_folder/server/python/wsgi.py
 
 rm -r $goagent_folder
 
-echo 
-echo shadowsocks 更新完成，版本：
-grep -m 1 "Current version:" "$ss_folder/README.md"
-rm -r $ss_folder
+#echo
+#echo shadowsocks 更新完成，版本：
+#grep -m 1 "Current version:" "$ss_folder/README.md"
+#rm -r $ss_folder

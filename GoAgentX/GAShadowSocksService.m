@@ -18,18 +18,6 @@
     NSString *tpl = [[NSString alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"shadowsocks-config-template" ofType:@""]
                                                     encoding:NSUTF8StringEncoding
                                                        error:NULL];
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *server = [defaults stringForKey:@"ShadowSocks:Server"] ?: @"";
-    NSString *remotePort = [defaults stringForKey:@"ShadowSocks:ListenOnRemote"] ?: @"";
-    NSString *localPort = [defaults stringForKey:@"ShadowSocks:LocalPort"] ?: @"";
-    NSString *pass = [defaults stringForKey:@"ShadowSocks:Password"] ?: @"";
-    NSString *timeout = [defaults stringForKey:@"ShadowSocks:Timeout"] ?: @"";
-    tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:Server}" withString:server];
-    tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:ListenOnRemote}" withString:remotePort];
-    tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:LocalPort}" withString:localPort];
-    tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:Password}" withString:pass];
-    tpl = [tpl stringByReplacingOccurrencesOfString:@"{ShadowSocks:Timeout}" withString:timeout];
-    
     return tpl;
 }
 
@@ -66,14 +54,8 @@
 - (void)setupCommandRunner {
     [super setupCommandRunner];
     
-    commandRunner.commandPath = @"/usr/bin/env";
-    NSString *server = [NSUserDefaults.standardUserDefaults stringForKey:@"ShadowSocks:Server"] ?: @"";
-    
-    if ([server rangeOfString:@":"].location != NSNotFound ) {
-        commandRunner.arguments = @[@"python", @"local.py", @"-6"];
-    } else {
-        commandRunner.arguments = [NSArray arrayWithObjects:@"python", @"local.py", nil];
-    }
+    commandRunner.commandPath = @"./ss-local";
+    commandRunner.arguments = [NSArray arrayWithObjects:@"-c", @"config.json", nil];
 
     commandRunner.inputText = nil;
 }

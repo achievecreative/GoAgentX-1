@@ -20,5 +20,10 @@
 		<string>SSLv3</string>
 		<string>TLSv1</string>
 	</array>
+	<key>ShadowSocks:Method</key>
+	<array>
+		<string>table</string>
+		<string>rc4</string>
+	</array>
 </dict>
 </plist>

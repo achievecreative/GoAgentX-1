@@ -16,7 +16,7 @@
 
 
 - (NSString *)serviceTitle {
-    return @"goagent 和 shadowsocks 更新";
+    return @"goagent 更新";
 }
 
 
