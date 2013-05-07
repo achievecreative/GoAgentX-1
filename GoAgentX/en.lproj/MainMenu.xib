@@ -1897,7 +1897,6 @@ jOaIkOmFjee9ruWQjuivt+i/m+WFpeKAnOeKtuaAgeKAneagh+etvuW8gOWni+mDqOe9suOAgg</stri
 																	<int key="NSvFlags">266</int>
 																	<string key="NSFrame">{{164, 168}, {308, 22}}</string>
 																	<reference key="NSSuperview" ref="285333318"/>
-																	<reference key="NSNextKeyView" ref="854588309"/>
 																	<string key="NSReuseIdentifierKey">_NS:903</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<object class="NSTextFieldCell" key="NSCell" id="685537499">
@@ -2668,7 +2667,7 @@ uLrlpJrkuKogc2VydmljZe+8jOivt+S9v+eUqOepuuihjOWIhumalOOAgg</string>
 																	<object class="NSTextFieldCell" key="NSCell" id="949626947">
 																		<int key="NSCellFlags">68157504</int>
 																		<int key="NSCellFlags2">272630784</int>
-																		<string key="NSContents">注：目前只支持 ShadowSocks 的 python 版本  服务端部署请到 https://github.com/clowwindy/shadowsocks 获取</string>
+																		<string key="NSContents">服务端部署请到 https://github.com/clowwindy/shadowsocks 获取</string>
 																		<reference key="NSSupport" ref="988758687"/>
 																		<string key="NSCellIdentifier">_NS:1535</string>
 																		<reference key="NSControlView" ref="919399147"/>
