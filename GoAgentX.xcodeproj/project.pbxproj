@@ -156,6 +156,10 @@
 		894E09CC154163BC00343BC6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		894E09D21541655F00343BC6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 		8960EA05173DF85A0020E2CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8960EA08173E517A0020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
+		8960EA09173E51900020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		8960EA0A173E51970020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = "zh-Hans"; path = "zh-Hans.lproj/Credits.rtf"; sourceTree = "<group>"; };
+		8960EA0B173E52540020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		8963E33D14ED4A01008587B7 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		8963E33F14ED4A01008587B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -225,13 +229,10 @@
 		89B72C6114E8DF9D0027DC19 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		89B72C6214E8DF9D0027DC19 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		89B72C6514E8DF9D0027DC19 /* GoAgentX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoAgentX-Info.plist"; sourceTree = "<group>"; };
-		89B72C6714E8DF9D0027DC19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		89B72C6914E8DF9D0027DC19 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		89B72C6B14E8DF9D0027DC19 /* GoAgentX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoAgentX-Prefix.pch"; sourceTree = "<group>"; };
-		89B72C6D14E8DF9D0027DC19 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		89B72C6F14E8DF9D0027DC19 /* GAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAAppDelegate.h; sourceTree = "<group>"; };
 		89B72C7014E8DF9D0027DC19 /* GAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GAAppDelegate.m; sourceTree = "<group>"; };
-		89B72C7314E8DF9D0027DC19 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		89B72CD714E9097E0027DC19 /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Icon.icns; sourceTree = "<group>"; };
 		89B72CDA14E90CC60027DC19 /* status_item_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_item_icon.png; sourceTree = "<group>"; };
 		89B72CDE14E9113A0027DC19 /* status_item_icon_alt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_item_icon_alt.png; sourceTree = "<group>"; };
@@ -623,6 +624,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 89B72C4E14E8DF9D0027DC19;
 			productRefGroup = 89B72C5A14E8DF9D0027DC19 /* Products */;
@@ -757,6 +759,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				8960EA05173DF85A0020E2CF /* en */,
+				8960EA0B173E52540020E2CF /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -764,7 +767,7 @@
 		89B72C6614E8DF9D0027DC19 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				89B72C6714E8DF9D0027DC19 /* en */,
+				8960EA09173E51900020E2CF /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -772,7 +775,7 @@
 		89B72C6C14E8DF9D0027DC19 /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
-				89B72C6D14E8DF9D0027DC19 /* en */,
+				8960EA0A173E51970020E2CF /* zh-Hans */,
 			);
 			name = Credits.rtf;
 			sourceTree = "<group>";
@@ -780,7 +783,7 @@
 		89B72C7214E8DF9D0027DC19 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				89B72C7314E8DF9D0027DC19 /* en */,
+				8960EA08173E517A0020E2CF /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
