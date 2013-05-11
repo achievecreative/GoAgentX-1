@@ -1159,6 +1159,8 @@ class Common(object):
         info += 'GAE Mode           : %s\n' % self.GOOGLE_MODE
         info += 'GAE Profile        : %s\n' % self.GAE_PROFILE
         info += 'GAE APPID          : %s\n' % '|'.join(self.GAE_APPIDS)
+        info += 'GAE Validate       : %s\n' % self.GAE_VALIDATE if self.GAE_VALIDATE else ''
+        info += 'GAE Obfuscate      : %s\n' % self.GAE_OBFUSCATE if self.GAE_OBFUSCATE else ''
         if common.PAC_ENABLE:
             info += 'Pac Server         : http://%s:%d/%s\n' % (self.PAC_IP, self.PAC_PORT, self.PAC_FILE)
             info += 'Pac File           : file://%s\n' % os.path.join(os.path.dirname(os.path.abspath(__file__)), self.PAC_FILE).replace('\\', '/')
@@ -1458,7 +1460,7 @@ class GAEProxyHandler(object):
         try:
             self.handle()
         except Exception as e:
-            logging.exception('%r Exception: %s', self, e)
+            logging.error('%r Exception: %r', address, e)
         finally:
             self.finish()
 
@@ -1625,12 +1627,13 @@ class GAEProxyHandler(object):
     def handle_method_urlfetch(self):
         """GAE http urlfetch"""
         host = self.headers.get('Host', '')
+        donotrange = re.compile('^http(?:s)?:\/\/[^\/]+\/[^?]+\.(?:xml|json|html|js|css|jpg|jpeg|png|gif|ico)')
         if 'Range' in self.headers:
             m = re.search('bytes=(\d+)-', self.headers['Range'])
             start = int(m.group(1) if m else 0)
             self.headers['Range'] = 'bytes=%d-%d' % (start, start+common.AUTORANGE_MAXSIZE-1)
             logging.info('autorange range=%r match url=%r', self.headers['Range'], self.path)
-        elif host.endswith(common.AUTORANGE_HOSTS_TAIL):
+        elif host.endswith(common.AUTORANGE_HOSTS_TAIL) and not donotrange.match(self.path):
             try:
                 pattern = (p for p in common.AUTORANGE_HOSTS if host.endswith(p) or fnmatch.fnmatch(host, p)).next()
                 logging.debug('autorange pattern=%r match url=%r', pattern, self.path)

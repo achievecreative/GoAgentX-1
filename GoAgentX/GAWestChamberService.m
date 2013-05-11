@@ -33,7 +33,7 @@
 
 
 - (NSString *)serviceTitle {
-    return @"西厢第3季";
+    return NSLocalizedString(@"西厢第3季", nil);
 }
 
 
