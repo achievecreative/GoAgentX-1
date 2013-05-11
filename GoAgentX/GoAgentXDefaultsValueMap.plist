@@ -22,7 +22,7 @@
 	</array>
 	<key>ShadowSocks:Method</key>
 	<array>
-		<string>table</string>
+		<string></string>
 		<string>rc4</string>
 	</array>
 </dict>
