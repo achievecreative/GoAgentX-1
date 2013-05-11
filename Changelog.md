@@ -1,4 +1,12 @@
-## GoAgentX v1.3.23
+## GoAgentX v1.3.26
+
+* [NEW] New English translation
+* [NEW] 使用 [libev 版本 shadowsocks](https://github.com/madeye/shadowsocks-libev)
+* [NEW] shadowsocks 增加 rc4 加密选项
+
+*Released on 2013.05.11*
+
+## GoAgentX v1.3.24
 
 * [FIX] 修正 stunnel 在 10.8 下运行的问题
 

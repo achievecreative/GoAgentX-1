@@ -40,6 +40,7 @@
 		894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D31541655F00343BC6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 894E09D21541655F00343BC6 /* dsa_pub.pem */; };
 		8960EA04173DF85A0020E2CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8960EA06173DF85A0020E2CF /* Localizable.strings */; };
+		8960EA12173E56580020E2CF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8960EA11173E56580020E2CF /* MainMenu.xib */; };
 		8963E34014ED4A01008587B7 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */; };
 		8963E34114ED4A01008587B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8963E33F14ED4A01008587B7 /* README.md */; };
 		899615281545AD04002DE998 /* west-chamber-proxy in Resources */ = {isa = PBXBuildFile; fileRef = 899615271545AD04002DE998 /* west-chamber-proxy */; };
@@ -78,7 +79,6 @@
 		89B72C6A14E8DF9D0027DC19 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B72C6914E8DF9D0027DC19 /* main.m */; };
 		89B72C6E14E8DF9D0027DC19 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 89B72C6C14E8DF9D0027DC19 /* Credits.rtf */; };
 		89B72C7114E8DF9D0027DC19 /* GAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B72C7014E8DF9D0027DC19 /* GAAppDelegate.m */; };
-		89B72C7414E8DF9D0027DC19 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B72C7214E8DF9D0027DC19 /* MainMenu.xib */; };
 		89B72CD814E9097E0027DC19 /* Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 89B72CD714E9097E0027DC19 /* Icon.icns */; };
 		89B72CDB14E90CC60027DC19 /* status_item_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 89B72CDA14E90CC60027DC19 /* status_item_icon.png */; };
 		89B72CE014E9113A0027DC19 /* status_item_icon_alt.png in Resources */ = {isa = PBXBuildFile; fileRef = 89B72CDE14E9113A0027DC19 /* status_item_icon_alt.png */; };
@@ -155,11 +155,11 @@
 		894178351549A3DA00E1819C /* pactemplate.pac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pactemplate.pac; sourceTree = "<group>"; };
 		894E09CC154163BC00343BC6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		894E09D21541655F00343BC6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
-		8960EA05173DF85A0020E2CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8960EA08173E517A0020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
+		8960EA05173DF85A0020E2CF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8960EA09173E51900020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		8960EA0A173E51970020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = "zh-Hans"; path = "zh-Hans.lproj/Credits.rtf"; sourceTree = "<group>"; };
-		8960EA0B173E52540020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8960EA0B173E52540020E2CF /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8960EA11173E56580020E2CF /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		8963E33D14ED4A01008587B7 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		8963E33F14ED4A01008587B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -537,7 +537,7 @@
 				894107FA1549179D0045DA38 /* GoAgentXServices.plist */,
 				89B72C6F14E8DF9D0027DC19 /* GAAppDelegate.h */,
 				89B72C7014E8DF9D0027DC19 /* GAAppDelegate.m */,
-				89B72C7214E8DF9D0027DC19 /* MainMenu.xib */,
+				8960EA11173E56580020E2CF /* MainMenu.xib */,
 			);
 			path = GoAgentX;
 			sourceTree = "<group>";
@@ -643,7 +643,6 @@
 			files = (
 				89B72C6814E8DF9D0027DC19 /* InfoPlist.strings in Resources */,
 				89B72C6E14E8DF9D0027DC19 /* Credits.rtf in Resources */,
-				89B72C7414E8DF9D0027DC19 /* MainMenu.xib in Resources */,
 				89B72CD814E9097E0027DC19 /* Icon.icns in Resources */,
 				89B72CDB14E90CC60027DC19 /* status_item_icon.png in Resources */,
 				89B72CE014E9113A0027DC19 /* status_item_icon_alt.png in Resources */,
@@ -676,6 +675,7 @@
 				891E40EF16E8E151000F5CC3 /* GoAgentX.sdef in Resources */,
 				89D2471E171ABBD1003FEDD1 /* goagent-update in Resources */,
 				8960EA04173DF85A0020E2CF /* Localizable.strings in Resources */,
+				8960EA12173E56580020E2CF /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,14 +778,6 @@
 				8960EA0A173E51970020E2CF /* zh-Hans */,
 			);
 			name = Credits.rtf;
-			sourceTree = "<group>";
-		};
-		89B72C7214E8DF9D0027DC19 /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8960EA08173E517A0020E2CF /* zh-Hans */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
