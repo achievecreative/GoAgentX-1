@@ -205,7 +205,7 @@ static AuthorizationFlags authFlags;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(start) object:nil];
     
     if (![self hasConfigured]) {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"请进行服务配置"
+        NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"请进行服务配置", nil)
                                          defaultButton:nil
                                        alternateButton:nil
                                            otherButton:nil
@@ -215,7 +215,9 @@ static AuthorizationFlags authFlags;
     }
     
     if (![commandRunner isTaskRunning]) {
-        [self.outputTextView appendString:[NSString stringWithFormat:@"%@ 正在启动...\n", [self serviceTitle]]];
+        [self.outputTextView appendString:[NSString stringWithFormat:@"%@ %@...\n",
+                                           [self serviceTitle],
+                                           NSLocalizedString(@"正在启动", nil)]];
         
         // 关闭可能的上次运行的进程
         NSInteger lastRunPID = [[NSUserDefaults standardUserDefaults] integerForKey:@"GoAgent:LastRunPID"];
@@ -229,7 +231,8 @@ static AuthorizationFlags authFlags;
         [self setupCommandRunner];
         [commandRunner run];
         
-        [self.outputTextView appendString:@"启动完成\n"];
+        [self.outputTextView appendString:NSLocalizedString(@"启动完成", nil)];
+        [self.outputTextView appendString:@"\n"];
         [[NSUserDefaults standardUserDefaults] setInteger:[commandRunner processId] forKey:@"GoAgent:LastRunPID"];
         
         [self notifyStatusChanged];

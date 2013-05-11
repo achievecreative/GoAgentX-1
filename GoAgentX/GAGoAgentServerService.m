@@ -31,7 +31,7 @@
 
 
 - (NSString *)serviceTitle {
-    return @"goagent 服务端部署";
+    return NSLocalizedString(@"goagent 服务端部署", nil);
 }
 
 

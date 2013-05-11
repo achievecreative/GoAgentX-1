@@ -39,6 +39,7 @@
 		894E09D01541642200343BC6 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D11541642700343BC6 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 894E09CC154163BC00343BC6 /* Sparkle.framework */; };
 		894E09D31541655F00343BC6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 894E09D21541655F00343BC6 /* dsa_pub.pem */; };
+		8960EA04173DF85A0020E2CF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8960EA06173DF85A0020E2CF /* Localizable.strings */; };
 		8963E34014ED4A01008587B7 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */; };
 		8963E34114ED4A01008587B7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8963E33F14ED4A01008587B7 /* README.md */; };
 		899615281545AD04002DE998 /* west-chamber-proxy in Resources */ = {isa = PBXBuildFile; fileRef = 899615271545AD04002DE998 /* west-chamber-proxy */; };
@@ -154,6 +155,7 @@
 		894178351549A3DA00E1819C /* pactemplate.pac */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pactemplate.pac; sourceTree = "<group>"; };
 		894E09CC154163BC00343BC6 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		894E09D21541655F00343BC6 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		8960EA05173DF85A0020E2CF /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8963E33D14ED4A01008587B7 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		8963E33E14ED4A01008587B7 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		8963E33F14ED4A01008587B7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
@@ -579,6 +581,7 @@
 				8905D9E61556DCA700E0E13A /* stunnel-config-example */,
 				33A099791656457900A0EAD3 /* shadowsocks-config-template */,
 				891E40EE16E8E151000F5CC3 /* GoAgentX.sdef */,
+				8960EA06173DF85A0020E2CF /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				33A0997C165649B000A0EAD3 /* shadowsocks in Resources */,
 				891E40EF16E8E151000F5CC3 /* GoAgentX.sdef in Resources */,
 				89D2471E171ABBD1003FEDD1 /* goagent-update in Resources */,
+				8960EA04173DF85A0020E2CF /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -749,6 +753,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		8960EA06173DF85A0020E2CF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8960EA05173DF85A0020E2CF /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		89B72C6614E8DF9D0027DC19 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

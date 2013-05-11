@@ -25,17 +25,17 @@
 - (void)setStatusToRunning:(NSNumber *)status {
     BOOL running = [status boolValue];
     
-    NSString *statusText = @"正在运行";
+    NSString *statusText = NSLocalizedString(@"正在运行", nil);
     if ([proxyService proxyPort] > 0) {
-        statusText = [statusText stringByAppendingFormat:@"，端口 %d", [proxyService proxyPort]];
+        statusText = [statusText stringByAppendingFormat:NSLocalizedString(@"，端口 %d", nil), [proxyService proxyPort]];
     }
     NSImage *statusImage = [NSImage imageNamed:@"status_running"];
-    NSString *buttonTitle = @"停止";
+    NSString *buttonTitle = NSLocalizedString(@"停止", nil);
     
     if (!running) {
-        statusText = @"已停止";
+        statusText = NSLocalizedString(@"已停止", nil);
         statusImage = [NSImage imageNamed:@"status_stopped"];
-        buttonTitle = [proxyService willAutoReconnect] ? @"停止重连" : @"启动";
+        buttonTitle = [proxyService willAutoReconnect] ? NSLocalizedString(@"停止重连", nil) : NSLocalizedString(@"启动", nil);
     }
     
     statusText = [NSString stringWithFormat:@"%@ %@", [proxyService serviceTitle], statusText];
@@ -158,8 +158,9 @@
         
     } else if ([proxyService willAutoReconnect]) {
         [proxyService stop];
-        statusToggleButton.title = @"启动";
-        [statusLogTextView appendString:@"\n已停止"];
+        statusToggleButton.title = NSLocalizedString(@"启动", nil);
+        [statusLogTextView appendString:@"\n"];
+        [statusLogTextView appendString:NSLocalizedString(@"已停止", nil)];
     
     } else {
         [self loadProxyService];
@@ -307,6 +308,10 @@
         [self toggleServiceStatus:nil];
     }
     
+    // 本地化界面
+    [self localizeMenu:statusBarItemMenu];
+    [self localizeControl:_mainTabView];
+    
     // 如果没有配置，则显示主窗口
     if (![proxyService hasConfigured]) {
         [self showMainWindow:nil];
@@ -392,6 +397,58 @@
             [[NSUserDefaults standardUserDefaults] setObject:path forKey:@"GoAgent:CustomPACAddress"];
         }
     }];
+}
+
+
+#pragma mark - Localization
+
+- (void)localizeMenu:(NSMenu *)menu {
+    if (menu.title) {
+        menu.title = NSLocalizedString(menu.title, nil);
+    }
+    for (NSMenuItem *menuItem in [menu itemArray]) {
+        if (menuItem.title) {
+            menuItem.title = NSLocalizedString(menuItem.title, nil);
+        }
+        if ([menuItem hasSubmenu]) {
+            [self localizeMenu:[menuItem submenu]];
+        }
+    }
+}
+
+
+- (void)localizeControl:(NSView *)control {
+    if ([control isKindOfClass:[NSTabView class]]) {
+        for (NSTabViewItem *item in [(NSTabView *)control tabViewItems]) {
+            item.label = NSLocalizedString(item.label, nil);
+            [self localizeControl:item.view];
+        }
+        
+    } else if ([control isKindOfClass:[NSTextField class]]) {
+        NSTextField *field = (NSTextField *)control;
+        field.stringValue = NSLocalizedString(field.stringValue, nil);
+        [field.cell setPlaceholderString:NSLocalizedString([field.cell placeholderString], nil)];
+        
+    } else if ([control isKindOfClass:[NSButton class]]) {
+        [(NSButton *)control setTitle:NSLocalizedString([(NSButton *)control title], nil)];
+        
+    } else if ([control isKindOfClass:[NSSegmentedControl class]]) {
+        NSSegmentedControl *seg = (NSSegmentedControl *)control;
+        for (int i = 0; i < seg.segmentCount; ++i) {
+            [seg setLabel:NSLocalizedString([seg labelForSegment:i], nil) forSegment:i];
+        }
+    
+    } else if ([control isKindOfClass:[NSBox class]]) {
+        [(NSBox *)control setTitle:NSLocalizedString([(NSBox *)control title], nil)];
+        for (NSView *view in control.subviews) {
+            [self localizeControl:view];
+        }
+        
+    } else if ([control isKindOfClass:[NSView class]]) {
+        for (NSView *view in control.subviews) {
+            [self localizeControl:view];
+        }
+    }
 }
 
 
