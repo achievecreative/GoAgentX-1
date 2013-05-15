@@ -58,7 +58,8 @@
 - (void)setupCommandRunner {
     [super setupCommandRunner];
     
-    commandRunner.commandPath = @"ssh";
+//    commandRunner.commandPath = @"ssh";
+    commandRunner.commandPath = [[NSBundle mainBundle] pathForResource:@"obfuscated-ssh" ofType:nil];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -71,6 +72,11 @@
     [args addObject:[defaults stringForKey:@"SSH:RemotePort"]];
     [args addObject:@"-D"];
     [args addObject:[NSString stringWithFormat:@"%s:%d", [self listenOnRemote] ? "*" : "localhost", [self proxyPort]]];
+    if ([defaults stringForKey:@"SSH:ObfuscateKeyword"].length > 0) {
+        [args addObject:@"-zZ"];
+        [args addObject:[defaults stringForKey:@"SSH:ObfuscateKeyword"]];
+    }
+    
     NSString *identityFile = [defaults stringForKey:@"SSH:IdentityFile"];
     if ([identityFile length] > 0) {
       [args addObject:@"-i"];

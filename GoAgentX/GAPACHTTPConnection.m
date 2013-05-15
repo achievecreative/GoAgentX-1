@@ -44,7 +44,7 @@
     BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
     NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
     
-    if (usePAC && useCustomePAC && customPAC.length > 0) {
+    if (/*usePAC && */useCustomePAC && customPAC.length > 0) {
         NSString *filePath = [[NSURL URLWithString:customPAC] path];
         return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
     }
