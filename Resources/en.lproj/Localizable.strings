@@ -225,3 +225,7 @@
 "启动完成" = "Start finished";
 
 "服务器端口：" = "Server Port:";
+
+"混淆密钥：" = "Obfuscate Keyword:";
+
+"混淆密钥，用于支持混淆的 SSH 服务器" = "Keyword used to connecting obfuscated SSH server";
