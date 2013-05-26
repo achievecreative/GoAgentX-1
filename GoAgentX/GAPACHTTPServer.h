@@ -12,6 +12,6 @@
 
 + (id)sharedServer;
 
-- (NSString *)pacAddressForProxy:(NSString *)proxySetting;
+- (NSString *)pacAddressForProxy;
 
 @end

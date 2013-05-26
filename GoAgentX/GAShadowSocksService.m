@@ -47,8 +47,8 @@
     return (bool)[[NSUserDefaults standardUserDefaults] boolForKey:@"ShadowSocks:ListenOnRemote"];
 }
 
-- (NSString *)proxySetting {
-    return [NSString stringWithFormat:@"SOCKS5 127.0.0.1:%d; SOCKS 127.0.0.1:%d", [self proxyPort], [self proxyPort]];
+- (NSArray *)proxyTypes {
+    return @[@"SOCKS5", @"SOCKS"];
 }
 
 - (void)setupCommandRunner {

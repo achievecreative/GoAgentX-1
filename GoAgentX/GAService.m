@@ -143,14 +143,15 @@ static AuthorizationFlags authFlags;
     return NO;
 }
 
-- (NSString *)proxySetting {
+
+- (NSArray *)proxyTypes {
     return nil;
 }
 
 
 - (void)notifyStatusChanged {
     // 如果有设置自动切换系统代理设置，切换系统代理设置
-    if ([self proxySetting] != nil && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
+    if ([self proxyTypes].count > 0 && ![[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:DontAutoToggleSystemProxySettings"]) {
         [self toggleSystemProxy:[self isRunning]];
     }
 
@@ -347,19 +348,19 @@ static AuthorizationFlags authFlags;
     
     if (enabled) {
         NSInteger proxyPort = [self proxyPort];
-        NSString *proxySetting = [self proxySetting];
+        NSArray *proxyTypes = [self proxyTypes];
         
         BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
         BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
         NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
-        NSString *pacFile = (useCustomePAC && ![customPAC hasPrefix:@"file://"]) ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy:[self proxySetting]];
+        NSString *pacFile = (useCustomePAC && ![customPAC hasPrefix:@"file://"]) ? customPAC : [[GAPACHTTPServer sharedServer] pacAddressForProxy];
         
         if (usePAC) {
             // 使用 PAC
             [proxies setObject:pacFile forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigURLString];
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesProxyAutoConfigEnable];
             
-        } else if ([proxySetting hasPrefix:@"PROXY"]) {
+        } else if ([proxyTypes indexOfObject:@"PROXY"] != NSNotFound) {
             // 使用 HTTP 代理
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesHTTPPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPProxy];
@@ -368,7 +369,8 @@ static AuthorizationFlags authFlags;
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesHTTPSProxy];
             [proxies setObject:[NSNumber numberWithInt:1] forKey:(NSString *)kCFNetworkProxiesHTTPSEnable];
             
-        } else if ([proxySetting hasPrefix:@"SOCKS"]) {
+        } else if ([proxyTypes indexOfObject:@"SOCKS"] != NSNotFound ||
+                   [proxyTypes indexOfObject:@"SOCKS5"] != NSNotFound) {
             // 使用 SOCKS 代理
             [proxies setObject:[NSNumber numberWithInteger:proxyPort] forKey:(NSString *)kCFNetworkProxiesSOCKSPort];
             [proxies setObject:@"127.0.0.1" forKey:(NSString *)kCFNetworkProxiesSOCKSProxy];

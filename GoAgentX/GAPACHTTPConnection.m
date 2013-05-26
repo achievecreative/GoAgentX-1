@@ -40,11 +40,10 @@
 
 
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path {
-    BOOL usePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:AutoToggleSystemProxyWithPAC"];
     BOOL useCustomePAC = [[NSUserDefaults standardUserDefaults] boolForKey:@"GoAgent:UseCustomPACAddress"];
     NSString *customPAC = [[NSUserDefaults standardUserDefaults] stringForKey:@"GoAgent:CustomPACAddress"];
     
-    if (/*usePAC && */useCustomePAC && customPAC.length > 0) {
+    if (useCustomePAC && customPAC.length > 0) {
         NSString *filePath = [[NSURL URLWithString:customPAC] path];
         return [[HTTPFileResponse alloc] initWithFilePath:filePath forConnection:self];
     }
@@ -68,17 +67,20 @@
         pacTemplate = [[NSString alloc] initWithData:[NSData dataFromBase64String:pacTemplate] encoding:NSUTF8StringEncoding];
 
         GAAppDelegate* delegate = [NSApp delegate];
-        NSString *proxySetting = [[delegate currentService] proxySetting];
+        NSArray *proxyTypes = [[delegate currentService] proxyTypes];
+        int proxyPort = [[delegate currentService] proxyPort];
         
         NSString *host = [request headerField:@"Host"];
         if ([host rangeOfString:@":"].location != NSNotFound) {
             host = [host substringToIndex:[host rangeOfString:@":"].location];
         }
         host = [host stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        if (host.length > 0) {
-            proxySetting = [proxySetting stringByReplacingOccurrencesOfString:@"127.0.0.1"
-                                                                   withString:host];
+        if (host.length == 0) {
+            host = @"127.0.0.1";
         }
+        
+        NSString *proxyAddress = [NSString stringWithFormat:@" %@:%d; ", host, proxyPort];
+        NSString *proxySetting = [[proxyTypes arrayByAddingObject:@"DIRECT"] componentsJoinedByString:proxyAddress];
         
         NSString *pacContent = [pacTemplate stringByReplacingOccurrencesOfString:@"PROXY 127.0.0.1:65536"
                                                                       withString:proxySetting];
