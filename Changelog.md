@@ -1,3 +1,12 @@
+## GoAgentX v1.3.28
+
+* [NEW] 添加 obfuscate-ssh 支持
+* [NEW] 更新 goagent 到 3.0.1，goagent-server 到 2.1.18
+* [NEW] 更新 shadowsocks-libev 到 1.3
+* [FIX] 修正 SSH 及 shadowsocks 不支持远程 DNS 的问题
+
+*Released on 2013.05.28*
+
 ## GoAgentX v1.3.26
 
 * [NEW] New English translation
