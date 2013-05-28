@@ -64,6 +64,8 @@ withdns =
 
 [autorange]
 hosts = .c.youtube.com|.atm.youku.com|.googlevideo.com|av.vimeo.com|smile-*.nicovideo.jp|video.*.fbcdn.net|s*.last.fm|x*.last.fm|.x.xvideos.com|.edgecastcdn.net|.d.rncdn3.com|cdn*.public.tube8.com|videos.flv*.redtubefiles.com|cdn*.public.extremetube.phncdn.com|cdn*.video.pornhub.phncdn.com|.mms.vlog.xuite.net|vs*.thisav.com|archive.rthk.hk|video*.modimovie.com
+endswith = .f4v|.flv|.hlv|.m4v|.mp4|.mp3|.ogg|.avi|.exe|.zip|.iso|.rar|.bz2|.xz|.dmg
+noendswith = .xml|.json|.html|.php|.py.js|.css|.jpg|.jpeg|.png|.gif|.ico
 threads = 2
 maxsize = 1048576
 waitsize = 524288
@@ -87,6 +89,12 @@ password = 123456
 listen = 127.0.0.1:8089
 fetchserver = http://.me:23/
 
+[light]
+enable = 0
+password = 
+listen = 127.0.0.1:8089
+server = 127.0.0.1:443
+
 [useragent]
 enable = 0
 string = Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3
@@ -101,5 +109,7 @@ timestamp = 1350927900
 tip = \u8bf7\u5173\u6ce8\u5317\u4eac\u5931\u5b66\u513f\u7ae5~~
 
 [hosts]
-www.253874.com = 
-
+talkx?\.google\.com = 
+.+\.dropbox\.com:443 = 
+^https?://upload\.facebook\.com = 
+^https?://.+\.c\.youtube\.com/liveplay = www.g.cn
