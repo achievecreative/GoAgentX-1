@@ -50,16 +50,15 @@
 }
 
 
-- (NSString *)proxySetting {
-    return [NSString stringWithFormat:@"SOCKS 127.0.0.1:%d", [self proxyPort]];
+- (NSArray *)proxyTypes {
+    return @[@"SOCKS5", @"SOCKS"];
 }
 
 
 - (void)setupCommandRunner {
     [super setupCommandRunner];
     
-//    commandRunner.commandPath = @"ssh";
-    commandRunner.commandPath = [[NSBundle mainBundle] pathForResource:@"obfuscated-ssh" ofType:nil];
+    commandRunner.commandPath = @"ssh";
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -73,6 +72,7 @@
     [args addObject:@"-D"];
     [args addObject:[NSString stringWithFormat:@"%s:%d", [self listenOnRemote] ? "*" : "localhost", [self proxyPort]]];
     if ([defaults stringForKey:@"SSH:ObfuscateKeyword"].length > 0) {
+        commandRunner.commandPath = @"./obfuscate-ssh";
         [args addObject:@"-zZ"];
         [args addObject:[defaults stringForKey:@"SSH:ObfuscateKeyword"]];
     }

@@ -84,6 +84,8 @@
 	<string>8388</string>
 	<key>ShadowSocks:Method</key>
 	<real>0</real>
+	<key>ShadowSocks:EncryptMethod</key>
+	<string></string>
 	<key>GoAgent:Server:LanguageType</key>
 	<integer>0</integer>
 	<key>ShadowSocks:Timeout</key>

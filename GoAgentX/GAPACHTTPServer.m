@@ -25,7 +25,7 @@ SYNTHESIZE_SINGLETON_FOR_CLASS(GAPACHTTPServer, Server)
 }
 
 
-- (NSString *)pacAddressForProxy:(NSString *)proxySetting {
+- (NSString *)pacAddressForProxy {
     int count = 0;
     while (![self isRunning] && count++ < 10000) {
         // do nothing

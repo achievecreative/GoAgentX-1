@@ -120,8 +120,8 @@
 }
 
 
-- (NSString *)proxySetting {
-    return [NSString stringWithFormat:@"PROXY 127.0.0.1:%d", [self proxyPort]];
+- (NSArray *)proxyTypes {
+    return @[@"SOCKS5", @"SOCKS"];
 }
 
 

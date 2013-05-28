@@ -3,7 +3,7 @@
 # Contributor:
 #      Phus Lu        <phus.lu@gmail.com>
 
-__version__ = '2.1.17'
+__version__ = '2.1.18'
 __password__ = ''
 __hostsdeny__ = ()  # __hostsdeny__ = ('.youtube.com', '.youku.com')
 
@@ -31,6 +31,10 @@ try:
     import sae
 except ImportError:
     sae = None
+try:
+    import bae.core.wsgi
+except ImportError:
+    bae = None
 try:
     import socket
     import select
@@ -258,6 +262,7 @@ def gae_application(environ, start_response):
             time.sleep(1)
             deadline = URLFETCH_TIMEOUT * 2
         except urlfetch.ResponseTooLargeError as e:
+            errors.append('%r, deadline=%s' % (e, deadline))
             response = e.response
             logging.error('ResponseTooLargeError(deadline=%s, url=%r) response(%r)', deadline, url, response)
             m = re.search(r'=\s*(\d+)-', headers.get('Range') or headers.get('range') or '')
@@ -280,7 +285,8 @@ def gae_application(environ, start_response):
         start_response('500 Internal Server Error', [('Content-Type', 'text/html')])
         error_string = '<br />\n'.join(errors)
         if not error_string:
-            error_string = 'Internal Server Error. <p/><a href="javascript:window.location.reload(true);">refresh</a> current page or visit <a href="https://appengine.google.com/" target="_blank">appengine.google.com</a> for error logs'
+            logurl = 'https://appengine.google.com/logs?&app_id=%s' % os.environ['APPLICATION_ID']
+            error_string = 'Internal Server Error. <p/>try <a href="javascript:window.location.reload(true);">refresh</a> or goto <a href="%s" target="_blank">appengine.google.com</a> for details' % logurl
         yield message_html('502 Urlfetch Error', 'Python Urlfetch Error: %r' % method,  error_string)
         raise StopIteration
 
@@ -525,7 +531,7 @@ def paas_application(environ, start_response):
             response = conn.getresponse()
 
             headers = [('X-Status', str(response.status))]
-            headers += [(k, v) for k, v in response.msg.items() if k != 'transfer-encoding']
+            headers += [(k.title(), v) for k, v in response.msg.items() if k.title() != 'Transfer-Encoding']
             start_response('200 OK', headers)
 
             bufsize = 8192
@@ -543,7 +549,12 @@ def paas_application(environ, start_response):
 
 
 app = gae_application if urlfetch else paas_application
-application = app if sae is None else sae.create_wsgi_app(app)
+if bae:
+    application = bae.core.wsgi.WSGIApplication(app)
+elif sae:
+    application = sae.create_wsgi_app(app)
+else:
+    application = app
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO, format='%(levelname)s - - %(asctime)s %(message)s', datefmt='[%b %d %H:%M:%S]')

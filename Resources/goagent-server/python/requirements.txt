@@ -1,3 +1,4 @@
+cython==0.19.1
 httplib2==0.8
 gunicorn==0.17.2
 -e git://github.com/surfly/gevent.git@1.0rc2#egg=gevent

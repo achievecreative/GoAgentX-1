@@ -4,5 +4,5 @@
     "local_port":{ShadowSocks:LocalPort},
     "password":"{ShadowSocks:Password}",
     "timeout":{ShadowSocks:Timeout},
-    "method": "{ShadowSocks:Method}"
+    "method": "{ShadowSocks:EncryptMethod}"
 }

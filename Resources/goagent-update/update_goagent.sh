@@ -1,5 +1,5 @@
 #!/bin/sh
-GOAGENT_URL="https://goo.gl/sxgfB"
+GOAGENT_URL="http://goo.gl/qFyRk"
 SHADOWSOCKS_URL="https://github.com/clowwindy/shadowsocks/archive/master.zip"
 
 if [ "$APP_BUNDLE_PATH" == "" ]; then
@@ -13,20 +13,21 @@ clean() {
 	rm -rf $1/server/php/
 	rm $1/server/uploader.bat
     rm $1/server/uploader.zip
+    rm $1/server/uploader.exe
 
 	rm $1/local/certs/*
-	rm $1/local/Microsoft.VC90.CRT.manifest
 	rm $1/local/SwitchyOptions.bak
 	rm $1/local/SwitchySharp_1_9_52.crx
 	rm $1/local/addto-startup.py
 	rm $1/local/addto-startup.vbs
 	rm $1/local/goagent-gtk.py
 	rm $1/local/goagent.exe
-	rm $1/local/msvcr90.dll
+    rm $1/local/goagent-osx.command
+	rm $1/local/msvcr100.dll
 	rm $1/local/proxy.bat
-	rm $1/local/python27.dll
-	rm $1/local/python27.exe
-	rm $1/local/uvent.bat
+	rm $1/local/python33.dll
+	rm $1/local/python33.exe
+    rm $1/local/python33.zip
 }
 
 echo 开始更新 goagent ...
