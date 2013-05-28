@@ -1541,6 +1541,7 @@ class GAEProxyHandler(http.server.BaseHTTPRequestHandler):
                     self.wfile.write(('HTTP/1.1 %s\r\n%s\r\n' % (response.status, ''.join('%s: %s\r\n' % (k.title(), v) for k, v in response.getheaders() if k != 'Transfer-Encoding'))).encode('latin-1'))
                     headers_sent = True
                 content_length = int(response.headers.get('Content-Length', 0))
+                accept_ranges = response.headers.get('Accept-Ranges')
                 if response.headers.get('Content-Range'):
                     content_range = response.headers['Content-Range']
                     start, end, length = list(map(int, re.search(r'bytes (\d+)-(\d+)/(\d+)', content_range).group(1, 2, 3)))
@@ -1567,7 +1568,7 @@ class GAEProxyHandler(http.server.BaseHTTPRequestHandler):
                     common.GOOGLE_MODE = 'https'
                     common.GAE_FETCHSERVER = '%s://%s.appspot.com%s?' % (common.GOOGLE_MODE, common.GAE_APPIDS[0], common.GAE_PATH)
                 elif e.args[0] == errno.ETIMEDOUT or isinstance(e.args[0], str) and 'timed out' in e.args[0]:
-                    if content_length:
+                    if content_length and accept_ranges == 'bytes':
                         # we can retry range fetch here
                         logging.warn('GAEProxyHandler.do_METHOD_GAE timed out, url=%r, content_length=%r, try again', self.path, content_length)
                         self.headers['Range'] = 'bytes=%d-%d' % (start, end)
