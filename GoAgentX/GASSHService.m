@@ -72,7 +72,7 @@
     [args addObject:@"-D"];
     [args addObject:[NSString stringWithFormat:@"%s:%d", [self listenOnRemote] ? "*" : "localhost", [self proxyPort]]];
     if ([defaults stringForKey:@"SSH:ObfuscateKeyword"].length > 0) {
-        commandRunner.commandPath = @"./obfuscate-ssh";
+        commandRunner.commandPath = @"./obfuscated-ssh";
         [args addObject:@"-zZ"];
         [args addObject:[defaults stringForKey:@"SSH:ObfuscateKeyword"]];
     }
