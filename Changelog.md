@@ -1,3 +1,10 @@
+## GoAgentX v1.3.29
+
+* [FIX] 修正混淆 SSH 不能使用的问题
+* [MOD] 修改 shadowsocks 加密方式的设置方式为下拉框
+
+*Released on 2013.06.03*
+
 ## GoAgentX v1.3.28
 
 * [NEW] 添加 obfuscate-ssh 支持
