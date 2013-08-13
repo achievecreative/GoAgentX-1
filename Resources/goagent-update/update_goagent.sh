@@ -24,24 +24,34 @@ clean() {
 	rm $1/local/goagent.exe
     rm $1/local/goagent-osx.command
 	rm $1/local/msvcr100.dll
+	rm $1/local/msvcr90.dll
+	rm $1/local/_memimporter.pyd
+	rm $1/local/SwitchySharp.crx
+	rm $1/local/Microsoft.VC90.CRT.manifest
+	rm $1/local/uvent.bat
 	rm $1/local/proxy.bat
-	rm $1/local/python33.dll
-	rm $1/local/python33.exe
-    rm $1/local/python33.zip
+	rm $1/local/python33.*
+	rm $1/local/python27.*
 }
 
 echo 开始更新 goagent ...
 echo 正在下载 goagent ...
-curl -L -o goagent.zip $GOAGENT_URL
+if [ ! -f "./goagent.zip" ]; then
+	curl -L -o goagent.zip $GOAGENT_URL
+fi
 
 echo 解压 goagent.zip ...
 unzip goagent.zip
 rm goagent.zip
 
 goagent_folder=`ls | grep -m 1 goagent-`
-clean $goagent_folder
-cp -r $goagent_folder/local/* "$SERVICES_FOLDER/goagent"
-cp -r $goagent_folder/server/* "$SERVICES_FOLDER/goagent-server"
+goagent_folder=./$goagent_folder
+
+if [ "$goagent_folder" != "./" ]; then
+	clean $goagent_folder
+	cp -r $goagent_folder/local/* "$SERVICES_FOLDER/goagent"
+	cp -r $goagent_folder/server/* "$SERVICES_FOLDER/goagent-server"
+fi
 
 
 # 更新 shadowsocks
@@ -61,7 +71,9 @@ grep -m 1 __version__ $goagent_folder/local/proxy.py
 echo goagent 服务端代码版本：
 grep -m 1 __version__ $goagent_folder/server/python/wsgi.py
 
-rm -r $goagent_folder
+if [ "$goagent_folder" != "./" ]; then
+	rm -r $goagent_folder
+fi
 
 #echo
 #echo shadowsocks 更新完成，版本：
