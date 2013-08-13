@@ -1,3 +1,9 @@
+## GoAgentX v1.3.30
+
+* [NEW] 更新 goagent 到 3.0.3
+
+*Released on 2013.08.13*
+
 ## GoAgentX v1.3.29
 
 * [FIX] 修正混淆 SSH 不能使用的问题
