@@ -1,4 +1,2 @@
-cython==0.19.1
-httplib2==0.8
 gunicorn==0.17.2
 -e git://github.com/phuslu/gevent-egg.git@master#egg=gevent
