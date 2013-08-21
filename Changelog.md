@@ -1,3 +1,10 @@
+## GoAgentX v1.3.31
+
+* [NEW] 更新 goagent 到 3.0.5
+* [MOD] 禁用 goagent 自带 PAC 服务，防止可能的端口占用问题
+
+*Released on 2013.08.21*
+
 ## GoAgentX v1.3.30
 
 * [NEW] 更新 goagent 到 3.0.3
