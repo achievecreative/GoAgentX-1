@@ -3,7 +3,7 @@
 # Contributor:
 #      Phus Lu        <phus.lu@gmail.com>
 
-__version__ = '2.1.18'
+__version__ = '3.0.5'
 __password__ = ''
 __hostsdeny__ = ()  # __hostsdeny__ = ('.youtube.com', '.youku.com')
 
@@ -18,6 +18,7 @@ import logging
 import httplib
 import urlparse
 import errno
+import string
 try:
     from io import BytesIO
 except ImportError:
@@ -51,41 +52,34 @@ URLFETCH_DEFLATE_MAXSIZE = 4*1024*1024
 URLFETCH_TIMEOUT = 60
 
 def message_html(title, banner, detail=''):
-    ERROR_TEMPLATE = '''
-<html><head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>{{ title }}</title>
-<style><!--
-body {font-family: arial,sans-serif}
-div.nav {margin-top: 1ex}
-div.nav A {font-size: 10pt; font-family: arial,sans-serif}
-span.nav {font-size: 10pt; font-family: arial,sans-serif; font-weight: bold}
-div.nav A,span.big {font-size: 12pt; color: #0000cc}
-div.nav A {font-size: 10pt; color: black}
-A.l:link {color: #6f6f6f}
-A.u:link {color: green}
-//--></style>
-</head>
-<body text=#000000 bgcolor=#ffffff>
-<table border=0 cellpadding=2 cellspacing=0 width=100%>
-<tr><td bgcolor=#3366cc><font face=arial,sans-serif color=#ffffff><b>Message</b></td></tr>
-<tr><td>&nbsp;</td></tr></table>
-<blockquote>
-<H1>{{ banner }}</H1>
-{{ detail }}
-<!--
-<script type="text/javascript" src="http://www.qq.com/404/search_children.js" charset="utf-8"></script>
-//-->
-<p>
-</blockquote>
-<table width=100% cellpadding=0 cellspacing=0><tr><td bgcolor=#3366cc><img alt="" width=1 height=4></td></tr></table>
-</body></html>
-'''
-    kwargs = dict(title=title, banner=banner, detail=detail)
-    template = ERROR_TEMPLATE
-    for keyword, value in kwargs.items():
-        template = template.replace('{{ %s }}' % keyword, value)
-    return template
+    MESSAGE_TEMPLATE = '''
+    <html><head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>$title</title>
+    <style><!--
+    body {font-family: arial,sans-serif}
+    div.nav {margin-top: 1ex}
+    div.nav A {font-size: 10pt; font-family: arial,sans-serif}
+    span.nav {font-size: 10pt; font-family: arial,sans-serif; font-weight: bold}
+    div.nav A,span.big {font-size: 12pt; color: #0000cc}
+    div.nav A {font-size: 10pt; color: black}
+    A.l:link {color: #6f6f6f}
+    A.u:link {color: green}
+    //--></style>
+    </head>
+    <body text=#000000 bgcolor=#ffffff>
+    <table border=0 cellpadding=2 cellspacing=0 width=100%>
+    <tr><td bgcolor=#3366cc><font face=arial,sans-serif color=#ffffff><b>Message</b></td></tr>
+    <tr><td> </td></tr></table>
+    <blockquote>
+    <H1>$banner</H1>
+    $detail
+    <p>
+    </blockquote>
+    <table width=100% cellpadding=0 cellspacing=0><tr><td bgcolor=#3366cc><img alt="" width=1 height=4></td></tr></table>
+    </body></html>
+    '''
+    return string.Template(MESSAGE_TEMPLATE).substitute(title=title, banner=banner, detail=detail)
 
 
 def gae_application(environ, start_response):
@@ -215,14 +209,8 @@ def gae_application(environ, start_response):
 
     data = response.content
     response_headers = response.headers
-    if response_headers.get('content-encoding') == 'gzip' and 'deflate' in accept_encoding and len(response.content) < URLFETCH_DEFLATE_MAXSIZE:
-        data = data[10:-8]
-        response_headers['Content-Encoding'] = 'deflate'
-    elif 'content-encoding' not in response_headers and len(response.content) < URLFETCH_DEFLATE_MAXSIZE and response_headers.get('content-type', '').startswith(('text/', 'application/json', 'application/javascript')):
-        if 'deflate' in accept_encoding:
-            response_headers['Content-Encoding'] = 'deflate'
-            data = zlib.compress(data)[2:-4]
-        elif 'gzip' in accept_encoding:
+    if 'content-encoding' not in response_headers and len(response.content) < URLFETCH_DEFLATE_MAXSIZE and response_headers.get('content-type', '').startswith(('text/', 'application/json', 'application/javascript')):
+        if 'gzip' in accept_encoding:
             response_headers['Content-Encoding'] = 'gzip'
             compressobj = zlib.compressobj(zlib.Z_DEFAULT_COMPRESSION, zlib.DEFLATED, -zlib.MAX_WBITS, zlib.DEF_MEM_LEVEL, 0)
             dataio = BytesIO()
@@ -231,6 +219,9 @@ def gae_application(environ, start_response):
             dataio.write(compressobj.flush())
             dataio.write(struct.pack('<LL', zlib.crc32(data) & 0xFFFFFFFFL, len(data) & 0xFFFFFFFFL))
             data = dataio.getvalue()
+        elif 'deflate' in accept_encoding:
+            response_headers['Content-Encoding'] = 'deflate'
+            data = zlib.compress(data)[2:-4]
     if data:
          response_headers['Content-Length'] = str(len(data))
     response_headers_data = zlib.compress('\n'.join('%s:%s' % (k.title(), v) for k, v in response_headers.items() if not k.startswith('x-google-')))[2:-4]
@@ -384,32 +375,27 @@ def paas_application(environ, start_response):
         start_response('302 Found', [('Location', 'https://www.google.com')])
         raise StopIteration
 
-    # inflate = lambda x:zlib.decompress(x, -zlib.MAX_WBITS)
     wsgi_input = environ['wsgi.input']
     data = wsgi_input.read(2)
     metadata_length, = struct.unpack('!h', data)
     metadata = wsgi_input.read(metadata_length)
 
     metadata = zlib.decompress(metadata, -zlib.MAX_WBITS)
-    headers = dict(x.split(':', 1) for x in metadata.splitlines() if x)
+    headers = {}
+    for line in metadata.splitlines():
+        if line:
+            keyword, value = line.split(':', 1)
+            headers[keyword.title()] = value.strip()
     method = headers.pop('G-Method')
     url = headers.pop('G-Url')
+    timeout = URLFETCH_TIMEOUT
 
     kwargs = {}
     any(kwargs.__setitem__(x[2:].lower(), headers.pop(x)) for x in headers.keys() if x.startswith('G-'))
 
-    headers['Connection'] = 'close'
-
-    payload = environ['wsgi.input'].read() if 'Content-Length' in headers else None
-    if 'Content-Encoding' in headers:
-        if headers['Content-Encoding'] == 'deflate':
-            payload = zlib.decompress(payload, -zlib.MAX_WBITS)
-            headers['Content-Length'] = str(len(payload))
-            del headers['Content-Encoding']
-
     if __password__ and __password__ != kwargs.get('password'):
         random_host = 'g%d%s' % (int(time.time()*100), environ['HTTP_HOST'])
-        conn = httplib.HTTPConnection(random_host, timeout=3)
+        conn = httplib.HTTPConnection(random_host, timeout=timeout)
         conn.request('GET', '/')
         response = conn.getresponse(True)
         status_line = '%s %s' % (response.status, httplib.responses.get(response.status, 'OK'))
@@ -422,8 +408,13 @@ def paas_application(environ, start_response):
         yield message_html('403 Forbidden Host', 'Hosts Deny(%s)' % url, detail='url=%r' % url)
         raise StopIteration
 
-    timeout = URLFETCH_TIMEOUT
-    xorchar = ord(kwargs.get('xorchar') or '\x00')
+    headers['Connection'] = 'close'
+    payload = environ['wsgi.input'].read() if 'Content-Length' in headers else None
+    if 'Content-Encoding' in headers:
+        if headers['Content-Encoding'] == 'deflate':
+            payload = zlib.decompress(payload, -zlib.MAX_WBITS)
+            headers['Content-Length'] = str(len(payload))
+            del headers['Content-Encoding']
 
     logging.info('%s "%s %s %s" - -', environ['REMOTE_ADDR'], method, url, 'HTTP/1.1')
 
@@ -436,7 +427,7 @@ def paas_application(environ, start_response):
         sock = rfile._sock
         host, _, port = url.rpartition(':')
         port = int(port)
-        remote_sock = socket.create_connection((host, port), timeout=URLFETCH_TIMEOUT)
+        remote_sock = socket.create_connection((host, port), timeout=timeout)
         start_response('200 OK', [])
         forward_socket(sock, remote_sock)
         yield 'out'
@@ -452,20 +443,15 @@ def paas_application(environ, start_response):
             conn.request(method, path, body=payload, headers=headers)
             response = conn.getresponse()
 
-            headers = [('X-Status', str(response.status))]
-            headers += [(k.title(), v) for k, v in response.msg.items() if k.title() != 'Transfer-Encoding']
-            start_response('200 OK', headers)
-
-            bufsize = 8192
+            headers_data = zlib.compress('\n'.join('%s:%s' % (k.title(), v) for k, v in response.getheaders()))[2:-4]
+            start_response('200 OK', [('Content-Type', 'image/gif')])
+            yield struct.pack('!hh', int(response.status), len(headers_data))+headers_data
             while 1:
-                data = response.read(bufsize)
+                data = response.read(8192)
                 if not data:
                     response.close()
                     break
-                if xorchar:
-                    yield ''.join(chr(ord(x) ^ xorchar) for x in data)
-                else:
-                    yield data
+                yield data
         except httplib.HTTPException:
             raise
 
