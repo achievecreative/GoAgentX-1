@@ -16,7 +16,7 @@
 SYNTHESIZE_SINGLETON_FOR_CLASS(GAPACHTTPServer, Server)
 
 - (id)init {
-    if (self == [super init]) {
+    if (self = [super init]) {
         [self setConnectionClass:[GAPACHTTPConnection class]];
         [self setDocumentRoot:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"www"]];
     }
