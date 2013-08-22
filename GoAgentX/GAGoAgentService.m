@@ -74,7 +74,7 @@
     NSString *pythonEggCache = [localFolder stringByAppendingPathComponent:@".python-egg-cache"];
     [[NSFileManager defaultManager] createDirectoryAtPath:pythonEggCache withIntermediateDirectories:YES attributes:nil error:NULL];
     
-    commandRunner.commandPath = @"./python3/python";
+    commandRunner.commandPath = @"python";
     commandRunner.arguments = [NSArray arrayWithObjects:@"proxy.py", nil];
     commandRunner.environment = [NSDictionary dictionaryWithObjectsAndKeys:
 //                                 @"./:greenlet-0.4.0-py2.7-macosx-10.7-intel.egg:gevent-1.0b4-py2.7-macosx-10.7-intel.egg:greenlet-0.4.0-py2.7-macosx-10.8-intel.egg:gevent-1.0b4-py2.7-macosx-10.8-intel.egg", @"PYTHONPATH",
