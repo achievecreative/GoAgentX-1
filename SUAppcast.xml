@@ -7,21 +7,6 @@
       <language>zh</language>
 
          <item>
-            <title>GoAgentX v1.3.31</title>
-            <description><![CDATA[
-                <h2>GoAgentX v1.3.31 Changelog</h2>
-                <p>更新时请先停止 GoAgentX 服务。</p>
-                <ul>
-                    <li>[NEW] 更新 goagent 到 3.0.5</li>
-                    <li>[MOD] 禁用 goagent 自带 PAC 服务，防止可能的端口占用问题</li>
-                </ul>
-                <p>更多内容请访问 <a href="http://goagentx.com">GoAgentX.com</a></p>
-            ]]></description>
-            <pubDate>Wed, 21 Aug 2013 23:00:00 +0800</pubDate>
-            <enclosure url="https://goagentx.googlecode.com/files/GoAgentX-v1.3.31.dmg" sparkle:shortVersionString="1.3.31" sparkle:version="341" length="5687056" type="application/octet-stream" sparkle:dsaSignature="MCwCFF21sadCmSJPUEtnrUNghxud0L5sAhQ+b8z2Z7c7HtBZQ9Vz576rq9NZFg==" />
-         </item>
-
-         <item>
             <title>GoAgentX v1.3.30</title>
             <description><![CDATA[
                 <h2>GoAgentX v1.3.30 Changelog</h2>
