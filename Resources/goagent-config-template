@@ -21,7 +21,7 @@ ip = 127.0.0.1
 port = 8086
 file = proxy.pac
 gfwlist = https://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt
-urlfilter = https://urlfilter-chinalist.googlecode.com/git/urlfilter.ini|https://simpleu.googlecode.com/svn/trunk/Opera/urlfilter.ini
+adblock = https://adblock-chinalist.googlecode.com/svn/trunk/adblock.txt
 expired = 86400
 
 [paas]
@@ -74,23 +74,12 @@ maxsize = 1048576
 waitsize = 524288
 bufsize = 8192
 
-[crlf]
-enable = 0
-dns = 8.8.8.8
-sites = .youtube.com|.ytimg.com
-
 [dns]
 enable = 0
 listen = 127.0.0.1:53
-remote = 8.8.8.8
+remote = 8.8.8.8|8.8.4.4|114.114.114.114|114.114.115.115
 cachesize = 5000
 timeout = 2
-
-[socks5]
-enable = 0
-password = 123456
-listen = 127.0.0.1:8089
-fetchserver = http://.me:23/
 
 [light]
 enable = 0
@@ -108,12 +97,12 @@ server =
 
 [love]
 enable = 1
-timestamp = 1350927900
 tip = \u8bf7\u5173\u6ce8\u5317\u4eac\u5931\u5b66\u513f\u7ae5~~
 
 [hosts]
+.+\.appspot\.com\:443 = www.google.cn
 .+\.dropbox\.com\:443 = 
 .+\.box\.com\:443 = 
 .+\.copy\.com\:443 = 
-talkx\.l\.google\.com\:5222 = 
-^https?\://.+\.c\.youtube\.com/liveplay = www.g.cn
+talkx?\.(l\.)?google\.com\:5222 = 
+^https?\://.+\.c\.youtube\.com/liveplay = www.google.cn
