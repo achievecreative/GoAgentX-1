@@ -21,6 +21,7 @@ ip = 127.0.0.1
 port = 8086
 file = proxy.pac
 gfwlist = https://autoproxy-gfwlist.googlecode.com/svn/trunk/gfwlist.txt
+urlfilter = https://urlfilter-chinalist.googlecode.com/git/urlfilter.ini|https://simpleu.googlecode.com/svn/trunk/Opera/urlfilter.ini
 expired = 86400
 
 [paas]
