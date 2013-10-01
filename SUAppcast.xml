@@ -7,7 +7,7 @@
       <language>zh</language>
 
          <item>
-            <title>GoAgentX v2.0</title>
+            <title>GoAgentX v2.0.1</title>
             <description><![CDATA[
                 <h2>GoAgentX v2.0 全新发布！</h2>
                 <p><strong style='color:red'>注意：升级到 GoAgentX v2.0 将会丢失旧版本所有配置，请先备份旧版本数据：</strong></p>
@@ -31,8 +31,8 @@
                 </ul>
                 <p>更多内容请访问 <a href="http://goagentx.com">GoAgentX.com</a></p>
             ]]></description>
-            <pubDate>Tue, 01 Oct 2013 16:00:00 +0800</pubDate>
-            <enclosure url="https://goagentx.googlecode.com/files/GoAgentX-v2.0.dmg" sparkle:shortVersionString="2.0" sparkle:version="469" length="12442466" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCGyCSJpTd04TyfSFnvdgYbwo18pgIUD/7Y26TdyEdXaLuo2KBYOa/VcMw=" />
+            <pubDate>Tue, 01 Oct 2013 23:00:00 +0800</pubDate>
+            <enclosure url="https://goagentx.googlecode.com/files/GoAgentX-v2.0.1.dmg" sparkle:shortVersionString="2.0.1" sparkle:version="521" length="12442756" type="application/octet-stream" sparkle:dsaSignature="MC0CFGvWh3jJLwQEbCsdE6ptOAKvcLGeAhUAgaDa7Z7Vn5pxaJec7dg8Nnbw87c=" />
          </item>
 
         <item>
