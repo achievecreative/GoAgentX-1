@@ -6,6 +6,37 @@
       <description></description>
       <language>zh</language>
 
+         <item>
+            <title>GoAgentX v2.2.9</title>
+            <description><![CDATA[
+                <h2>GoAgentX v2 全新发布！</h2>
+                <p><strong style='color:red'>注意：升级到 GoAgentX v2 将会丢失旧版本所有配置，请先备份以下配置内容：</strong></p>
+                <ul style='color:red'>
+                    <li>自定义 PAC 域名列表</li>
+                    <li>各服务配置参数</li>
+                </ul>
+                <p><strong style='color:red'>再次提醒：如果升级后不会使用，请前往 https://code.google.com/p/goagentx/downloads/list 重新下载旧版本使用，或在 GitHub 搜索已经存在的 Issue。如果就新版本使用提出 Issue，将会被直接关闭。</strong></p>
+                <p><strong style='color:red'>再再次提醒：如果使用 goagent，需要重新部署服务端，以及选择 HTTP+IPv4 模式时，需要设置服务密码并重新部署。关于 goagent 不能使用的 Issue 也将会被直接关闭。</strong></p>
+                <h3>GoAgentX v2 全新功能：</h3>
+                <ul>
+                    <li>全新设计的界面，更易用</li>
+                    <li>支持多配置文件</li>
+                    <li>支持多服务同时运行</li>
+                    <li>支持自定义服务配置文件模板</li>
+                    <li>添加 SSL 代理、SPDY 代理、COW 支持</li>
+                    <li>全新的 PAC 规则编辑器</li>
+                    <li>更强大的 PAC 规则支持</li>
+                    <li>GoAgentX API 支持，通过规则助手添加规则更快捷</li>
+                    <li>提供 Chrome 扩展，与 Chrome 集成</li>
+                    <li>支持配置文件的导入和导出</li>
+                    <li>仅支持 OS X Lion 及以上系统</li>
+                </ul>
+                <p>更多内容请访问 <a href="http://goagentx.com">GoAgentX.com</a></p>
+            ]]></description>
+            <pubDate>Tue, 21 Jan 2014 22:00:00 +0800</pubDate>
+            <enclosure url="https://goagentx.googlecode.com/files/GoAgentX-v2.2.9.dmg" sparkle:shortVersionString="2.2.9" sparkle:version="643" length="11056675" type="application/octet-stream" sparkle:dsaSignature="MCwCFD2Dt1GhTdHJ/McU0X8iqRfkDOTyAhQfAoxrkF3tT8mE7zl1CwO9GudFrw==" />
+         </item>
+
         <item>
             <title>GoAgentX v1.3.33</title>
             <description><![CDATA[
