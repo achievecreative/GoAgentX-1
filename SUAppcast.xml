@@ -10,6 +10,7 @@
             <title>GoAgentX v2.2.9</title>
             <description><![CDATA[
                 <h2>GoAgentX v2 全新发布！</h2>
+                <p><strong style='color:red'>GoAgentX v1 将不再继续维护和更新。</strong></p>
                 <p><strong style='color:red'>注意：升级到 GoAgentX v2 将会丢失旧版本所有配置，请先备份以下配置内容：</strong></p>
                 <ul style='color:red'>
                     <li>自定义 PAC 域名列表</li>
