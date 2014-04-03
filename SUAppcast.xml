@@ -5,6 +5,41 @@
       <link>https://raw.github.com/ohdarling/GoAgentX/master/SUAppcast.xml</link>
       <description></description>
       <language>zh</language>
+      
+        <item>
+            <title>GoAgentX v2.3.2</title>
+            <description><![CDATA[
+                <h2>GoAgentX v2.3.2 更新日志</h2>
+                <ul>
+                    <li>[FIX] 修正停止所有服务或退出后系统代理设置没有还原的问题</li>
+                </ul>
+
+                <h2>GoAgentX v2.3.1 更新日志</h2>
+                <ul>
+                    <li>[FIX] 修正在 OS X 10.8 上无法运行的问题</li>
+                    <li>[FIX] 修正 bundle 中的配置文件无法自动启动的问题</li>
+                    <li>[FIX] 修正安装 Bundle 时默认为禁用的问题</li>
+                </ul>
+
+                <h2>GoAgentX v2.3.0 更新日志</h2>
+                <ul>
+                    <li>[NEW] 添加 GoAgentX Helper，切换模式时无需授权</li>
+                    <li>[NEW] 添加选项，禁止同时使用 SOCKS 和 HTTP 代理</li>
+                    <li>[NEW] 规则列表添加优先级支持</li>
+                    <li>[NEW] 启动服务时停止已经运行的使用同样本地端口服务</li>
+                    <li>[NEW] 在没有启用自定义模板时也显示默认配置模板</li>
+                    <li>[NEW] 更新 goagent 到 3.1.5</li>
+                    <li>[NEW] SSH 服务使用 autossh 来连接，增加稳定性</li>
+                    <li>[NEW] PAC 配置界面在分享 PAC 到局域网时列出所有可能访问的地址</li>
+                    <li>[FIX] 修正 cow 使用多服务出错的问题</li>
+                    <li>[FIX] 删除 PAC 中的 dnsResolve 语句，增加查询效率</li>
+                    <li>[FIX] 修正使用服务菜单添加规则不会立即生效的问题</li>
+                </ul>
+                <p>更多内容请访问 <a href="https://goagentx.com">GoAgentX.com</a></p>
+            ]]></description>
+            <pubDate>Tue, 18 Mar 2014 21:00:00 +0800</pubDate>
+            <enclosure url="https://goagentx.com/files/GoAgentX.dmg" sparkle:shortVersionString="2.3.2" sparkle:version="707" length="11553528" type="application/octet-stream" sparkle:dsaSignature="MC0CFQCO1mLJqwogHICklPlo0MfsU/LS1QIUNovJx/WFX48qWkNkyESagDMdq6U=" />
+         </item>
 
          <item>
             <title>GoAgentX v2.2.9</title>
