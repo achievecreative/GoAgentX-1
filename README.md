@@ -4,7 +4,7 @@ GoAgentX 是一个在 Mac OS X 下使用代理服务的图形界面控制软件�
 
 ## 下载
 
-<http://goagentx.com>
+<https://github.com/ohdarling/GoAgentX/releases>
 
 ## 功能
 
